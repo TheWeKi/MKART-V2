@@ -1,9 +1,25 @@
-function App() {
+import {BrowserRouter, Route, Routes} from "react-router-dom"
+import ProductList from "./pages/ProductList"
+import Home from "./pages/Home"
+import Navbar from "./components/layout/Navbar"
+import Footer from "./components/layout/Footer"
+import Divider from "./components/ui/Divider"
+
+const App = () => {
     return (
         <>
-            <h1 className="flex justify-center">
-                Missing ;
-            </h1>
+            <BrowserRouter>
+                <Navbar/>
+                <Divider/>
+
+                <Routes>
+                    <Route path="/" element={<Home/>}/>
+                    <Route path="/products" element={<ProductList/>}/>
+                </Routes>
+
+                <Divider/>
+                <Footer/>
+            </BrowserRouter>
         </>
     )
 }
