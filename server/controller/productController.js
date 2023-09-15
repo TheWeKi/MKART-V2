@@ -1,50 +1,34 @@
-import { productModel } from "../models/productModel.js";
-import { v4 as uuidv4 } from 'uuid';
-export const getProducts = async (req,res,next) => {
+const products = [
+    {
+        "id": "1",
+        "status": "good",
+    },
+    {
+        "id": "2",
+        "status": "better",
+    },
+    {
+        "id": "3",
+        "status": "best",
+    },
+]
 
-    res
-        .status(200)
-        .json({
-        success:"true",
-        products:productModel
-    })
-
+const getProducts = (req, res) => {
+    res.json(products)
 }
 
-export const getProduct = async (req,res,next) => {
-    
-    const {productId}=req.params;
-
-    const product = productModel.find(p=> p.id.toString()===productId.toString());
-
-    res
-        .status(200)
-        .json({
-        success:"true",
-        product:product
-    })
-
+const getProductById = (req, res) => {
+    const {id} = req.params
+    const product = products.find(product => product.id === id)
+    res.json(product)
 }
 
-export const addProduct = async (req,res,next) => {
-    
-    const {name,description,image,price}=req.body;
-
-    const product ={
-        id : uuidv4(),
-        name : name,
-        description : description,
-        image : image,
-        price :price
-    }
-
-    productModel.push(product);
-
+const addProduct = (req, res) => {
+    const product = req.body
+    products.push(product)
     res
-        .status(200)
-        .json({
-        success:"true"
-    })
-
+        .status(201)
+        .json(product)
 }
 
+export {getProducts, getProductById, addProduct}

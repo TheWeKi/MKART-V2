@@ -1,18 +1,19 @@
-import express from "express";
-import productRouter from "./routes/productRoutes.js"
+import express, {json, urlencoded} from "express";
 import cors from "cors";
+
+import productRouter from "./routes/productRoutes.js"
+
 const app = express();
 
-
-
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(json());
+app.use(urlencoded({extended: true}));
 
-app.use('/api/v1/products', productRouter);
+app.use("/api/v1/products", productRouter);
+
 app.get("/", (req, res) => {
     res.json({
-        status: "success",
+        status: "running",
     });
 });
 
