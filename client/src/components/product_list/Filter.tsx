@@ -12,39 +12,14 @@ const Filter = () => {
 
                     {/* Sort */}
 
-                    <div className="dropdown dropdown-bottom dropdown-end">
-                        <label tabIndex={0} className="link link-hover">
-                            <div className="flex gap-1">
-                                <div className="text-lg">Sort</div>
-                                <svg className="pt-2 h-6 w-6" fill="none" stroke="currentColor" strokeWidth={2}
-                                     viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
-                                </svg>
-                            </div>
-                        </label>
-                        <div className="form-control">
-                        <ul tabIndex={0}
-                            className="menu menu-lg dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-80">
-                            <li>
-                                <label className="label cursor-pointer">
-                                    <span className="label-text">Price Low to High</span>
-                                    <input type="checkbox"  className="checkbox checkbox-xs" />
-                                </label>
-                            </li>
-                            <li>
-                                <label className="label cursor-pointer">
-                                    <span className="label-text">Price High to Low</span>
-                                    <input type="checkbox" className="checkbox checkbox-xs" />
-                                </label>
-                            </li>
-                            <li>
-                                <label className="label cursor-pointer">
-                                    <span className="label-text">Sort By Popularity</span>
-                                    <input type="checkbox" className="checkbox checkbox-xs" />
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
+                    <div className="form-control">
+                        <select className="select select-bordered select-md w-full max-w-lg">
+                            <option disabled selected hidden value="sort">Sort</option>
+                            <option value="price1">Price Low To High</option>
+                            <option value="price0">Price High To Low</option>
+                            <option value="popularity1">Popularity Low To High</option>
+                            <option value="popularity0">Popularity High To Low</option>
+                        </select>
                     </div>
 
                     {/* Filter */}

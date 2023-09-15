@@ -10,10 +10,10 @@ const ProductCard = () => {
                     <h2 className="card-title">Shoes!</h2>
                     <p>If a dog chews shoes whose shoes does he choose?</p>
                     <div className="card-actions justify-end">
-                        <div className="text-lg font-semibold text-black mx-auto my-auto">
-                            199.99
+                        <div className="text-lg font-semibold text-black mr-auto mt-auto">
+                            {`$${999}`}
                         </div>
-                        <button className="btn btn-primary">Buy Now</button>
+                        <button className="btn btn-outline">Buy Now</button>
                     </div>
                 </div>
             </div>
