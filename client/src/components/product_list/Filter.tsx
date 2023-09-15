@@ -22,18 +22,29 @@ const Filter = () => {
                                 </svg>
                             </div>
                         </label>
+                        <div className="form-control">
                         <ul tabIndex={0}
-                            className="menu menu-lg dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-42">
+                            className="menu menu-lg dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-80">
                             <li>
-                                <a>Home</a>
+                                <label className="label cursor-pointer">
+                                    <span className="label-text">Price Low to High</span>
+                                    <input type="checkbox"  className="checkbox checkbox-xs" />
+                                </label>
                             </li>
                             <li>
-                                <a>Products</a>
+                                <label className="label cursor-pointer">
+                                    <span className="label-text">Price High to Low</span>
+                                    <input type="checkbox" className="checkbox checkbox-xs" />
+                                </label>
                             </li>
                             <li>
-                                <a>Profile</a>
+                                <label className="label cursor-pointer">
+                                    <span className="label-text">Sort By Popularity</span>
+                                    <input type="checkbox" className="checkbox checkbox-xs" />
+                                </label>
                             </li>
                         </ul>
+                    </div>
                     </div>
 
                     {/* Filter */}
