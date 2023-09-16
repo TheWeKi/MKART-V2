@@ -1,34 +1,28 @@
-const products = [
-    {
-        "id": "1",
-        "status": "good",
-    },
-    {
-        "id": "2",
-        "status": "better",
-    },
-    {
-        "id": "3",
-        "status": "best",
-    },
-]
+import prisma from "../database/prismaClient.js";
 
-const getProducts = (req, res) => {
+const getProducts = async (req, res) => {
+    const products = await prisma.product.findMany();
     res.json(products)
 }
 
-const getProductById = (req, res) => {
-    const {id} = req.params
-    const product = products.find(product => product.id === id)
+const getProductById = async (req, res) => {
+    const {id} = req.params;
+    const product = await prisma.product.findFirst({
+        where: {
+            id,
+        }
+    })
     res.json(product)
 }
 
-const addProduct = (req, res) => {
-    const product = req.body
-    products.push(product)
+const addProduct = async (req, res) => {
+    const product = req.body;
+    const newProduct = await prisma.product.create({
+        data : product,
+    });
     res
         .status(201)
-        .json(product)
+        .json(newProduct)
 }
 
 export {getProducts, getProductById, addProduct}
