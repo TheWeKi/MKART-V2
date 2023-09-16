@@ -18,7 +18,7 @@ const getProductById = async (req, res) => {
 const addProduct = async (req, res) => {
     const product = req.body;
     const newProduct = await prisma.product.create({
-        data : product,
+        data: product,
     });
     res
         .status(201)
