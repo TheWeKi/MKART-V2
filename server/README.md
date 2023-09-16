@@ -1,4 +1,4 @@
 # Environment Variables :
 
-    PORT
-    DATABASE_URL
+    PORT = 8080
+    DATABASE_URL = postgresql://<user>:<pass>@<host>:<port>/<db_name>?schema=public
