@@ -1,3 +1,10 @@
+import Divider from "../ui/Divider.tsx";
+
+const filters = {
+    companies: ["Apple", "Microsoft", "Xiaomi", "Samsung", "Oppo"],
+    categories: ["Shoe", "Shirt", "Pant", "Trouser"],
+}
+
 const Filter = () => {
     return (
         <>
@@ -40,8 +47,47 @@ const Filter = () => {
                         <div className="drawer-side z-50">
                             <label htmlFor="my-drawer" className="drawer-overlay"></label>
                             <ul className="menu p-4 w-80 min-h-full bg-base-100">
-                                <li><a>Sidebar Item 1</a></li>
-                                <li><a>Sidebar Item 2</a></li>
+                                <div className="mb-8">
+                                    <p className="text-xl mb-4">Category</p>
+                                    {filters.categories.map(category => (
+                                        <div className="form-control">
+                                            <label className="label cursor-pointer">
+                                                <span className="text-md">{category}</span>
+                                                <input type="checkbox" className="checkbox checkbox-sm"/>
+                                            </label>
+                                        </div>
+                                    ))}
+                                </div>
+                                <Divider/>
+
+                                <div className="mb-8">
+                                    <p className="text-xl mb-8">Price</p>
+                                    <div className="form-control">
+                                        <div className="mb-4">
+                                            <span className="text-md">Minimum Price: </span>
+                                            <input type="text" placeholder="Minimum Amount"
+                                                   className="input input-bordered w-full max-w-xs"/>
+                                        </div>
+                                        <div>
+                                            <span>Maximum Price: </span>
+                                            <input type="text" placeholder="Maximum Amount"
+                                                   className="input input-bordered w-full max-w-xs"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <Divider/>
+
+                                <div className="mb-8">
+                                    <p className="text-xl mb-4">Company</p>
+                                    {filters.companies.map(company => (
+                                        <div className="form-control">
+                                            <label className="label cursor-pointer">
+                                                <span className="text-md">{company}</span>
+                                                <input type="checkbox" className="checkbox checkbox-sm"/>
+                                            </label>
+                                        </div>
+                                    ))}
+                                </div>
                             </ul>
                         </div>
                     </div>
