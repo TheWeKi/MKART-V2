@@ -1,5 +1,5 @@
-import ProductCard from "./ProductCard"
 import {Link} from "react-router-dom";
+import ProductCard from "./ProductCard.tsx";
 
 const productIds = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
