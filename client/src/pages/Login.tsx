@@ -1,4 +1,5 @@
 import Divider from "../components/ui/Divider.tsx";
+import {Link} from "react-router-dom";
 
 const Login = () => {
     return (
@@ -66,7 +67,9 @@ const Login = () => {
                         No Account?
                     </span>
                     <div>
-                        <button className="btn btn-outline">Sign Up</button>
+                        <Link to='/signup'>
+                            <button className="btn btn-outline">Sign Up</button>
+                        </Link>
                     </div>
                 </div>
             </div>

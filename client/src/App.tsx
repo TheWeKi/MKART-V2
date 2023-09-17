@@ -7,6 +7,7 @@ import Divider from "./components/ui/Divider"
 import Login from "./pages/Login.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
 import ProductDetail from "./pages/ProductDetail.tsx";
+import SignUp from "./pages/SignUp.tsx";
 
 const App = () => {
     return (
@@ -20,6 +21,7 @@ const App = () => {
                     <Route path="/products" element={<ProductList/>}/>
                     <Route path="/product-detail" element={<ProductDetail/>}/>
                     <Route path="/login" element={<Login/>}/>
+                    <Route path="/signup" element={<SignUp/>}/>
 
                     <Route path="*" element={<ErrorPage/>}/>
                 </Routes>
