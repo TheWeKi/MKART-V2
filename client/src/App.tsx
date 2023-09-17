@@ -5,6 +5,7 @@ import Navbar from "./components/layout/Navbar"
 import Footer from "./components/layout/Footer"
 import Divider from "./components/ui/Divider"
 import Login from "./pages/Login.tsx";
+import ProductDetail from "./pages/ProductDetail.tsx"
 
 const App = () => {
     return (
@@ -16,6 +17,7 @@ const App = () => {
                 <Routes>
                     <Route path="/" element={<Home/>}/>
                     <Route path="/products" element={<ProductList/>}/>
+                    <Route path="/productDetail" element={<ProductDetail/>}/>
                     <Route path="/login" element={<Login/>}/>
                 </Routes>
 
