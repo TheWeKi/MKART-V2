@@ -1,6 +1,10 @@
 import {Link} from 'react-router-dom'
+import {useState} from "react";
 
 const Navbar = () => {
+
+    const [isAuthenticated] = useState(false);
+
     return (
         <>
             <div className="navbar bg-base-100 min-h-[8vh] px-8">
@@ -20,6 +24,9 @@ const Navbar = () => {
                             <li>
                                 <Link to='/products'>Products</Link>
                             </li>
+                            <li>
+                                <Link to='/cart'>Cart</Link>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -27,11 +34,19 @@ const Navbar = () => {
                     <Link to='/' className="btn btn-ghost hover:bg-transparent normal-case text-xl">MKART</Link>
                 </div>
                 <div className="navbar-end">
-                    <Link to='/login'>
-                        <button className="btn btn-ghost btn-outline">
-                            Login
-                        </button>
-                    </Link>
+                    {
+                        isAuthenticated ?
+                            <Link to='/login'>
+                                <button className="btn btn-ghost btn-outline">
+                                    Login
+                                </button>
+                            </Link> :
+                            <Link to='/logout'>
+                                <button className="btn btn-ghost btn-outline">
+                                    Logout
+                                </button>
+                            </Link>
+                    }
                 </div>
             </div>
         </>
