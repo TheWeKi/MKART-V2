@@ -66,7 +66,7 @@ const Login = () => {
                         No Account?
                     </span>
                     <div>
-                        <button className="btn btn-outline space-x-1">Sign Up</button>
+                        <button className="btn btn-outline">Sign Up</button>
                     </div>
                 </div>
             </div>

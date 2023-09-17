@@ -36,14 +36,14 @@ const Navbar = () => {
                 <div className="navbar-end">
                     {
                         isAuthenticated ?
-                            <Link to='/login'>
-                                <button className="btn btn-ghost btn-outline">
-                                    Login
-                                </button>
-                            </Link> :
                             <Link to='/logout'>
                                 <button className="btn btn-ghost btn-outline">
                                     Logout
+                                </button>
+                            </Link> :
+                            <Link to='/login'>
+                                <button className="btn btn-ghost btn-outline">
+                                    Login
                                 </button>
                             </Link>
                     }

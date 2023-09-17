@@ -6,7 +6,7 @@ import Footer from "./components/layout/Footer"
 import Divider from "./components/ui/Divider"
 import Login from "./pages/Login.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
-import ProductDetail from "./pages/ProductDetail.tsx"
+import ProductDetail from "./pages/ProductDetail.tsx";
 
 const App = () => {
     return (
@@ -18,9 +18,9 @@ const App = () => {
                 <Routes>
                     <Route path="/" element={<Home/>}/>
                     <Route path="/products" element={<ProductList/>}/>
-                    <Route path="/productDetail" element={<ProductDetail/>}/>
+                    <Route path="/product-detail" element={<ProductDetail/>}/>
                     <Route path="/login" element={<Login/>}/>
-                    
+
                     <Route path="*" element={<ErrorPage/>}/>
                 </Routes>
 

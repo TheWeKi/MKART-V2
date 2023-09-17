@@ -1,7 +1,7 @@
 import ProductCard from "./ProductCard"
 import {Link} from "react-router-dom";
 
-const productIds = [1, 2,3 , 4, 5, 6, 7, 8, 9];
+const productIds = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const ProductLayout = () => {
     return (
@@ -11,7 +11,7 @@ const ProductLayout = () => {
                 {
                     productIds.map(id => (
                         <div key={id}>
-                            <Link to='/productdetail'>
+                            <Link to='/product-detail'>
                                 <ProductCard/>
                             </Link>
                         </div>
