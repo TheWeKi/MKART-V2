@@ -9,6 +9,7 @@ import ErrorPage from "./pages/ErrorPage.tsx";
 import ProductDetail from "./pages/ProductDetail.tsx";
 import SignUp from "./pages/SignUp.tsx";
 import Cart from "./pages/Cart.tsx"
+import AdminDashboard from "./pages/AdminDashboard.tsx";
 
 const App = () => {
     return (
@@ -24,6 +25,8 @@ const App = () => {
                     <Route path="/cart" element={<Cart/>}/>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
+
+                    <Route path='/admin-dashboard' element={<AdminDashboard/>}/>
 
                     <Route path="*" element={<ErrorPage/>}/>
                 </Routes>
