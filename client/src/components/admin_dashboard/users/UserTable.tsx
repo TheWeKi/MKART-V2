@@ -11,43 +11,43 @@ const UserTable = () => {
                 <table className="table table-zebra table-lg">
                     {/* head */}
                     <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Admin Role</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Admin Role</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
                     </thead>
 
 
                     <tbody>
 
-                        {
-                            ids.map(i => (
-                                <tr key={i}>
-                                    <td>
-                                        7869097709
-                                    </td>
-                                    <td>
-                                        username
-                                    </td>
-                                    <td>
-                                        email@email.email
-                                    </td>
-                                    <td>
-                                        false
-                                    </td>
-                                    <td>
-                                        <button className="btn btn-outline btn-primary btn-sm">Modify</button>
-                                    </td>
-                                    <td>
-                                        <button className="btn btn-outline btn-error btn-sm">Delete</button>
-                                    </td>
-                                </tr>
-                            ))
-                        }
+                    {
+                        ids.map(i => (
+                            <tr key={i}>
+                                <td>
+                                    7869097709
+                                </td>
+                                <td>
+                                    username
+                                </td>
+                                <td>
+                                    email@email.email
+                                </td>
+                                <td>
+                                    false
+                                </td>
+                                <td>
+                                    <button className="btn btn-outline btn-primary btn-sm">Modify</button>
+                                </td>
+                                <td>
+                                    <button className="btn btn-outline btn-error btn-sm">Delete</button>
+                                </td>
+                            </tr>
+                        ))
+                    }
 
                     </tbody>
 
@@ -55,7 +55,7 @@ const UserTable = () => {
                 </table>
             </div>
 
-            <Pagination />
+            <Pagination/>
 
         </main>
     )

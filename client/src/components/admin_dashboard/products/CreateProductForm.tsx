@@ -7,32 +7,32 @@ const CreateProductForm = () => {
                         <label className="label">
                             <span className="label-text text-lg">Title</span>
                         </label>
-                        <input type="text" placeholder="title" className="input input-bordered" />
+                        <input type="text" placeholder="title" className="input input-bordered"/>
                     </div>
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text text-lg">Company</span>
                         </label>
-                        <input type="text" placeholder="company" className="input input-bordered" />
+                        <input type="text" placeholder="company" className="input input-bordered"/>
                     </div>
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text text-lg">Category</span>
                         </label>
-                        <input type="text" placeholder="category" className="input input-bordered" />
+                        <input type="text" placeholder="category" className="input input-bordered"/>
                     </div>
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text text-lg">Price</span>
                         </label>
-                        <input type="number" placeholder="price" className="input input-bordered" />
+                        <input type="number" placeholder="price" className="input input-bordered"/>
                     </div>
 
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text text-lg">Image</span>
                         </label>
-                        <input type="file" className="file-input file-input-bordered" />
+                        <input type="file" className="file-input file-input-bordered"/>
                     </div>
 
                     <div className="form-control">

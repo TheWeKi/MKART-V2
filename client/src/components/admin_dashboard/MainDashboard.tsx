@@ -1,18 +1,18 @@
-import UserTable from "./users/UserTable.tsx";
-import OrderTable from "./orders/OrderTable.tsx";
-import ProductTable from "./products/ProductTable.tsx";
-import {useState} from "react";
+import {useParams} from "react-router-dom";
+import ErrorPage from "../../pages/ErrorPage.tsx";
+import ProductDashboard from "./products/ProductDashboard.tsx";
+import UserDashboard from "./users/UserDashboard.tsx";
+import OrderDashboard from "./orders/OrderDashboard.tsx";
 
 const MainDashboard = () => {
-
-    const [currentDashboard] = useState("products");
+    const {dashboard} = useParams<string>();
 
     return (
         <main>
-            {currentDashboard === "products" ? <ProductTable/>
-                : currentDashboard === "users" ? <UserTable/>
-                    : currentDashboard === "orders" ? <OrderTable/>
-                        : null}
+            {dashboard === "products" ? <ProductDashboard/>
+                : dashboard === "users" ? <UserDashboard/>
+                    : dashboard === "orders" ? <OrderDashboard/>
+                        : <ErrorPage/>}
         </main>
 
     )
