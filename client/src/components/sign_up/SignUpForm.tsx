@@ -5,9 +5,9 @@ const SignUpForm = () => {
                 <div className="card-body card-bordered border-base-300 rounded-box">
                     <div className="form-control">
                         <label className="label">
-                            <span className="label-text text-lg">User ID</span>
+                            <span className="label-text text-lg">Username</span>
                         </label>
-                        <input type="text" placeholder="user id" className="input input-bordered"/>
+                        <input type="text" placeholder="username" className="input input-bordered"/>
                     </div>
                     <div className="form-control">
                         <label className="label">

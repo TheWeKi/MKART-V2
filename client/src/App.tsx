@@ -9,7 +9,10 @@ import ErrorPage from "./pages/ErrorPage.tsx";
 import ProductDetail from "./pages/ProductDetail.tsx";
 import SignUp from "./pages/SignUp.tsx";
 import Cart from "./pages/Cart.tsx"
-import AdminDashboard from "./pages/AdminDashboard.tsx";
+import CreateProduct from "./components/admin_dashboard/products/CreateProduct.tsx"
+import ProductDashboard from "./components/admin_dashboard/products/ProductDashboard.tsx";
+import UserDashboard from "./components/admin_dashboard/users/UserDashboard.tsx";
+import OrderDashboard from "./components/admin_dashboard/orders/OrderDashboard.tsx";
 
 const App = () => {
     return (
@@ -26,7 +29,10 @@ const App = () => {
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
 
-                    <Route path='/admin-dashboard' element={<AdminDashboard/>}/>
+                    <Route path="/admin-dashboard/products" element={<ProductDashboard/>}/>
+                    <Route path="/admin-dashboard/users" element={<UserDashboard/>}/>
+                    <Route path="/admin-dashboard/orders" element={<OrderDashboard/>}/>
+                    <Route path="/admin-dashboard/products/create-product" element={<CreateProduct/>} />
 
                     <Route path="*" element={<ErrorPage/>}/>
                 </Routes>

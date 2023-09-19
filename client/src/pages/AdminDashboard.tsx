@@ -1,11 +1,11 @@
-import DashboardMain from "../components/admin_dashboard/DashboardMain.tsx";
+import MainDashboard from "../components/admin_dashboard/MainDashboard.tsx";
 import DashboardNavbar from "../components/admin_dashboard/DashboardNavbar.tsx";
 
 const AdminDashboard = () => {
     return (
         <>
             <DashboardNavbar/>
-            <DashboardMain/>
+            <MainDashboard/>
         </>
     );
 };

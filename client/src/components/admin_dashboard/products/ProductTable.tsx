@@ -1,18 +1,20 @@
-const DashboardTable = () => {
+import Pagination from "../../product_list/Pagination.tsx";
 
-    const id = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const ProductTable = () => {
+
+    const ids = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
     return (
         <main>
 
-            <div className="">
-                <table className="table table-zebra table-pin-rows table-lg">
+            <div className="px-12">
+                <table className="table table-zebra table-lg">
                     {/* head */}
                     <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Job</th>
-                        <th>Favorite Color</th>
+                        <th>Title</th>
+                        <th>Category / Company </th>
+                        <th></th>
                         <th></th>
                     </tr>
                     </thead>
@@ -21,7 +23,7 @@ const DashboardTable = () => {
                     <tbody>
 
                     {
-                        id.map(i => (
+                        ids.map(i => (
                             <tr key={i}>
                                 <td>
                                     <div className="flex items-center space-x-3">
@@ -33,20 +35,22 @@ const DashboardTable = () => {
                                             </div>
                                         </div>
                                         <div>
-                                            <div className="font-bold">Hart Hagerty</div>
-                                            <div className="text-sm opacity-50">United States</div>
+                                            <div className="font-bold">Title</div>
+                                            <div className="text-sm opacity-50">#6849398027028</div>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                    Zemlak, Daniel and Leannon
+                                    Category
                                     <br/>
-                                    <span className="badge badge-ghost badge-sm">Desktop Support Technician</span>
+                                    <span className="badge badge-ghost badge-sm">Company</span>
                                 </td>
-                                <td>Purple</td>
-                                <th>
-                                    <button className="btn btn-ghost btn-xs">details</button>
-                                </th>
+                                <td>
+                                    <button className="btn btn-outline btn-primary btn-sm">Modify</button>
+                                </td>
+                                <td>
+                                    <button className="btn btn-outline btn-error btn-sm">Delete</button>
+                                </td>
                             </tr>
                         ))
                     }
@@ -57,8 +61,10 @@ const DashboardTable = () => {
                 </table>
             </div>
 
+            <Pagination/>
+
         </main>
     )
 }
 
-export default DashboardTable;
+export default ProductTable;
