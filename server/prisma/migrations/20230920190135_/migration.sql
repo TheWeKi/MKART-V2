@@ -8,19 +8,22 @@
 
 */
 -- AlterTable
-ALTER TABLE "Product" ADD COLUMN     "category" TEXT NOT NULL,
+ALTER TABLE "Product"
+    ADD COLUMN "category" TEXT NOT NULL,
 ADD COLUMN     "company" TEXT NOT NULL,
 ADD COLUMN     "image" TEXT NOT NULL,
-DROP COLUMN "price",
+DROP
+COLUMN "price",
 ADD COLUMN     "price" DOUBLE PRECISION NOT NULL;
 
 -- CreateTable
-CREATE TABLE "User" (
-    "id" TEXT NOT NULL,
-    "username" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
-    "roleAdmin" BOOLEAN NOT NULL DEFAULT false,
+CREATE TABLE "User"
+(
+    "id"        TEXT         NOT NULL,
+    "username"  TEXT         NOT NULL,
+    "email"     TEXT         NOT NULL,
+    "password"  TEXT         NOT NULL,
+    "roleAdmin" BOOLEAN      NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -28,19 +31,21 @@ CREATE TABLE "User" (
 );
 
 -- CreateTable
-CREATE TABLE "Order" (
-    "id" TEXT NOT NULL,
-    "deliveryAddress" TEXT NOT NULL,
-    "isDelivered" BOOLEAN NOT NULL DEFAULT false,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
+CREATE TABLE "Order"
+(
+    "id"              TEXT         NOT NULL,
+    "deliveryAddress" TEXT         NOT NULL,
+    "isDelivered"     BOOLEAN      NOT NULL DEFAULT false,
+    "createdAt"       TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt"       TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Cart" (
-    "id" TEXT NOT NULL,
+CREATE TABLE "Cart"
+(
+    "id"        TEXT         NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
