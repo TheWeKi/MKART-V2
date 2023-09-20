@@ -6,7 +6,7 @@ const schema = z.object({
     title: z.string().nonempty({message: 'Title is required'}),
     company: z.string().nonempty({message: 'Company is required'}),
     category: z.string().nonempty({message: 'Category is required'}),
-    price: z.number().min(0, { message: 'Price should be greater than 0' }),
+    price: z.number().min(0, {message: 'Price should be greater than 0'}),
     description: z.string().nonempty({message: 'Description is required'}),
 });
 
@@ -41,7 +41,8 @@ const CreateProductForm = () => {
                                 <span className="label-text text-lg">Company</span>
                                 {errors.company && <p className={"px-5"}>{errors.company.message}</p>}
                             </label>
-                            <input {...register('company')} type="text" placeholder="company" className="input input-bordered"/>
+                            <input {...register('company')} type="text" placeholder="company"
+                                   className="input input-bordered"/>
 
                         </div>
                         <div className="form-control">
@@ -49,7 +50,8 @@ const CreateProductForm = () => {
                                 <span className="label-text text-lg">Category</span>
                                 {errors.category && <p className={"px-5"}>{errors.category.message}</p>}
                             </label>
-                            <input {...register('category')} type="text" placeholder="category" className="input input-bordered"/>
+                            <input {...register('category')} type="text" placeholder="category"
+                                   className="input input-bordered"/>
 
                         </div>
                         <div className="form-control">
@@ -57,7 +59,8 @@ const CreateProductForm = () => {
                                 <span className="label-text text-lg">Price</span>
                                 {errors.price && <p className={"px-5"}>{errors.price.message}</p>}
                             </label>
-                            <input {...register('price', { setValueAs: value => parseFloat(value) })} type="number" placeholder="price" className="input input-bordered"/>
+                            <input {...register('price', {setValueAs: value => parseFloat(value)})} type="number"
+                                   placeholder="price" className="input input-bordered"/>
 
                         </div>
 
@@ -73,7 +76,8 @@ const CreateProductForm = () => {
                                 <span className="label-text text-lg">Description</span>
                                 {errors.description && <p className={"px-5"}>{errors.description.message}</p>}
                             </label>
-                            <textarea {...register('description')} className="textarea textarea-bordered" placeholder="description"></textarea>
+                            <textarea {...register('description')} className="textarea textarea-bordered"
+                                      placeholder="description"></textarea>
 
                         </div>
 
