@@ -64,12 +64,12 @@ const CreateProductForm = () => {
 
                         </div>
 
-                        {/*<div className="form-control">*/}
-                        {/*    <label className="label">*/}
-                        {/*        <span className="label-text text-lg">Image</span>*/}
-                        {/*    </label>*/}
-                        {/*    <input type="file" className="file-input file-input-bordered"/>*/}
-                        {/*</div>*/}
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text text-lg">Image</span>
+                            </label>
+                            <input type="file" className="file-input file-input-bordered"/>
+                        </div>
 
                         <div className="form-control">
                             <label className="label">
