@@ -1,6 +1,7 @@
 import z from 'zod';
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
+import { useState } from 'react';
 //ValidationSchema
 const schema = z.object({
     title: z.string().nonempty({message: 'Title is required'}),
@@ -8,6 +9,7 @@ const schema = z.object({
     category: z.string().nonempty({message: 'Category is required'}),
     price: z.number().min(0, {message: 'Price should be greater than 0'}),
     description: z.string().nonempty({message: 'Description is required'}),
+    image: z.instanceof(FileList).refine(file => file[0].type.startsWith('image'), {message: 'Only Image Is Accepted'}),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -34,7 +36,6 @@ const CreateProductForm = () => {
                             </label>
                             <input {...register('title')} type="text" placeholder="title"
                                    className="input input-bordered"/>
-
                         </div>
                         <div className="form-control">
                             <label className="label">
@@ -43,7 +44,6 @@ const CreateProductForm = () => {
                             </label>
                             <input {...register('company')} type="text" placeholder="company"
                                    className="input input-bordered"/>
-
                         </div>
                         <div className="form-control">
                             <label className="label">
@@ -67,8 +67,9 @@ const CreateProductForm = () => {
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text text-lg">Image</span>
+                                {errors.image && <p className={"px-5"}>{errors.image.message}</p>}
                             </label>
-                            <input type="file" className="file-input file-input-bordered"/>
+                            <input {...register('image')} type="file" className="file-input file-input-bordered"/>
                         </div>
 
                         <div className="form-control">
