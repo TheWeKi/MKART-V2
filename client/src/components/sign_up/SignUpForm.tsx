@@ -1,6 +1,7 @@
-import z from "zod";
+import { z } from "zod";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
+
 
 const schema = z.object({
     username: z.string().nonempty({message: 'Username is Required'}).min(3, {message: 'Username must contain 3 chars'}),
