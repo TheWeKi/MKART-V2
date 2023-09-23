@@ -3,9 +3,9 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 
 const schema = z.object({
-    username: z.string().nonempty({message: 'Username is Required'}).min(4, {message: 'Enter a valid username'}),
-    email: z.string().nonempty({message: 'Email is Required'}).email({message: "Enter a Valid Email"}),
-    password: z.string().nonempty({message: 'Password is required'}).min(8, {message: 'Password too short'}),
+    username: z.string().nonempty({message: 'Username is Required'}).min(3, {message: 'Username must contain 3 chars'}),
+    email: z.string().email({message: "Enter a Valid Email"}).nonempty({message: 'Email is Required'}),
+    password: z.string().nonempty({message: 'Password is required'}).min(6, {message: 'Password too short'}),
 });
 
 type FormData = z.infer<typeof schema>;
