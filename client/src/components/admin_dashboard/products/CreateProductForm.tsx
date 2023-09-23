@@ -1,7 +1,6 @@
 import z from 'zod';
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import { useState } from 'react';
 //ValidationSchema
 const schema = z.object({
     title: z.string().nonempty({message: 'Title is required'}),
