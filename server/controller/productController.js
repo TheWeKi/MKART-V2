@@ -25,4 +25,27 @@ const addProduct = async (req, res) => {
         .json(newProduct)
 }
 
-export {getProducts, getProductById, addProduct}
+const deleteProductById = async (req, res) => {
+    const {id} = req.params;
+    await prisma.product.delete({
+        where: {
+            id,
+        }
+    })
+    res.json({
+        message: `Product [${id}] Deleted Successfully`
+    })
+}
+
+const updateProductById = async (req, res) => {
+    const {id} = req.params
+    const updatedProduct = await prisma.product.update({
+        data: req.data,
+        where: {
+            id,
+        }
+    })
+    res.json(updatedProduct)
+}
+
+export {getProducts, getProductById, addProduct, updateProductById, deleteProductById}
