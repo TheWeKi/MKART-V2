@@ -1,24 +1,17 @@
 import prisma from "../database/prismaClient.js";
 
 const createUser = async (req, res) => {
-    const userData = req.body;
-    await prisma.user.create(userData);
+    const user = await prisma.user.create({
+        data: req.body,
+    });
     res
         .status(201)
-        .json({
-            success: "true",
-            message: "User Created Successfully"
-        })
+        .json(user)
 }
 
 const getUsers = async (req, res) => {
     const users = await prisma.user.findMany();
-
-    if (!users) {
-    }
-
     res.json(users);
-
 }
 
 
