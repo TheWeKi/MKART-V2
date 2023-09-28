@@ -1,15 +1,15 @@
 import express from "express";
-import {createCart, getCartById} from "../controller/cartController.js";
-import {isAuthenticated, isAuthorized} from "../middleware/isAuthenticated.js";
+import {addToCart, getCart} from "../controller/cartController.js";
+import {isAuthenticated} from "../middleware/isAuthenticated.js";
 
 const cartRouter = express.Router();
 
 cartRouter
     .route("/")
-    .post(isAuthenticated, isAuthorized(true), createCart);
+    .post(isAuthenticated, addToCart);
 
 cartRouter
-    .route("/:id")
-    .get(isAuthenticated, isAuthorized(true), getCartById)
+    .route("/")
+    .get(isAuthenticated, getCart);
 
 export default cartRouter;

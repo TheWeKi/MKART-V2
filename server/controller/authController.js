@@ -2,12 +2,16 @@ import prisma from "../database/prismaClient.js";
 import {dispatchJsonToken} from "../utils/dispatchToken.js";
 
 export const signUp = async (req, res) => {
-    const user = await prisma.user.create({
-        data: req.body,
-    });
-    res
-        .status(201)
-        .json(user)
+    try {
+        const user = await prisma.user.create({
+            data: req.body,
+        });
+        res
+            .status(201)
+            .json(user)
+    } catch (e) {
+        console.log(e);
+    }
 }
 export const login = async (req, res, next) => {
     try {
@@ -22,7 +26,7 @@ export const login = async (req, res, next) => {
         }
 
         dispatchJsonToken(user, 201, res);
-    } catch (error) {
-        next(error);
+    } catch (e) {
+        console.log(e);
     }
 };
