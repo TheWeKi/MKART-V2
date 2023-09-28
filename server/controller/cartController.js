@@ -1,15 +1,13 @@
 import prisma from "../database/prismaClient.js";
 
-const getCartByUserId = async (req, res) => {
-    const {userId} = req.params;
-    const cart = await prisma.cart.findFirst({
-        where: {
-            userId,
-        }
+const createCart = async (req, res) => {
+    const cart = await prisma.cart.create({
+        data: req.body,
     });
-    res.json(cart);
+    res
+        .status(201)
+        .json(cart);
 }
-
 
 const getCartById = async (req, res) => {
     const {id} = req.params;
@@ -17,15 +15,8 @@ const getCartById = async (req, res) => {
         where: {
             id,
         }
-    });
-    res.json(cart);
+    })
+    res.json(cart)
 }
 
-const createCart = async (req, res) => {
-    const newCart = await prisma.cart.create({
-        data: req.body,
-    });
-    res
-        .status(201)
-        .json(newCart);
-}
+export {createCart, getCartById}
