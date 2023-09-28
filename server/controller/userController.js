@@ -1,13 +1,5 @@
 import prisma from "../database/prismaClient.js";
 
-const createUser = async (req, res) => {
-    const user = await prisma.user.create({
-        data: req.body,
-    });
-    res
-        .status(201)
-        .json(user)
-}
 
 const getUsers = async (req, res) => {
     const users = await prisma.user.findMany();
@@ -48,4 +40,4 @@ const updateUserById = async (req, res) => {
     res.json(updatedUser)
 }
 
-export {getUsers, getUserById, updateUserById, deleteUserById, createUser}
+export {getUsers, getUserById, updateUserById, deleteUserById}

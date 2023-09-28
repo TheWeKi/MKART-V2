@@ -6,12 +6,13 @@ import {
     getProducts,
     updateProductById
 } from "../controller/productController.js";
+import {isAuthenticated, isAuthorized} from "../middleware/isAuthenticated.js";
 
 const productRouter = Router();
 
 productRouter
     .route('/')
-    .get(getProducts)
+    .get(isAuthenticated,isAuthorized(true),getProducts)
     .post(addProduct);
 
 productRouter
