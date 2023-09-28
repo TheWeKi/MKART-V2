@@ -12,17 +12,17 @@ export const signUp = async (req, res) => {
 export const login = async (req, res, next) => {
     try {
         const {email, password} = req.body;
-        const user = await prisma.user.findFirst({where:{email:email}});
-        if(!user){
+        const user = await prisma.user.findFirst({where: {email: email}});
+        if (!user) {
             return console.log("No user")
         }
-        const isMatch= password=== user.password;
-        if(!isMatch){
+        const isMatch = password === user.password;
+        if (!isMatch) {
             return console.log("Invalid");
         }
 
-        dispatchJsonToken(user,201,res);
-    }catch (error){
+        dispatchJsonToken(user, 201, res);
+    } catch (error) {
         next(error);
     }
 };

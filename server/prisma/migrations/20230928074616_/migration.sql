@@ -10,50 +10,60 @@
 
 */
 -- AlterTable
-ALTER TABLE "Cart" ADD COLUMN     "userId" TEXT NOT NULL;
+ALTER TABLE "Cart"
+    ADD COLUMN "userId" TEXT NOT NULL;
 
 -- AlterTable
-ALTER TABLE "Order" ADD COLUMN     "cartId" TEXT NOT NULL,
+ALTER TABLE "Order"
+    ADD COLUMN "cartId" TEXT NOT NULL,
 ADD COLUMN     "userId" TEXT NOT NULL;
 
 -- AlterTable
-ALTER TABLE "Product" ADD COLUMN     "creatorId" TEXT NOT NULL;
+ALTER TABLE "Product"
+    ADD COLUMN "creatorId" TEXT NOT NULL;
 
 -- CreateTable
-CREATE TABLE "CartItem" (
-    "id" TEXT NOT NULL,
+CREATE TABLE "CartItem"
+(
+    "id"        TEXT         NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "cartId" TEXT NOT NULL,
-    "productId" TEXT NOT NULL,
-    "quantity" INTEGER NOT NULL,
+    "cartId"    TEXT         NOT NULL,
+    "productId" TEXT         NOT NULL,
+    "quantity"  INTEGER      NOT NULL,
 
     CONSTRAINT "CartItem_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "CartItem_cartId_key" ON "CartItem"("cartId");
+CREATE UNIQUE INDEX "CartItem_cartId_key" ON "CartItem" ("cartId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Cart_userId_key" ON "Cart"("userId");
+CREATE UNIQUE INDEX "Cart_userId_key" ON "Cart" ("userId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Order_cartId_key" ON "Order"("cartId");
+CREATE UNIQUE INDEX "Order_cartId_key" ON "Order" ("cartId");
 
 -- AddForeignKey
-ALTER TABLE "Product" ADD CONSTRAINT "Product_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Product"
+    ADD CONSTRAINT "Product_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Cart" ADD CONSTRAINT "Cart_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Cart"
+    ADD CONSTRAINT "Cart_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "CartItem" ADD CONSTRAINT "CartItem_cartId_fkey" FOREIGN KEY ("cartId") REFERENCES "Cart"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "CartItem"
+    ADD CONSTRAINT "CartItem_cartId_fkey" FOREIGN KEY ("cartId") REFERENCES "Cart" ("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "CartItem" ADD CONSTRAINT "CartItem_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "CartItem"
+    ADD CONSTRAINT "CartItem_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product" ("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Order" ADD CONSTRAINT "Order_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Order"
+    ADD CONSTRAINT "Order_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Order" ADD CONSTRAINT "Order_cartId_fkey" FOREIGN KEY ("cartId") REFERENCES "Cart"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Order"
+    ADD CONSTRAINT "Order_cartId_fkey" FOREIGN KEY ("cartId") REFERENCES "Cart" ("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -1,8 +1,11 @@
 import prisma from "../database/prismaClient.js";
 
 const createCart = async (req, res) => {
+
+    const data = {...req.body, userId: req.user.id}
+
     const cart = await prisma.cart.create({
-        data: req.body,
+        data,
     });
     res
         .status(201)

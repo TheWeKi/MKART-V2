@@ -12,13 +12,13 @@ const productRouter = Router();
 
 productRouter
     .route('/')
-    .get(isAuthenticated,isAuthorized(true),getProducts)
-    .post(addProduct);
+    .get(getProducts)
+    .post(isAuthenticated, isAuthorized(true), addProduct);
 
 productRouter
     .route('/:id')
     .get(getProductById)
-    .put(updateProductById)
-    .delete(deleteProductById);
+    .put(isAuthenticated, isAuthorized(true), updateProductById)
+    .delete(isAuthenticated, isAuthorized(true), deleteProductById);
 
 export default productRouter;
