@@ -1,6 +1,7 @@
 import prisma from "../database/prismaClient.js";
+import Errorhandler from "../utils/errorhandler.js";
 
-const addToCart = async (req, res) => {
+const addToCart = async (req, res ,next) => {
     try {
         const {prodId, quantity, price} = req.body;
         const userId = req.user.id;
@@ -13,7 +14,7 @@ const addToCart = async (req, res) => {
         });
 
         if (!user || !product) {
-            return console.log("User or Product Not Found");
+            return next(new Errorhandler(404,"Resource Not Found"));
         }
 
         let cart = await prisma.cart.findUnique({
@@ -60,72 +61,59 @@ const addToCart = async (req, res) => {
                 message: 'Product added to cart successfully'
             });
     } catch (e) {
-        console.log(e);
+        next(e)
     }
 }
 
-const getCart = async (req, res) => {
+
+
+// { @get Total Product Price With Final Amount }
+
+const getCart = async (req, res ,next) => {
     try {
         const cart = await prisma.cart.findFirst({
             where: {
                 userId: req.user.id,
             }
-        })
+        });
+
+        if (!cart) {
+            return res.json({
+                cartItems: [],
+                totalPrice: 0,
+            });
+        }
 
         const cartItems = await prisma.cartItem.findMany({
             where: {
                 cartId: cart.id,
+            },
+            include: {
+                product: true,
             }
-        })
-        res.json(cartItems)
-    } catch (e) {
-        console.log(e);
-    }
-}
-
-// { @get Total Product Price With Final Amount }
-
-const getTotalProductPriceWithFinalAmount = async (req, res) => {
-    const cart = await prisma.cart.findFirst({
-        where: {
-            userId: req.user.id,
-        }
-    });
-
-    if (!cart) {
-        return res.json({
-            cartItems: [],
-            totalPrice: 0,
         });
+
+        let totalPrice = 0;
+
+        const cartItemsWithTotalPrice = cartItems.map((cartItem) => {
+            const {productId, quantity, product} = cartItem;
+            const totalItemPrice = quantity * product.price;
+            totalPrice += totalItemPrice;
+
+            return {
+                prodId: productId,
+                quantity,
+                totalItemPrice,
+            };
+        });
+
+        res.json({
+            cartItems: cartItemsWithTotalPrice,
+            totalPrice,
+        });
+    } catch (e) {
+        next(e);
     }
-
-    const cartItems = await prisma.cartItem.findMany({
-        where: {
-            cartId: cart.id,
-        },
-        include: {
-            product: true,
-        }
-    });
-
-    let totalPrice = 0;
-
-    const cartItemsWithTotalPrice = cartItems.map((cartItem) => {
-        const {productId, quantity, product} = cartItem;
-        const totalItemPrice = quantity * product.price;
-        totalPrice += totalItemPrice;
-
-        return {
-            prodId: productId,
-            quantity,
-            totalItemPrice,
-        };
-    });
-
-    res.json({
-        cartItems: cartItemsWithTotalPrice,
-        totalPrice,
-    });
 }
 
 export {addToCart, getCart}
