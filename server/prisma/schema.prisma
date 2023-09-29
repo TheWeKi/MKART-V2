@@ -59,6 +59,7 @@ model CartItem {
 model Order {
   id              String   @id @default(uuid())
   deliveryAddress String
+  totalPrice      Float
   isDelivered     Boolean  @default(false)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
