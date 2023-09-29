@@ -1,6 +1,7 @@
 import prisma from "../database/prismaClient.js";
 import jwt from "jsonwebtoken";
 import Errorhandler from "../utils/errorhandler.js";
+import fs from "fs";
 
 export const isAuthenticated = async (req, res, next) => {
     try {
@@ -8,7 +9,10 @@ export const isAuthenticated = async (req, res, next) => {
         if (!token) {
             return next(new Errorhandler(400,"Login Required"));
         }
-        const decodedData = await jwt.verify(token, process.env.JWT_SECRET_KEY)
+        const publicKEY  = fs.readFileSync('./public.key', 'utf8');
+        const decodedData = await jwt.verify(token, publicKEY, {
+            algorithms: ["RS256"],
+        });
 
         req.user = await prisma.user.findFirst({
             where:
