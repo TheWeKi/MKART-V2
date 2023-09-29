@@ -20,7 +20,9 @@ export const isAuthenticated = async (req, res, next) => {
                     id: decodedData.id
                 }
         });
-
+        if (!token) {
+            return next(new Errorhandler(400, "Login Required"));
+        }
         next();
     } catch (error) {
         next(error);

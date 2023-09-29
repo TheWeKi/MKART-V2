@@ -2,12 +2,13 @@ import prisma from "../database/prismaClient.js";
 
 const getOrders = async (req, res, next) => {
     try {
-        const orders = await prisma.order.findFirst({
+
+        const allOrders = await prisma.order.findMany({
             where: {
                 userId: req.user.id,
             }
         });
-        res.json(orders);
+        res.json(allOrders);
     } catch (e) {
         next(e);
     }
@@ -16,21 +17,7 @@ const getOrders = async (req, res, next) => {
 const createOrder = async (req, res, next) => {
     try {
         const userId = req.user.id;
-        const {deliveryAddress, totalPrice} = req.body;
-
-        let order = await prisma.order.findFirst({
-            where: {
-                userId,
-            }
-        });
-
-        if (!order) {
-            order = await prisma.order.create({
-                data: {
-                    userId,
-                }
-            });
-        }
+        const {deliveryAddress} = req.body;
 
         const cart = await prisma.cart.findFirst({
             where: {
@@ -46,11 +33,11 @@ const createOrder = async (req, res, next) => {
                 product: true,
             }
         });
-
+        let totalPrice= 0;
         const cartItemsWithTotalPrice = cartItems.map((cartItem) => {
             const {productId, quantity, product} = cartItem;
             const totalItemPrice = quantity * product.price;
-
+            totalPrice = totalItemPrice + totalPrice;
             return {
                 prodId: productId,
                 quantity,
@@ -58,19 +45,21 @@ const createOrder = async (req, res, next) => {
             };
         });
 
-        const cartToAddInOrder = order.cart ? order.cart : [];
+        const cartToAddInOrder = [];
         cartToAddInOrder.push(...cartItemsWithTotalPrice);
 
-        const orderItem = await prisma.orderItem.create({
+        const orderItem = await prisma.order.create({
             data: {
-                deliveryAddress,
-                totalPrice,
-                orderId: order.id,
+                deliveryAddress:deliveryAddress,
+                totalPrice:totalPrice,
                 cart: cartToAddInOrder,
+                userId:req.user.id,
             }
-        })
+        });
 
         res.status(201).json(orderItem);
+
+        await prisma.cartItem.deleteMany({where:{cartId:cart.id}});
 
     } catch (e) {
         next(e);
