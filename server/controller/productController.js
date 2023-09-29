@@ -1,15 +1,19 @@
 import prisma from "../database/prismaClient.js";
+import Errorhandler from "../utils/errorhandler.js";
 
-const getProducts = async (req, res) => {
+const getProducts = async (req, res, next) => {
     try {
         const products = await prisma.product.findMany();
+        if(!products){
+            return next(new Errorhandler(404,"Products Not Founds"))
+        }
         res.json(products)
     } catch (e) {
-        console.log(e);
+        next(e);
     }
 }
 
-const getProductById = async (req, res) => {
+const getProductById = async (req, res ,next) => {
     try {
         const {id} = req.params;
         const product = await prisma.product.findFirst({
@@ -17,13 +21,16 @@ const getProductById = async (req, res) => {
                 id,
             }
         })
+        if(!product){
+            return next(new Errorhandler(404,"Product Not Founds"))
+        }
         res.json(product)
     } catch (e) {
-        console.log(e);
+        next(e);
     }
 }
 
-const addProduct = async (req, res) => {
+const addProduct = async (req, res, next) => {
     try {
         const {title, category, company, image, description, price} = req.body;
         const creator = req.user.id;
@@ -43,11 +50,11 @@ const addProduct = async (req, res) => {
             .status(201)
             .json(newProduct)
     } catch (e) {
-        console.log(e);
+        next(e);
     }
 }
 
-const deleteProductById = async (req, res) => {
+const deleteProductById = async (req, res, next) => {
     try {
         const {id} = req.params;
         await prisma.product.delete({
@@ -59,11 +66,11 @@ const deleteProductById = async (req, res) => {
             message: `Product [${id}] Deleted Successfully`
         })
     } catch (e) {
-        console.log(e);
+        next(e);
     }
 }
 
-const updateProductById = async (req, res) => {
+const updateProductById = async (req, res ,next) => {
     try {
         const {id} = req.params
         const updatedProduct = await prisma.product.update({
@@ -74,7 +81,7 @@ const updateProductById = async (req, res) => {
         })
         res.json(updatedProduct)
     } catch (e) {
-        console.log(e);
+        next(e);
     }
 }
 

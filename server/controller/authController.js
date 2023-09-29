@@ -1,7 +1,8 @@
 import prisma from "../database/prismaClient.js";
 import {dispatchJsonToken} from "../utils/dispatchToken.js";
+import Errorhandler from "../utils/errorhandler.js";
 
-export const signUp = async (req, res) => {
+export const signUp = async (req, res, next) => {
     try {
         const user = await prisma.user.create({
             data: req.body,
@@ -10,7 +11,7 @@ export const signUp = async (req, res) => {
             .status(201)
             .json(user)
     } catch (e) {
-        console.log(e);
+        next(e);
     }
 }
 export const login = async (req, res, next) => {
@@ -18,15 +19,15 @@ export const login = async (req, res, next) => {
         const {email, password} = req.body;
         const user = await prisma.user.findFirst({where: {email: email}});
         if (!user) {
-            return console.log("No user")
+            return next(new Errorhandler(404,"User Not Found"));
         }
         const isMatch = password === user.password;
         if (!isMatch) {
-            return console.log("Invalid");
+            return next(new Errorhandler(400,"Invalid Credentials"))
         }
 
         dispatchJsonToken(user, 201, res);
     } catch (e) {
-        console.log(e);
+        next(e);
     }
 };

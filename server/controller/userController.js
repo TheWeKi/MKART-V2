@@ -1,31 +1,38 @@
 import prisma from "../database/prismaClient.js";
+import Errorhandler from "../utils/errorhandler.js";
 
 
-const getUsers = async (req, res) => {
+const getUsers = async (req, res ,next) => {
     try {
         const users = await prisma.user.findMany();
+        if(!users){
+            return  next(new Errorhandler(404,"User Not Found"));
+        }
         res.json(users);
     } catch (e) {
-        console.log(e);
+        next(e);
     }
 }
 
 
-const getUserById = async (req, res) => {
+const getUserById = async (req, res, next) => {
     try {
-        const {id} = req.params
+        const {id} = req.params;
         const user = await prisma.user.findFirst({
             where: {
                 id,
             }
         })
+        if(!user){
+            return  next(new Errorhandler(404,"User Not Found"));
+        }
         res.json(user)
     } catch (e) {
-        console.log(e);
+        next(e);
     }
 }
 
-const deleteUserById = async (req, res) => {
+const deleteUserById = async (req, res, next) => {
     try {
         const {id} = req.params
         await prisma.user.delete({
@@ -37,7 +44,7 @@ const deleteUserById = async (req, res) => {
             message: `User [${id}] Deleted Successfully`
         })
     } catch (e) {
-        console.log(e);
+        next(e);
     }
 }
 

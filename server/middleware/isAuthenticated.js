@@ -1,11 +1,12 @@
 import prisma from "../database/prismaClient.js";
 import jwt from "jsonwebtoken";
+import Errorhandler from "../utils/errorhandler.js";
 
 export const isAuthenticated = async (req, res, next) => {
     try {
         const {token} = req.cookies;
         if (!token) {
-            return console.log("No Token")
+            return next(new Errorhandler(400,"Login Required"));
         }
         const decodedData = await jwt.verify(token, process.env.JWT_SECRET_KEY)
 
@@ -28,7 +29,7 @@ export const isAuthorized = (role) => {
     return (req, res, next) => {
         try {
             if (role.toString() !== (req.user.roleAdmin.toString())) {
-                return console.log("Not Authorized")
+                return next(new Errorhandler(400,"Not Authorized"))
             }
             next();
         } catch (error) {

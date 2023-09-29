@@ -5,6 +5,7 @@ import userRouter from "./routes/userRoutes.js";
 import cartRouter from "./routes/cartRoutes.js";
 import authRouter from "./routes/authRoutes.js";
 import cookieParser from "cookie-parser";
+import {errorMiddleware} from "./middleware/error.js";
 
 const app = express();
 
@@ -23,5 +24,6 @@ app.get("/", (req, res) => {
         status: "running",
     });
 });
+app.use(errorMiddleware);
 
 export default app;
