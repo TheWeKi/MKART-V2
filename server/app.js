@@ -6,6 +6,7 @@ import cartRouter from "./routes/cartRoutes.js";
 import authRouter from "./routes/authRoutes.js";
 import cookieParser from "cookie-parser";
 import {errorMiddleware} from "./middleware/error.js";
+import orderRouter from "./routes/orderRoutes.js";
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use("/api/v1", authRouter);
 app.use("/api/v1/products", productRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/carts", cartRouter);
+app.use("/api/v1/orders", orderRouter);
 
 app.get("/", (req, res) => {
     res.json({
