@@ -19,11 +19,11 @@ export const login = async (req, res, next) => {
         const {email, password} = req.body;
         const user = await prisma.user.findFirst({where: {email: email}});
         if (!user) {
-            return next(new Errorhandler(404,"User Not Found"));
+            return next(new Errorhandler(404, "User Not Found"));
         }
         const isMatch = password === user.password;
         if (!isMatch) {
-            return next(new Errorhandler(400,"Invalid Credentials"))
+            return next(new Errorhandler(400, "Invalid Credentials"))
         }
 
         dispatchJsonToken(user, 201, res);

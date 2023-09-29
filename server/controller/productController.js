@@ -4,8 +4,8 @@ import Errorhandler from "../utils/errorhandler.js";
 const getProducts = async (req, res, next) => {
     try {
         const products = await prisma.product.findMany();
-        if(!products){
-            return next(new Errorhandler(404,"Products Not Founds"))
+        if (!products) {
+            return next(new Errorhandler(404, "Products Not Founds"))
         }
         res.json(products)
     } catch (e) {
@@ -13,7 +13,7 @@ const getProducts = async (req, res, next) => {
     }
 }
 
-const getProductById = async (req, res ,next) => {
+const getProductById = async (req, res, next) => {
     try {
         const {id} = req.params;
         const product = await prisma.product.findFirst({
@@ -21,8 +21,8 @@ const getProductById = async (req, res ,next) => {
                 id,
             }
         })
-        if(!product){
-            return next(new Errorhandler(404,"Product Not Founds"))
+        if (!product) {
+            return next(new Errorhandler(404, "Product Not Founds"))
         }
         res.json(product)
     } catch (e) {
@@ -70,7 +70,7 @@ const deleteProductById = async (req, res, next) => {
     }
 }
 
-const updateProductById = async (req, res ,next) => {
+const updateProductById = async (req, res, next) => {
     try {
         const {id} = req.params
         const updatedProduct = await prisma.product.update({

@@ -1,7 +1,7 @@
 import prisma from "../database/prismaClient.js";
 import Errorhandler from "../utils/errorhandler.js";
 
-const addToCart = async (req, res ,next) => {
+const addToCart = async (req, res, next) => {
     try {
         const {prodId, quantity, price} = req.body;
         const userId = req.user.id;
@@ -14,7 +14,7 @@ const addToCart = async (req, res ,next) => {
         });
 
         if (!user || !product) {
-            return next(new Errorhandler(404,"Resource Not Found"));
+            return next(new Errorhandler(404, "Resource Not Found"));
         }
 
         let cart = await prisma.cart.findUnique({
@@ -66,10 +66,9 @@ const addToCart = async (req, res ,next) => {
 }
 
 
-
 // { @get Total Product Price With Final Amount }
 
-const getCart = async (req, res ,next) => {
+const getCart = async (req, res, next) => {
     try {
         const cart = await prisma.cart.findFirst({
             where: {
@@ -93,12 +92,9 @@ const getCart = async (req, res ,next) => {
             }
         });
 
-        let totalPrice = 0;
-
         const cartItemsWithTotalPrice = cartItems.map((cartItem) => {
             const {productId, quantity, product} = cartItem;
             const totalItemPrice = quantity * product.price;
-            totalPrice += totalItemPrice;
 
             return {
                 prodId: productId,
@@ -107,10 +103,7 @@ const getCart = async (req, res ,next) => {
             };
         });
 
-        res.json({
-            cartItems: cartItemsWithTotalPrice,
-            totalPrice,
-        });
+        res.json(cartItemsWithTotalPrice);
     } catch (e) {
         next(e);
     }

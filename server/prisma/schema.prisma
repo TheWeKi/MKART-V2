@@ -31,7 +31,7 @@ model User {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   products  Product[]
-  orders    Order[]
+  orders    Order?
   Cart      Cart?
 }
 
@@ -42,7 +42,6 @@ model Cart {
   user      User       @relation(fields: [userId], references: [id])
   userId    String     @unique
   cartItems CartItem[]
-  order     Order?
 }
 
 model CartItem {
@@ -59,7 +58,11 @@ model CartItem {
 model OrderItem {
   id String @id @default(uuid())
 
-  cart Json?
+  cart            Json?
+  deliveryAddress String
+  totalPrice      Float
+
+  isDelivered Boolean @default(false)
 
   order   Order  @relation(fields: [orderId], references: [id])
   orderId String
@@ -69,17 +72,12 @@ model OrderItem {
 }
 
 model Order {
-  id              String      @id @default(uuid())
-  deliveryAddress String
-  totalPrice      Float
-  isDelivered     Boolean     @default(false)
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
-  user            User        @relation(fields: [userId], references: [id])
-  userId          String
-  cart            Cart        @relation(fields: [cartId], references: [id])
-  cartId          String      @unique
-  OrderItem       OrderItem[]
+  id        String      @id @default(uuid())
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  user      User        @relation(fields: [userId], references: [id])
+  userId    String      @unique
+  OrderItem OrderItem[]
 }
 
 // npm i -D prisma, npm install @prisma/client

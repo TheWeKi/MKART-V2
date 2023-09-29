@@ -2,11 +2,11 @@ import prisma from "../database/prismaClient.js";
 import Errorhandler from "../utils/errorhandler.js";
 
 
-const getUsers = async (req, res ,next) => {
+const getUsers = async (req, res, next) => {
     try {
         const users = await prisma.user.findMany();
-        if(!users){
-            return  next(new Errorhandler(404,"User Not Found"));
+        if (!users) {
+            return next(new Errorhandler(404, "User Not Found"));
         }
         res.json(users);
     } catch (e) {
@@ -23,8 +23,8 @@ const getUserById = async (req, res, next) => {
                 id,
             }
         })
-        if(!user){
-            return  next(new Errorhandler(404,"User Not Found"));
+        if (!user) {
+            return next(new Errorhandler(404, "User Not Found"));
         }
         res.json(user)
     } catch (e) {

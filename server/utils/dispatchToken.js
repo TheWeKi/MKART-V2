@@ -2,10 +2,10 @@ import jwt from "jsonwebtoken";
 import fs from "fs";
 
 export const dispatchJsonToken = (user, statusCode, res) => {
-    const privateKEY  = fs.readFileSync('./private.key', 'utf8');
+    const privateKEY = fs.readFileSync('./private.key', 'utf8');
 
 
-    const token = jwt.sign({ id: user.id }, privateKEY, {
+    const token = jwt.sign({id: user.id}, privateKEY, {
         algorithm: "RS256",
         expiresIn: process.env.JWT_EXPIRE,
     });
