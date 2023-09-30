@@ -1,18 +1,35 @@
 import {Link} from "react-router-dom";
 import ProductCard from "./ProductCard.tsx";
+import {getAllProducts} from "../../api/products.ts";
 
-const productIds = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+interface Product {
+    id: string,
+    title: string,
+    description: string,
+    price: number,
+    category: string,
+    image: string
+    company: string,
+    createdAt: Date,
+    updatedAt: Date,
+    creatorId: string,
 
-const ProductLayout = () => {
+}
+
+
+const ProductLayout = async () => {
+
+    const productList :Product[] = await getAllProducts();
+    console.log(productList);
     return (
         <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 justify-items-center p-12">
 
                 {
-                    productIds.map(id => (
-                        <div key={id}>
+                    productList.map(product => (
+                        <div key={product.id}>
                             <Link to='/product-detail'>
-                                <ProductCard/>
+                                <ProductCard product={product}/>
                             </Link>
                         </div>
                     ))
