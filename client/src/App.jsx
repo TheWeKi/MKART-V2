@@ -1,16 +1,16 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom"
-import ProductList from "./pages/ProductList"
-import Home from "./pages/Home"
-import Navbar from "./components/layout/Navbar"
-import Footer from "./components/layout/Footer"
-import Divider from "./components/ui/Divider"
-import Login from "./pages/Login.tsx";
-import ErrorPage from "./pages/ErrorPage.tsx";
-import ProductDetail from "./pages/ProductDetail.tsx";
-import SignUp from "./pages/SignUp.tsx";
-import Cart from "./pages/Cart.tsx"
-import CreateProduct from "./components/admin_dashboard/products/CreateProduct.tsx"
-import AdminDashboard from "./pages/AdminDashboard.tsx";
+import ProductList from "./pages/ProductList.jsx"
+import Home from "./pages/Home.jsx"
+import Navbar from "./components/layout/Navbar.jsx"
+import Footer from "./components/layout/Footer.jsx"
+import Divider from "./components/ui/Divider.jsx"
+import Login from "./pages/Login.jsx";
+import ErrorPage from "./pages/ErrorPage.jsx";
+import ProductDetail from "./pages/ProductDetail.jsx";
+import SignUp from "./pages/SignUp.jsx";
+import Cart from "./pages/Cart.jsx"
+import CreateProduct from "./components/admin_dashboard/products/CreateProduct.jsx"
+import AdminDashboard from "./pages/AdminDashboard.jsx";
 
 const App = () => {
     return (

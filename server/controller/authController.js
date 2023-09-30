@@ -5,12 +5,12 @@ import bcrypt from "bcryptjs";
 
 export const signUp = async (req, res, next) => {
     try {
-        const {email, password,username,roleAdmin} = req.body;
+        const {email, password, username, roleAdmin} = req.body;
         const existingUser = await prisma.user.findFirst({
-            where: {
-                email: email,
+                where: {
+                    email: email,
+                }
             }
-        }
         );
         if (existingUser) {
             return next(new Errorhandler(400, "User Already Exists"));

@@ -33,7 +33,7 @@ const createOrder = async (req, res, next) => {
                 product: true,
             }
         });
-        let totalPrice= 0;
+        let totalPrice = 0;
         const cartItemsWithTotalPrice = cartItems.map((cartItem) => {
             const {productId, quantity, product} = cartItem;
             const totalItemPrice = quantity * product.price;
@@ -50,16 +50,16 @@ const createOrder = async (req, res, next) => {
 
         const orderItem = await prisma.order.create({
             data: {
-                deliveryAddress:deliveryAddress,
-                totalPrice:totalPrice,
+                deliveryAddress: deliveryAddress,
+                totalPrice: totalPrice,
                 cart: cartToAddInOrder,
-                userId:req.user.id,
+                userId: req.user.id,
             }
         });
 
         res.status(201).json(orderItem);
 
-        await prisma.cartItem.deleteMany({where:{cartId:cart.id}});
+        await prisma.cartItem.deleteMany({where: {cartId: cart.id}});
 
     } catch (e) {
         next(e);

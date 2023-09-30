@@ -7,11 +7,9 @@ export default {
     theme: {
         extend: {},
     },
-    plugins: [
-        require("daisyui"),
-    ],
+    plugins: [require("daisyui")],
 
-    /* daisyUI Config */
+    // daisyUI config
     daisyui: {
         themes: false,
         darkTheme: "dark",
@@ -22,5 +20,6 @@ export default {
         prefix: "",
         logs: true,
     },
+
 }
 

@@ -1,5 +1,5 @@
-import CreateProductForm from "./CreateProductForm.tsx";
-import DashboardNavbar from "../DashboardNavbar.tsx";
+import CreateProductForm from "./CreateProductForm.jsx";
+import DashboardNavbar from "../DashboardNavbar.jsx";
 
 const CreateProduct = () => {
     return (

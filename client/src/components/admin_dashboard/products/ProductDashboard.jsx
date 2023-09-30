@@ -1,6 +1,6 @@
-import ProductTable from "./ProductTable";
-import ProductDashboardNavbar from "./ProductDashboardNavbar.tsx";
-import Divider from "../../ui/Divider.tsx";
+import ProductTable from "./ProductTable.jsx";
+import ProductDashboardNavbar from "./ProductDashboardNavbar.jsx";
+import Divider from "../../ui/Divider.jsx";
 
 const ProductDashboard = () => {
     return (

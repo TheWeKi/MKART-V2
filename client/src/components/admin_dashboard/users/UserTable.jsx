@@ -1,6 +1,6 @@
-import Pagination from "../../product_list/Pagination.tsx";
+import Pagination from "../../product_list/Pagination.jsx";
 
-const OrderTable = () => {
+const UserTable = () => {
 
     const ids = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -14,9 +14,8 @@ const OrderTable = () => {
                     <tr>
                         <th>ID</th>
                         <th>Username</th>
-                        <th>Delivery Address</th>
-                        <th>Total Amount</th>
-                        <th>Status</th>
+                        <th>Email</th>
+                        <th>Admin Role</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -35,10 +34,7 @@ const OrderTable = () => {
                                     username
                                 </td>
                                 <td>
-                                    preeti nagar 123 123 123
-                                </td>
-                                <td>
-                                    9999
+                                    email@email.email
                                 </td>
                                 <td>
                                     false
@@ -65,4 +61,4 @@ const OrderTable = () => {
     )
 }
 
-export default OrderTable;
+export default UserTable;

@@ -1,4 +1,4 @@
-import Divider from "../ui/Divider";
+import Divider from "../ui/Divider.jsx";
 import {Link} from "react-router-dom";
 
 const DashboardNavbar = () => {
