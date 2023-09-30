@@ -5,9 +5,7 @@ import bcrypt from "bcryptjs";
 
 export const signUp = async (req, res, next) => {
     try {
-        const {email} = req.body;
-        const {username}=req.body;
-        const {password}=req.body;
+        const {email, password,username,roleAdmin} = req.body;
         const existingUser = await prisma.user.findFirst({
             where: {
                 email: email,
@@ -20,12 +18,13 @@ export const signUp = async (req, res, next) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         const data = {
-            email: email,
-            username:username,
+            email,
             password: hashedPassword,
+            username,
+            roleAdmin,
         }
         const user = await prisma.user.create({
-            data: data,
+            data,
         });
 
         dispatchJsonToken(user, 201, res);
