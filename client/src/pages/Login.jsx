@@ -1,5 +1,5 @@
-import LoginForm from "../components/login/LoginForm.tsx";
-import MiscLoginForm from "../components/login/MiscLoginForm.tsx";
+import LoginForm from "../components/login/LoginForm.jsx";
+import MiscLoginForm from "../components/login/MiscLoginForm.jsx";
 
 const Login = () => {
     return (

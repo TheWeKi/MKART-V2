@@ -1,5 +1,5 @@
-import SignUpForm from "../components/sign_up/SignUpForm.tsx";
-import MiscSignUpForm from "../components/sign_up/MiscSignUpForm.tsx";
+import SignUpForm from "../components/sign_up/SignUpForm.jsx";
+import MiscSignUpForm from "../components/sign_up/MiscSignUpForm.jsx";
 
 const SignUp = () => {
     return (

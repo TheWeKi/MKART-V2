@@ -1,6 +1,6 @@
-import UserTable from "./UserTable";
-import UserDashboardNavbar from "./UserDashboardNavbar.tsx";
-import Divider from "../../ui/Divider.tsx";
+import UserTable from "./UserTable.jsx";
+import UserDashboardNavbar from "./UserDashboardNavbar.jsx";
+import Divider from "../../ui/Divider.jsx";
 
 const UserDashboard = () => {
     return (

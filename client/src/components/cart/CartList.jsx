@@ -1,4 +1,4 @@
-import CartCard from "./CartCard.tsx";
+import CartCard from "./CartCard.jsx";
 
 const CartList = () => {
     return (

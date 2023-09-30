@@ -1,5 +1,5 @@
-import ThirdPartyLogin from "./ThirdPartyLogin.tsx";
-import NoAccountSignUp from "./NoAccountSignUp.tsx";
+import ThirdPartyLogin from "./ThirdPartyLogin.jsx";
+import NoAccountSignUp from "./NoAccountSignUp.jsx";
 
 const MiscLoginForm = () => {
     return (

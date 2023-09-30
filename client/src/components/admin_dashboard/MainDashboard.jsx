@@ -1,11 +1,11 @@
 import {useParams} from "react-router-dom";
-import ErrorPage from "../../pages/ErrorPage.tsx";
-import ProductDashboard from "./products/ProductDashboard.tsx";
-import UserDashboard from "./users/UserDashboard.tsx";
-import OrderDashboard from "./orders/OrderDashboard.tsx";
+import ErrorPage from "../../pages/ErrorPage.jsx";
+import ProductDashboard from "./products/ProductDashboard.jsx";
+import UserDashboard from "./users/UserDashboard.jsx";
+import OrderDashboard from "./orders/OrderDashboard.jsx";
 
 const MainDashboard = () => {
-    const {dashboard} = useParams<string>();
+    const {dashboard} = useParams();
 
     return (
         <main>

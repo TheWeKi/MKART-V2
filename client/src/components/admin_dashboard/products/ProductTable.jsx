@@ -1,4 +1,4 @@
-import Pagination from "../../product_list/Pagination.tsx";
+import Pagination from "../../product_list/Pagination.jsx";
 
 const ProductTable = () => {
 

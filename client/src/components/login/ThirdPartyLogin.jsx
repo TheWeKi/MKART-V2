@@ -1,4 +1,4 @@
-import Divider from "../ui/Divider.tsx";
+import Divider from "../ui/Divider.jsx";
 
 const ThirdPartyLogin = () => {
     return (

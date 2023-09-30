@@ -11,15 +11,13 @@ const schema = z.object({
     image: z.instanceof(FileList).refine(file => file[0].type.startsWith('image'), {message: 'Only Image Is Accepted'}),
 });
 
-type FormData = z.infer<typeof schema>;
-
 const CreateProductForm = () => {
 
-    const {register, handleSubmit, formState: {errors}} = useForm<FormData>({
+    const {register, handleSubmit, formState: {errors}} = useForm({
         resolver: zodResolver(schema),
     });
 
-    const onSubmit = (data: FormData) => {
+    const onSubmit = (data) => {
         console.log(data);
     };
 

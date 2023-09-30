@@ -1,4 +1,4 @@
-import Divider from "../ui/Divider.tsx";
+import Divider from "../ui/Divider.jsx";
 
 const filters = {
     companies: ["Apple", "Microsoft", "Xiaomi", "Samsung", "Oppo"],
@@ -50,7 +50,7 @@ const Filter = () => {
                                 <div className="mb-8">
                                     <p className="text-xl mb-4">Category</p>
                                     {filters.categories.map(category => (
-                                        <div className="form-control">
+                                        <div className="form-control" key={category}>
                                             <label className="label cursor-pointer">
                                                 <span className="text-md">{category}</span>
                                                 <input type="checkbox" className="checkbox checkbox-sm"/>
@@ -80,7 +80,7 @@ const Filter = () => {
                                 <div className="mb-8">
                                     <p className="text-xl mb-4">Company</p>
                                     {filters.companies.map(company => (
-                                        <div className="form-control">
+                                        <div className="form-control" key={company}>
                                             <label className="label cursor-pointer">
                                                 <span className="text-md">{company}</span>
                                                 <input type="checkbox" className="checkbox checkbox-sm"/>
@@ -98,4 +98,4 @@ const Filter = () => {
     )
 }
 
-export default Filter
+export default Filter;
