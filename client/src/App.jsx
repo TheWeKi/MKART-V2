@@ -30,7 +30,7 @@ const App = () => {
                     <Route path="/admin-dashboard/:dashboard" element={<AdminDashboard/>}/>
                     <Route path="/admin-dashboard/products/create-product" element={<CreateProduct/>}/>
 
-                    <Route path="*" element={<ErrorPage/>}/>
+                    <Route path="*" element={<ErrorPage/>}/>//Comment
                 </Routes>
 
                 <Divider/>
