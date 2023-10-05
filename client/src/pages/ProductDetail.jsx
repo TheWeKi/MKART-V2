@@ -1,7 +1,7 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {axiosConfig, baseUrl} from "../axios/baseUrl.js";
+import {baseUrl} from "../axios/baseUrl.js";
 
 const ProductDetail = () => {
     const navigate = useNavigate();
@@ -25,19 +25,10 @@ const ProductDetail = () => {
 
     const addToCart = async() => {
         try {
-            const data = document.cookie.split('token=')[1];
-            const token = data.split(';')[0];
-            if(!token){
-                return navigate('/login');
-            }
             const res = await axios.post(`http://localhost:8080/api/v1/carts/`,{
                 prodId: productId,
                 quantity: quantity,
-
-            },{
-                headers: {
-                Authorization: `Bearer ${token}`,
-            }})
+            })
             console.log(res.data);
         }
         catch (e) {

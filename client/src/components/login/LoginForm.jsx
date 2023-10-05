@@ -2,6 +2,7 @@ import {z} from "zod";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import axios from "axios";
+import {baseUrl} from "../../axios/baseUrl.js";
 
 const schema = z.object({
     email: z.string().email({message: "Enter a Valid Email"}).nonempty({message: 'Email is Required'}),
@@ -22,7 +23,10 @@ const LoginForm = () => {
                 return  console.log("Token not found.");
             }
             document.cookie = `token=${token}`;
-            console.log("Token:", token);
+            baseUrl.interceptors.request.use((config) => {
+                config.headers.Authorization = `Bearer ${token}`;
+                return config;
+            })
         } catch (e) {
             console.log(e);
         }
