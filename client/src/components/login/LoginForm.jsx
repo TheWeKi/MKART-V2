@@ -1,6 +1,7 @@
 import {z} from "zod";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
+import axios from "axios";
 
 const schema = z.object({
     email: z.string().email({message: "Enter a Valid Email"}).nonempty({message: 'Email is Required'}),
@@ -13,8 +14,9 @@ const LoginForm = () => {
         resolver: zodResolver(schema),
     });
 
-    const onSubmit = (data) => {
-        console.log(data);
+    const onSubmit = async (data) => {
+        const res = await axios.post('http://localhost:8080/api/v1/login', data);
+        console.log(res.data);
     };
 
     return (

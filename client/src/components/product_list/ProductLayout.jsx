@@ -2,6 +2,7 @@ import {Link} from "react-router-dom";
 import ProductCard from "./ProductCard.jsx";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import {baseUrl} from "../../axios/baseUrl.js";
 
 
 
@@ -9,7 +10,7 @@ const ProductLayout = () => {
     const [products,setProducts] = useState([]);
 
     const fetchProducts = async () => {
-        const res = await axios.get('http://localhost:8080/api/v1/products')
+        const res = await baseUrl.get('/products')
         setProducts(res.data);
     }
     useEffect(() => {
@@ -23,7 +24,7 @@ const ProductLayout = () => {
                 {
                     products.map(product=> (
                         <div key={product.id}>
-                            <Link to='/product-detail'>
+                            <Link to={`/product-detail/${product.id}`}>
                                 <ProductCard product={product}/>
                             </Link>
                         </div>

@@ -13,7 +13,7 @@ const ProductCard = ({product}) => {
                             {product.title}
                             <div className="badge badge-secondary">NEW</div>
                         </h2>
-                        <p className="mb-4">{product.description}</p>
+                        <p className="mb-4">{product.description.split('?')[0]}</p>
                         <div className="card-actions">
                             <div className="flex-1">
                                 <p className="text-lg font-semibold">

@@ -1,6 +1,7 @@
 import {z} from "zod";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
+import axios from "axios";
 
 
 const schema = z.object({
@@ -15,8 +16,9 @@ const SignUpForm = () => {
         resolver: zodResolver(schema),
     });
 
-    const onSubmit = (data) => {
-        console.log(data);
+    const onSubmit = async (data) => {
+        const res = await axios.post('http://localhost:8080/api/v1/signup', data);
+        console.log(res.data);
     };
 
     return (

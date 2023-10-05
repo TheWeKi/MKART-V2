@@ -1,4 +1,55 @@
+import {useNavigate, useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
+import axios from "axios";
+import {axiosConfig, baseUrl} from "../axios/baseUrl.js";
+
 const ProductDetail = () => {
+    const navigate = useNavigate();
+    const {productId}= useParams();
+    const [product,setProduct] = useState({});
+    const [quantity,setQuantity] = useState(1);
+
+    const fetchProduct = async () => {
+        const res = await baseUrl.get(`/products/${productId}`)
+        setProduct(res.data);
+    }
+    const handleDecreaseQuantity =()=>{
+        if(quantity===1){
+            return;
+        }
+        setQuantity(quantity-1);
+    }
+    const handleIncreaseQuantity =()=>{
+        setQuantity(quantity+1);
+    }
+
+    const addToCart = async() => {
+        try {
+            let token = localStorage.getItem('token');
+            if (!token) {
+                return navigate('/login');
+            }
+            // console.log(token);
+            // axiosConfig(token);
+            const response = await baseUrl.post(`/carts/`, {
+                prodId: productId,
+                quantity: quantity
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            console.log(response.data);
+
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+
+    useEffect(() => {
+        fetchProduct();
+    },[])
     return (
         <>
             <div className="min-h-[70vh] bg-base-100 flex flex-col md:flex-row place-content-evenly items-center px-8">
@@ -8,14 +59,14 @@ const ProductDetail = () => {
                     <div className="card-body">
                         {/*image*/}
                         <figure>
-                            <img src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt=""
+                            <img src={product.image} alt=""
                                  className='rounded-lg'/>
                         </figure>
 
                         {/*category*/}
                         <div className="flex flex-row gap-4 mt-4">
-                            <div className="badge badge-outline badge-lg">Shoes</div>
-                            <div className="badge badge-outline badge-lg">Adidas</div>
+                            <div className="badge badge-outline badge-lg">{product.category}</div>
+                            <div className="badge badge-outline badge-lg">{product.company}</div>
                         </div>
                     </div>
                 </div>
@@ -26,27 +77,26 @@ const ProductDetail = () => {
 
                         <div className="mb-4">
                             {/*title*/}
-                            <h1 className='text-4xl mb-2'>Title</h1>
+                            <h1 className='text-4xl mb-2'>{product.title}</h1>
 
                             {/*description*/}
                             <p>
-                                Get Your Smash Right Now!!!
-                                Feel Lighter as never before !!!
+                                {product.description}
                             </p>
                         </div>
 
                         {/*price*/}
-                        <div className='text-2xl mb-2'>$478</div>
+                        <div className='text-2xl mb-2'>${product.price}</div>
 
                         {/*quantity*/}
                         <div className='flex flex-row items-center gap-6'>
-                            <button className="btn btn-outline btn-md text-lg">-</button>
-                            <span className="text-xl">0</span>
-                            <button className="btn btn-outline btn-md text-lg">+</button>
+                            <button onClick={()=>handleDecreaseQuantity()} className="btn btn-outline btn-md text-lg">-</button>
+                            <span className="text-xl">{quantity}</span>
+                            <button onClick={()=>handleIncreaseQuantity()} className="btn btn-outline btn-md text-lg">+</button>
                         </div>
 
                         {/*button cart*/}
-                        <button className="btn btn-lg mt-4 btn-outline">Add To Cart</button>
+                        <button onClick={()=>addToCart()} className="btn btn-lg mt-4 btn-outline">Add To Cart</button>
                     </div>
                 </div>
             </div>
