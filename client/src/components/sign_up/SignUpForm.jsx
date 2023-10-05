@@ -1,7 +1,8 @@
 import {z} from "zod";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import axios from "axios";
+import {useNavigate} from "react-router-dom";
+import {baseUrl} from "../../axios/baseUrl.js";
 
 
 const schema = z.object({
@@ -11,14 +12,18 @@ const schema = z.object({
 });
 
 const SignUpForm = () => {
-
+    const navigate = useNavigate();
     const {register, handleSubmit, formState: {errors}} = useForm({
         resolver: zodResolver(schema),
     });
 
     const onSubmit = async (data) => {
-        const res = await axios.post('http://localhost:8080/api/v1/signup', data);
-        console.log(res.data);
+        try {
+            await baseUrl.post('/signup', data);
+            navigate('/login');
+        } catch (e) {
+            console.log(e);
+        }
     };
 
     return (

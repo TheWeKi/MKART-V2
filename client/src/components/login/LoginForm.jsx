@@ -15,8 +15,17 @@ const LoginForm = () => {
     });
 
     const onSubmit = async (data) => {
-        const res = await axios.post('http://localhost:8080/api/v1/login', data);
-        console.log(res.data);
+        try {
+            const res = await axios.post('http://localhost:8080/api/v1/login', data);
+            const token =res.data.token;
+            if(!token){
+                return  console.log("Token not found.");
+            }
+            document.cookie = `token=${token}`;
+            console.log("Token:", token);
+        } catch (e) {
+            console.log(e);
+        }
     };
 
     return (
