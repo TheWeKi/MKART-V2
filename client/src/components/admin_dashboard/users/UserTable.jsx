@@ -1,8 +1,19 @@
 import Pagination from "../../product_list/Pagination.jsx";
+import {useEffect, useState} from "react";
+import {baseUrl} from "../../../axios/baseUrl.js";
 
 const UserTable = () => {
 
-    const ids = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const [users, setUsers] = useState([]);
+
+    const fetchUsers = async () => {
+        const res = await baseUrl.get("/users");
+        setUsers(res.data);
+    }
+
+    useEffect(() => {
+        fetchUsers();
+    },[]);
 
     return (
         <main>
@@ -25,19 +36,19 @@ const UserTable = () => {
                     <tbody>
 
                     {
-                        ids.map(i => (
-                            <tr key={i}>
+                        users.map(user => (
+                            <tr key={user.id}>
                                 <td>
-                                    7869097709
+                                    {user.id}
                                 </td>
                                 <td>
-                                    username
+                                    {user.username}
                                 </td>
                                 <td>
-                                    email@email.email
+                                    {user.email}
                                 </td>
                                 <td>
-                                    false
+                                    {user.roleAdmin ? "Yes" : "No"}
                                 </td>
                                 <td>
                                     <button className="btn btn-outline btn-primary btn-sm">Modify</button>

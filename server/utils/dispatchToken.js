@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import fs from "fs";
+import fs from "node:fs";
 
 export const dispatchJsonToken = (user, statusCode, res) => {
     const privateKEY = fs.readFileSync('./private.key', 'utf8');
@@ -19,5 +19,10 @@ export const dispatchJsonToken = (user, statusCode, res) => {
         .json({
             message: "Successfully Achieved",
             token,
+            user: {
+                id: user.id,
+                email: user.email,
+                roleAdmin: user.roleAdmin,
+            },
         });
 };

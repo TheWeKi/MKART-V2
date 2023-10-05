@@ -1,8 +1,19 @@
 import Pagination from "../../product_list/Pagination.jsx";
+import {useEffect, useState} from "react";
+import {baseUrl} from "../../../axios/baseUrl.js";
 
 const ProductTable = () => {
 
-    const ids = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const [products, setProducts] = useState([]);
+
+    const fetchProducts = async () => {
+        const res = await baseUrl.get("/products");
+        setProducts(res.data);
+    }
+
+    useEffect(() => {
+        fetchProducts();
+    },[]);
 
     return (
         <main>
@@ -23,27 +34,27 @@ const ProductTable = () => {
                     <tbody>
 
                     {
-                        ids.map(i => (
-                            <tr key={i}>
+                        products.map(product => (
+                            <tr key={product.id}>
                                 <td>
                                     <div className="flex items-center space-x-3">
                                         <div className="avatar">
                                             <div className="mask mask-squircle w-12 h-12">
                                                 <img
-                                                    src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-                                                    alt="Avatar Tailwind CSS Component"/>
+                                                    src={product.image}
+                                                    alt="Product Image"/>
                                             </div>
                                         </div>
                                         <div>
-                                            <div className="font-bold">Title</div>
-                                            <div className="text-sm opacity-50">#6849398027028</div>
+                                            <div className="font-bold">{product.title}</div>
+                                            <div className="text-sm opacity-50">{product.id}</div>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                    Category
+                                    {product.company}
                                     <br/>
-                                    <span className="badge badge-ghost badge-sm">Company</span>
+                                    <span className="badge badge-ghost badge-sm">{product.category}</span>
                                 </td>
                                 <td>
                                     <button className="btn btn-outline btn-primary btn-sm">Modify</button>

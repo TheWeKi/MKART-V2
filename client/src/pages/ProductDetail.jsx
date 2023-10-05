@@ -25,9 +25,15 @@ const ProductDetail = () => {
 
     const addToCart = async() => {
         try {
+            const data = document.cookie.split("token=")[1];
+            const token = data.split(";")[0];
             const res = await axios.post(`http://localhost:8080/api/v1/carts/`,{
                 prodId: productId,
                 quantity: quantity,
+            },{
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
             })
             console.log(res.data);
         }

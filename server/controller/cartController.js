@@ -92,9 +92,13 @@ const getCart = async (req, res, next) => {
             }
         });
 
+        let totalPrice = 0;
+
         const cartItemsWithTotalPrice = cartItems.map((cartItem) => {
             const {productId, quantity, product} = cartItem;
             const totalItemPrice = quantity * product.price;
+
+            totalPrice += totalItemPrice;
 
             return {
                 prodId: productId,
@@ -103,7 +107,12 @@ const getCart = async (req, res, next) => {
             };
         });
 
-        res.json(cartItemsWithTotalPrice);
+        res.json({
+            cartItems: cartItemsWithTotalPrice,
+            totalPrice,
+            tax: totalPrice * 0.24,
+            shipping: 30,
+        });
     } catch (e) {
         next(e);
     }

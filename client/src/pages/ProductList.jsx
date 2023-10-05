@@ -5,7 +5,7 @@ import ProductLayout from "../components/product_list/ProductLayout.jsx"
 const ProductList = () => {
     return (
         <>
-            <Filter/>
+            {/*<Filter/>*/}
             <ProductLayout/>
             <Pagination/>
         </>

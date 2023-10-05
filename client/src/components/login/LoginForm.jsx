@@ -3,6 +3,7 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import axios from "axios";
 import {baseUrl} from "../../axios/baseUrl.js";
+import {useNavigate} from "react-router-dom";
 
 const schema = z.object({
     email: z.string().email({message: "Enter a Valid Email"}).nonempty({message: 'Email is Required'}),
@@ -10,23 +11,28 @@ const schema = z.object({
 });
 
 const LoginForm = () => {
-
+    const navigate = useNavigate();
     const {register, handleSubmit, formState: {errors}} = useForm({
         resolver: zodResolver(schema),
     });
 
     const onSubmit = async (data) => {
         try {
-            const res = await axios.post('http://localhost:8080/api/v1/login', data);
+            const res = await baseUrl.post('/login', data);
             const token =res.data.token;
+            const user = res.data.user;
             if(!token){
                 return  console.log("Token not found.");
             }
             document.cookie = `token=${token}`;
-            baseUrl.interceptors.request.use((config) => {
-                config.headers.Authorization = `Bearer ${token}`;
-                return config;
-            })
+            // baseUrl.interceptors.request.use((config) => {
+            //     config.headers.Authorization = `Bearer ${token}`;
+            //     return config;
+            // });
+            if(user.roleAdmin){
+              return  navigate('/admin-dashboard/products');
+            }
+            navigate('/products');
         } catch (e) {
             console.log(e);
         }

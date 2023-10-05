@@ -1,27 +1,39 @@
-const CartCard = () => {
+import {useEffect, useState} from "react";
+import {baseUrl} from "../../axios/baseUrl.js";
+
+const CartCard = ({cartItem}) => {
+    const [product, setProduct] = useState({});
+    const fetchProduct = async () => {
+        const res = await baseUrl.get(`/products/${cartItem.prodId}`)
+        setProduct(res.data);
+    }
+    useEffect(() => {
+        fetchProduct();
+    })
     return (
         <>
             <div className="max-w-xl w-full bg-base-100 my-4 py-8">
 
                 <div className="flex items-center gap-4">
                     <img
-                        src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
+                        src={product.image}
                         alt=""
                         className="h-24 w-24 object-cover"
                     />
 
                     <div>
-                        <h3 className="text-xl text-gray-900">Title</h3>
+                        <h3 className="text-xl text-gray-900">{product.title}</h3>
 
                         <dl className="mt-0.5 space-y-px text-lg text-gray-600">
                             <div>
-                                <dd className="inline">Company</dd>
+                                <dd className="inline">{product.company}</dd>
                             </div>
                         </dl>
                     </div>
 
                     <div className="flex flex-1 items-center justify-end gap-2">
-                        <dd className="inline">Quantity</dd>
+                        <dd className="inline">{cartItem.quantity}</dd>
+
 
                         <button className="text-gray-600 transition hover:text-red-600">
                             <span className="sr-only">Remove item</span>

@@ -27,7 +27,11 @@ export const signUp = async (req, res, next) => {
             data,
         });
 
-        dispatchJsonToken(user, 201, res);
+       res
+           .status(201)
+           .json({
+              message: "Successfully Created",
+       });
 
 
     } catch (e) {
