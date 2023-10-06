@@ -5,7 +5,7 @@ import {baseUrl} from "../../axios/baseUrl.js";
 import {useNavigate} from "react-router-dom";
 
 import {useDispatch} from "react-redux";
-import { login } from "../../redux/features/authSlice.js";
+import {login} from "../../redux/features/authSlice.js";
 
 const schema = z.object({
     email: z.string().email({message: "Enter a Valid Email"}).nonempty({message: 'Email is Required'}),
@@ -22,10 +22,10 @@ const LoginForm = () => {
     const onSubmit = async (data) => {
         try {
             const res = await baseUrl.post('/login', data);
-            const token =res.data.token;
+            const token = res.data.token;
             const user = res.data.user;
-            if(!token){
-                return  console.log("Token not found.");
+            if (!token) {
+                return console.log("Token not found.");
             }
             document.cookie = `token=${token}`;
             // baseUrl.interceptors.request.use((config) => {
@@ -35,8 +35,8 @@ const LoginForm = () => {
 
             dispatch(login());
 
-            if(user.roleAdmin){
-              return  navigate('/admin-dashboard/products');
+            if (user.roleAdmin) {
+                return navigate('/admin-dashboard/products');
             }
             navigate('/products');
         } catch (e) {

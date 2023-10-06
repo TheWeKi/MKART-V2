@@ -1,4 +1,3 @@
-import Pagination from "../../product_list/Pagination.jsx";
 import {useEffect, useState} from "react";
 import {baseUrl} from "../../../axios/baseUrl.js";
 
@@ -13,7 +12,7 @@ const ProductTable = () => {
 
     useEffect(() => {
         fetchProducts();
-    },[]);
+    }, []);
 
     return (
         <main>

@@ -1,27 +1,26 @@
-import { useEffect, useState } from "react";
-import Pagination from "../../product_list/Pagination.jsx";
-import { baseUrl } from "../../../axios/baseUrl.js";
+import {useEffect, useState} from "react";
+import {baseUrl} from "../../../axios/baseUrl.js";
 
 const OrderTable = () => {
 
     const [orders, setOrders] = useState([]);
 
     const fetchOrders = async () => {
-            const data = document.cookie.split("token=")[1];
-            const token = data.split(";")[0];
-            const res = await baseUrl.get(`/orders`,{
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                }
-            });
-            setOrders(res.data);
-            
+        const data = document.cookie.split("token=")[1];
+        const token = data.split(";")[0];
+        const res = await baseUrl.get(`/orders`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
+        setOrders(res.data);
+
     }
 
     useEffect(() => {
         fetchOrders();
-    },[]);
-    
+    }, []);
+
     return (
         <main>
 

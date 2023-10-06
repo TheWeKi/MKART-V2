@@ -10,7 +10,7 @@ orderRouter
     .post(isAuthenticated, createOrder);
 
 orderRouter
-    .route("/ordersByUser") 
+    .route("/ordersByUser")
     .get(isAuthenticated, getOrdersByUser);
 
 orderRouter

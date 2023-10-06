@@ -27,11 +27,11 @@ export const signUp = async (req, res, next) => {
             data,
         });
 
-       res
-           .status(201)
-           .json({
-              message: "Successfully Created",
-       });
+        res
+            .status(201)
+            .json({
+                message: "Successfully Created",
+            });
 
 
     } catch (e) {

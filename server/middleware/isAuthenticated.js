@@ -2,9 +2,10 @@ import prisma from "../database/prismaClient.js";
 import jwt from "jsonwebtoken";
 import Errorhandler from "../utils/errorhandler.js";
 import fs from "node:fs";
+
 export const isAuthenticated = async (req, res, next) => {
     try {
-        const token =req.headers.authorization.split(" ")[1] || req.cookies.token;
+        const token = req.headers.authorization.split(" ")[1] || req.cookies.token;
         if (!token) {
             return next(new Errorhandler(400, "Login Required"));
         }

@@ -5,47 +5,46 @@ import {baseUrl} from "../axios/baseUrl.js";
 
 const ProductDetail = () => {
     const navigate = useNavigate();
-    const {productId}= useParams();
-    const [product,setProduct] = useState({});
-    const [quantity,setQuantity] = useState(1);
+    const {productId} = useParams();
+    const [product, setProduct] = useState({});
+    const [quantity, setQuantity] = useState(1);
 
     const fetchProduct = async () => {
         const res = await baseUrl.get(`/products/${productId}`)
         setProduct(res.data);
     }
-    const handleDecreaseQuantity =()=>{
-        if(quantity===1){
+    const handleDecreaseQuantity = () => {
+        if (quantity === 1) {
             return;
         }
-        setQuantity(quantity-1);
+        setQuantity(quantity - 1);
     }
-    const handleIncreaseQuantity =()=>{
-        setQuantity(quantity+1);
+    const handleIncreaseQuantity = () => {
+        setQuantity(quantity + 1);
     }
 
-    const addToCart = async() => {
+    const addToCart = async () => {
         try {
             const data = document.cookie.split("token=")[1];
             const token = data.split(";")[0];
-            const res = await axios.post(`http://localhost:8080/api/v1/carts/`,{
+            const res = await axios.post(`http://localhost:8080/api/v1/carts/`, {
                 prodId: productId,
                 quantity: quantity,
-            },{
+            }, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
             })
 
             navigate('/products');
-        }
-        catch (e) {
+        } catch (e) {
             console.log(e)
         }
     }
 
     useEffect(() => {
         fetchProduct();
-    },[])
+    }, [])
     return (
         <>
             <div className="min-h-[70vh] bg-base-100 flex flex-col md:flex-row place-content-evenly items-center px-8">
@@ -86,13 +85,17 @@ const ProductDetail = () => {
 
                         {/*quantity*/}
                         <div className='flex flex-row items-center gap-6'>
-                            <button onClick={()=>handleDecreaseQuantity()} className="btn btn-outline btn-md text-lg">-</button>
+                            <button onClick={() => handleDecreaseQuantity()}
+                                    className="btn btn-outline btn-md text-lg">-
+                            </button>
                             <span className="text-xl">{quantity}</span>
-                            <button onClick={()=>handleIncreaseQuantity()} className="btn btn-outline btn-md text-lg">+</button>
+                            <button onClick={() => handleIncreaseQuantity()}
+                                    className="btn btn-outline btn-md text-lg">+
+                            </button>
                         </div>
 
                         {/*button cart*/}
-                        <button onClick={()=>addToCart()} className="btn btn-lg mt-4 btn-outline">Add To Cart</button>
+                        <button onClick={() => addToCart()} className="btn btn-lg mt-4 btn-outline">Add To Cart</button>
                     </div>
                 </div>
             </div>

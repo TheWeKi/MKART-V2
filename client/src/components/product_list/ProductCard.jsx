@@ -5,8 +5,8 @@ const ProductCard = ({product}) => {
                 <div className="card w-72 lg:w-80 bg-base-100 shadow-xl">
                     <figure>
                         <img className="max-h-60 w-full object-cover"
-                            src={product.image}
-                            alt="Shoes"/>
+                             src={product.image}
+                             alt="Shoes"/>
                     </figure>
                     <div className="card-body">
                         <h2 className="card-title">

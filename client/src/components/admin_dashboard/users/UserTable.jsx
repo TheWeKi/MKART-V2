@@ -1,4 +1,3 @@
-import Pagination from "../../product_list/Pagination.jsx";
 import {useEffect, useState} from "react";
 import {baseUrl} from "../../../axios/baseUrl.js";
 
@@ -7,7 +6,7 @@ const UserTable = () => {
     const [users, setUsers] = useState([]);
 
     const fetchUsers = async () => {
-        const res = await baseUrl.get(`/users`,{
+        const res = await baseUrl.get(`/users`, {
             headers: {
                 Authorization: `Bearer ${document.cookie.split("token=")[1].split(";")[0]}`,
             }
@@ -17,7 +16,7 @@ const UserTable = () => {
 
     useEffect(() => {
         fetchUsers();
-    },[]);
+    }, []);
 
     return (
         <main>

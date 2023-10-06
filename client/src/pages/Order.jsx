@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { baseUrl } from "../axios/baseUrl.js";
-import { useNavigate } from "react-router-dom";
+import {useEffect, useState} from "react";
+import {baseUrl} from "../axios/baseUrl.js";
+import {useNavigate} from "react-router-dom";
 
 const Order = () => {
 
@@ -8,20 +8,20 @@ const Order = () => {
     const navigate = useNavigate();
 
     const fetchOrders = async () => {
-            
-            const res = await baseUrl.get(`/orders/ordersByUser`,{
-                headers: {
-                    Authorization: `Bearer ${document.cookie.split("token=")[1].split(";")[0]}`,
-                }
-            });
-            setOrders(res.data);
-            
+
+        const res = await baseUrl.get(`/orders/ordersByUser`, {
+            headers: {
+                Authorization: `Bearer ${document.cookie.split("token=")[1].split(";")[0]}`,
+            }
+        });
+        setOrders(res.data);
+
     }
 
     useEffect(() => {
         fetchOrders();
-    },[]);
-    
+    }, []);
+
     return (
         <main>
             <div>

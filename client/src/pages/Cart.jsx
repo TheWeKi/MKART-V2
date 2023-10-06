@@ -29,7 +29,7 @@ const Cart = () => {
 
     useEffect(() => {
         fetchCartItems();
-    },[])
+    }, [])
     return (
         <>
             <section>
@@ -69,7 +69,7 @@ const Cart = () => {
                         <div className="mt-8 flex justify-between ">
 
                             <h2 className="text-xl font-semibold">Total</h2>
-                            <h2 className="text-xl font-semibold">{tax + ship +totalPrice}</h2>
+                            <h2 className="text-xl font-semibold">{tax + ship + totalPrice}</h2>
 
                         </div>
 

@@ -1,8 +1,8 @@
 import {z} from "zod";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import { baseUrl } from "../axios/baseUrl";
-import { useNavigate } from "react-router-dom";
+import {baseUrl} from "../axios/baseUrl";
+import {useNavigate} from "react-router-dom";
 
 const schema = z.object({
     houseNumber: z.string().nonempty({message: "House number is required"}),
@@ -31,7 +31,7 @@ const Checkout = () => {
                 }
             });
             return navigate('/orders');
-        
+
         } catch (e) {
             console.log(e);
         }
@@ -57,7 +57,7 @@ const Checkout = () => {
                                 {errors.town && <p className={"px-5"}>{errors.town.message}</p>}
                             </label>
                             <input {...register('town')} type="text" placeholder="Town"
-                                      className="input input-bordered"/>
+                                   className="input input-bordered"/>
                         </div>
                         <div className="form-control">
                             <label className="label">
@@ -65,7 +65,7 @@ const Checkout = () => {
                                 {errors.city && <p className={"px-5"}>{errors.city.message}</p>}
                             </label>
                             <input {...register('city')} type="text" placeholder="City"
-                                        className="input input-bordered"/>
+                                   className="input input-bordered"/>
                         </div>
                         <div className="form-control">
                             <label className="label">
@@ -73,16 +73,16 @@ const Checkout = () => {
                                 {errors.state && <p className={"px-5"}>{errors.state.message}</p>}
                             </label>
                             <input {...register('state')} type="text" placeholder="State"
-                                        className="input input-bordered"/>
+                                   className="input input-bordered"/>
                         </div>
-                        
+
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text text-lg">Zipcode</span>
                                 {errors.zipcode && <p className={"px-5"}>{errors.zipcode.message}</p>}
                             </label>
                             <input {...register('zipcode')} type="text" placeholder="Zipcode"
-                                        className="input input-bordered"/>
+                                   className="input input-bordered"/>
                         </div>
 
                         <div className="form-control">

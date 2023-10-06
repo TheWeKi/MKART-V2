@@ -88,4 +88,4 @@ const createOrder = async (req, res, next) => {
     }
 }
 
-export {getOrders, createOrder, getOrdersByUser , getOrderItemById};
+export {getOrders, createOrder, getOrdersByUser, getOrderItemById};
