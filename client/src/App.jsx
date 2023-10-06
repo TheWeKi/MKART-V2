@@ -12,6 +12,8 @@ import Cart from "./pages/Cart.jsx"
 import CreateProduct from "./components/admin_dashboard/products/CreateProduct.jsx"
 import AdminDashboard from "./pages/AdminDashboard.jsx";
 import Checkout from "./pages/Checkout.jsx";
+import Order from "./pages/Order.jsx"
+
 
 const App = () => {
     return (
@@ -28,6 +30,8 @@ const App = () => {
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
                     <Route path="/checkout" element={<Checkout/>}/>
+                    <Route path="/orders" element={<Order/>}/>
+                    
 
                     <Route path="/admin-dashboard/:dashboard" element={<AdminDashboard/>}/>
                     <Route path="/admin-dashboard/products/create-product" element={<CreateProduct/>}/>

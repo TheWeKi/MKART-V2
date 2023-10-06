@@ -3,14 +3,36 @@ import prisma from "../database/prismaClient.js";
 const getOrders = async (req, res, next) => {
     try {
 
-        const allOrders = await prisma.order.findMany({
+        const allOrders = await prisma.order.findMany({});
+        res.json(allOrders);
+    } catch (e) {
+        next(e);
+    }
+}
+
+const getOrdersByUser = async (req, res, next) => {
+    try {
+        const orders = await prisma.order.findMany({
             where: {
                 userId: req.user.id,
             }
         });
-        res.json(allOrders);
-    } catch (e) {
-        next(e);
+        res.json(orders)
+    } catch (error) {
+        next(error);
+    }
+}
+const getOrderItemById = async (req, res, next) => {
+    try {
+        const {id} = req.body;
+        const orderItem = await prisma.order.findFirst({
+            where: {
+                id: id,
+            }
+        });
+        res.json(orderItem)
+    } catch (error) {
+        next(error);
     }
 }
 
@@ -66,4 +88,4 @@ const createOrder = async (req, res, next) => {
     }
 }
 
-export {getOrders, createOrder};
+export {getOrders, createOrder, getOrdersByUser , getOrderItemById};

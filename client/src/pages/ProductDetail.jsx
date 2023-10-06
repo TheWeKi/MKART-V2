@@ -35,7 +35,8 @@ const ProductDetail = () => {
                     Authorization: `Bearer ${token}`,
                 }
             })
-            console.log(res.data);
+
+            navigate('/products');
         }
         catch (e) {
             console.log(e)

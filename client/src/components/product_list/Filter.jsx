@@ -19,7 +19,7 @@ const Filter = () => {
 
                     {/* Sort */}
 
-                    <div className="form-control">
+                    {/* <div className="form-control">
                         <select className="select select-bordered select-md w-full max-w-lg">
                             <option disabled selected hidden value="sort">Sort</option>
                             <option value="price1">Price Low To High</option>
@@ -27,7 +27,7 @@ const Filter = () => {
                             <option value="popularity1">Popularity Low To High</option>
                             <option value="popularity0">Popularity High To Low</option>
                         </select>
-                    </div>
+                    </div> */}
 
                     {/* Filter */}
 

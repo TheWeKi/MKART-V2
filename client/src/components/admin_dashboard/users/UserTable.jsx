@@ -7,7 +7,11 @@ const UserTable = () => {
     const [users, setUsers] = useState([]);
 
     const fetchUsers = async () => {
-        const res = await baseUrl.get("/users");
+        const res = await baseUrl.get(`/users`,{
+            headers: {
+                Authorization: `Bearer ${document.cookie.split("token=")[1].split(";")[0]}`,
+            }
+        });
         setUsers(res.data);
     }
 
@@ -66,7 +70,7 @@ const UserTable = () => {
                 </table>
             </div>
 
-            <Pagination/>
+            {/* <Pagination/> */}
 
         </main>
     )

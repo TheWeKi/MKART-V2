@@ -1,9 +1,25 @@
-import {Link} from 'react-router-dom'
-import {useState} from "react";
+import { Link, useNavigate } from 'react-router-dom'
+
+import { useDispatch, useSelector } from 'react-redux';
+import { login,logout } from '../../redux/features/authSlice.js';
 
 const Navbar = () => {
 
-    const [isAuthenticated] = useState(false);
+        const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);//Get the state from redux store to check if user is logged in or not
+        const navigate = useNavigate();
+        const dispatch = useDispatch();
+        const token = document.cookie.split("token=")[1];
+        if(!token){
+            dispatch(logout());//Set the state to false if token is not present in cookies in case of page refresh
+        }
+        else{
+            dispatch(login()); //Set the state to true if token is present in cookies in case of page refresh
+        }
+        const setLogout = () => {
+            document.cookie = 'token' + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;'; //Delete the token from cookies if user clicks on logout button
+            dispatch(logout()); //Set the state to false if user clicks on logout button
+            navigate('/login');
+        };
 
     return (
         <>
@@ -13,7 +29,7 @@ const Navbar = () => {
                         <label tabIndex={0} className="btn btn-ghost btn-circle">
                             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                                      d="M4 6h16M4 12h16M4 18h7"/>
+                                    d="M4 6h16M4 12h16M4 18h7" />
                             </svg>
                         </label>
                         <ul tabIndex={0}
@@ -36,16 +52,15 @@ const Navbar = () => {
                 <div className="navbar-end">
                     {
                         isAuthenticated ?
-                            <Link to='/logout'>
-                                <button className="btn btn-ghost btn-outline">
+                                <button className="btn btn-ghost btn-outline" onClick={() =>setLogout()}>
                                     Logout
                                 </button>
-                            </Link> :
-                            <Link to='/login'>
-                                <button className="btn btn-ghost btn-outline">
+                            :
+                            <Link to="/login"> <button className="btn btn-ghost btn-outline">
                                     Login
-                                </button>
+                            </button>
                             </Link>
+                           
                     }
                 </div>
             </div>

@@ -1,9 +1,11 @@
 import {z} from "zod";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import axios from "axios";
 import {baseUrl} from "../../axios/baseUrl.js";
 import {useNavigate} from "react-router-dom";
+
+import {useDispatch} from "react-redux";
+import { login } from "../../redux/features/authSlice.js";
 
 const schema = z.object({
     email: z.string().email({message: "Enter a Valid Email"}).nonempty({message: 'Email is Required'}),
@@ -12,6 +14,7 @@ const schema = z.object({
 
 const LoginForm = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const {register, handleSubmit, formState: {errors}} = useForm({
         resolver: zodResolver(schema),
     });
@@ -29,6 +32,9 @@ const LoginForm = () => {
             //     config.headers.Authorization = `Bearer ${token}`;
             //     return config;
             // });
+
+            dispatch(login());
+
             if(user.roleAdmin){
               return  navigate('/admin-dashboard/products');
             }

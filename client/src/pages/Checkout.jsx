@@ -1,6 +1,8 @@
 import {z} from "zod";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
+import { baseUrl } from "../axios/baseUrl";
+import { useNavigate } from "react-router-dom";
 
 const schema = z.object({
     houseNumber: z.string().nonempty({message: "House number is required"}),
@@ -16,9 +18,20 @@ const Checkout = () => {
         resolver: zodResolver(schema),
     });
 
+    const navigate = useNavigate();
+
     const onSubmit = async (data) => {
         try {
-            console.log(`House Number: ${data.houseNumber},Town: ${data.town},City: ${data.city},State: ${data.state}(${data.zipcode})- Mobile Number: ${data.mobileNumber}`);
+            const deliveryAddress = `House Number: ${data.houseNumber},Town: ${data.town},City: ${data.city},State: ${data.state}(${data.zipcode})- Mobile Number: ${data.mobileNumber}`;
+            const res = await baseUrl.post('/orders', {
+                deliveryAddress: deliveryAddress,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${document.cookie.split("token=")[1].split(";")[0]}`,
+                }
+            });
+            return navigate('/orders');
+        
         } catch (e) {
             console.log(e);
         }
@@ -48,20 +61,21 @@ const Checkout = () => {
                         </div>
                         <div className="form-control">
                             <label className="label">
-                                <span className="label-text text-lg">State</span>
-                                {errors.state && <p className={"px-5"}>{errors.state.message}</p>}
-                            </label>
-                            <input {...register('state')} type="text" placeholder="State"
-                                        className="input input-bordered"/>
-                        </div>
-                        <div className="form-control">
-                            <label className="label">
                                 <span className="label-text text-lg">City</span>
                                 {errors.city && <p className={"px-5"}>{errors.city.message}</p>}
                             </label>
                             <input {...register('city')} type="text" placeholder="City"
                                         className="input input-bordered"/>
                         </div>
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text text-lg">State</span>
+                                {errors.state && <p className={"px-5"}>{errors.state.message}</p>}
+                            </label>
+                            <input {...register('state')} type="text" placeholder="State"
+                                        className="input input-bordered"/>
+                        </div>
+                        
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text text-lg">Zipcode</span>

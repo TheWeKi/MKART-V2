@@ -72,7 +72,7 @@ const ProductTable = () => {
                 </table>
             </div>
 
-            <Pagination/>
+            {/* <Pagination/> */}
 
         </main>
     )

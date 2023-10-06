@@ -18,7 +18,6 @@ const Cart = () => {
                     Authorization: `Bearer ${token}`,
                 }
             })
-            console.log(res.data)
             setCartItems(res.data.cartItems);
             setTotalPrice(res.data.totalPrice);
             setTax(res.data.tax);

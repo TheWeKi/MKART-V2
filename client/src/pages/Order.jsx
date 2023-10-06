@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
-import Pagination from "../../product_list/Pagination.jsx";
-import { baseUrl } from "../../../axios/baseUrl.js";
+import { baseUrl } from "../axios/baseUrl.js";
+import { useNavigate } from "react-router-dom";
 
-const OrderTable = () => {
+const Order = () => {
 
     const [orders, setOrders] = useState([]);
+    const navigate = useNavigate();
 
     const fetchOrders = async () => {
-            const data = document.cookie.split("token=")[1];
-            const token = data.split(";")[0];
-            const res = await baseUrl.get(`/orders`,{
+            
+            const res = await baseUrl.get(`/orders/ordersByUser`,{
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${document.cookie.split("token=")[1].split(";")[0]}`,
                 }
             });
             setOrders(res.data);
@@ -24,6 +24,9 @@ const OrderTable = () => {
     
     return (
         <main>
+            <div>
+                <h1 className="text-xl pl-16 font-bold mt-10 mb-5">Orders</h1>
+            </div>
 
             <div className="px-12">
                 <table className="table table-zebra table-lg">
@@ -35,8 +38,7 @@ const OrderTable = () => {
                         <th>Delivery Address</th>
                         <th>Total Amount</th>
                         <th>Status</th>
-                        <th></th>
-                        <th></th>
+                        <th>Date</th>
                     </tr>
                     </thead>
 
@@ -62,10 +64,7 @@ const OrderTable = () => {
                                     {order.isDelivered ? "Delivered" : "Not Delivered"}
                                 </td>
                                 <td>
-                                    <button className="btn btn-outline btn-primary btn-sm">Modify</button>
-                                </td>
-                                <td>
-                                    <button className="btn btn-outline btn-error btn-sm">Delete</button>
+                                    {order.createdAt.split("T")[0]}
                                 </td>
                             </tr>
                         ))
@@ -77,10 +76,8 @@ const OrderTable = () => {
                 </table>
             </div>
 
-            {/* <Pagination/> */}
-
         </main>
     )
 }
 
-export default OrderTable;
+export default Order;
