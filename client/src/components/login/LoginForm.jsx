@@ -1,9 +1,9 @@
 import {z} from "zod";
-import {useForm} from "react-hook-form";
+import {set, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {baseUrl} from "../../axios/baseUrl.js";
 import {useNavigate} from "react-router-dom";
-
+import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {login} from "../../redux/features/authSlice.js";
 
@@ -19,14 +19,13 @@ const LoginForm = () => {
         resolver: zodResolver(schema),
     });
 
+    const [invalid, setInvalid] = useState(false);
+
     const onSubmit = async (data) => {
         try {
             const res = await baseUrl.post('/login', data);
             const token = res.data.token;
             const user = res.data.user;
-            if (!token) {
-                return console.log("Token not found.");
-            }
             document.cookie = `token=${token}`;
             // baseUrl.interceptors.request.use((config) => {
             //     config.headers.Authorization = `Bearer ${token}`;
@@ -40,7 +39,7 @@ const LoginForm = () => {
             }
             navigate('/products');
         } catch (e) {
-            console.log(e);
+            setInvalid(true);
         }
     };
 
@@ -48,6 +47,7 @@ const LoginForm = () => {
         <>
             <div className="card max-w-xl w-full shadow-3xl bg-base-100">
                 <div className="card-body card-bordered border-base-300 rounded-box">
+                    {invalid && <p className={"text-red-500"}>Invalid Credentials</p>}
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="form-control">
                             <label className="label">
