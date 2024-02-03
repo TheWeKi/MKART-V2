@@ -13,6 +13,7 @@ import CreateProduct from "./components/admin_dashboard/products/CreateProduct.j
 import AdminDashboard from "./pages/AdminDashboard.jsx";
 import Checkout from "./pages/Checkout.jsx";
 import Order from "./pages/Order.jsx"
+import { AuthenticatedRoute } from "./utils/AuthenticatedRoute.jsx"
 
 
 const App = () => {
@@ -26,15 +27,15 @@ const App = () => {
                     <Route path="/" element={<Home/>}/>
                     <Route path="/products" element={<ProductList/>}/>
                     <Route path="/product-detail/:productId" element={<ProductDetail/>}/>
-                    <Route path="/cart" element={<Cart/>}/>
+                    <Route path="/cart" element={<AuthenticatedRoute><Cart/></AuthenticatedRoute>}/>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
-                    <Route path="/checkout" element={<Checkout/>}/>
-                    <Route path="/orders" element={<Order/>}/>
+                    <Route path="/checkout" element={<AuthenticatedRoute><Checkout/></AuthenticatedRoute>}/>
+                    <Route path="/orders" element={<AuthenticatedRoute><Order/></AuthenticatedRoute>}/>
 
 
-                    <Route path="/admin-dashboard/:dashboard" element={<AdminDashboard/>}/>
-                    <Route path="/admin-dashboard/products/create-product" element={<CreateProduct/>}/>
+                    <Route path="/admin-dashboard/:dashboard" element={<AuthenticatedRoute><AdminDashboard/></AuthenticatedRoute>}/>
+                    <Route path="/admin-dashboard/products/create-product" element={<AuthenticatedRoute><CreateProduct/></AuthenticatedRoute>}/>
                     <Route path="*" element={<ErrorPage/>}/>
                 </Routes>
 

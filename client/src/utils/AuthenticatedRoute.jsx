@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-const AuthenticatedRoute = ( props ) => {
+export const AuthenticatedRoute = ( props ) => {
 
     const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);
 
