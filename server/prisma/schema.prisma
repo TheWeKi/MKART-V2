@@ -30,6 +30,8 @@ model User {
   roleAdmin Boolean   @default(false)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  resetToken String?
+  resetTokenExpiry DateTime?
   products  Product[]
   orders    Order[]
   Cart      Cart?
