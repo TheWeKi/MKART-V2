@@ -64,9 +64,9 @@ const LoginForm = () => {
                             </label>
                             <input {...register('password')} type="password" placeholder="password"
                                    className="input input-bordered"/>
-                            {/* <label className="label">
-                               <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
-                            </label> */}
+                            <label className="label">
+                                <p className="label-text-alt link link-hover" onClick={()=>navigate('/reset')}>Forgot password?</p>
+                            </label>
                         </div>
                         <div className="form-control mt-6">
                             <button className="btn btn-outline">Login</button>

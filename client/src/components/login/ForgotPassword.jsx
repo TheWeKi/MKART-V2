@@ -1,27 +1,26 @@
 import { z } from 'zod';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate, useParams } from 'react-router-dom';
 import { baseUrl } from '../../axios/baseUrl';
-
+import { useState } from 'react';
 //ValidationSchema
 const schema = z.object({
-	password: z.string({ message: 'Password is required' }).min(6, { message: 'Password is too short [min 6 chars]' }),
+	email: z.string({ message: 'Email is Required' }).email({ message: 'Enter a Valid Email' }),
 });
 
-const ResetPassword = () => {
-
-	const { resetToken } = useParams();
-	const navigate = useNavigate();
+const ForgotPassword = () => {
 
 	const { register, handleSubmit, formState: { errors } } = useForm({
 		resolver: zodResolver(schema),
 	});
 
+    const [sentEmail, setSentEmail] = useState(false);
+
 	const onSubmit = async (data) => {
 		try {
-			await baseUrl.post(`/newPassword`, { password: data.password, resetToken: resetToken })
-			navigate('/login');
+		    const response = await baseUrl.post(`/reset`, { email: data.email })
+            if(response.status === 202) setSentEmail(true);
+            console.log(response);
 		} catch (error) {
 			console.log(error)
 		}
@@ -34,14 +33,15 @@ const ResetPassword = () => {
 					<form onSubmit={handleSubmit(onSubmit)}>
 						<div className="form-control">
 							<label className="label">
-								<span className="label-text text-lg">New Password</span>
-								{errors.password && <p className={"px-5 "}>{errors.password.message}</p>}
+								<span className="label-text text-lg">Enter E-mail</span>
+								{errors.email && <p className={"px-5 "}>{errors.password.message}</p>}
 							</label>
-							<input {...register('password')} type="password" placeholder="password"
+							<input {...register('email')} type="email" placeholder="E-mail"
 								className="input input-bordered" />
 						</div>
+                        {sentEmail && <p className={"text-green-700 p-1"}>Please check your Email</p>}
 						<div className="form-control mt-6">
-							<button className="btn btn-outline">Reset</button>
+							<button className="btn btn-outline">Send Link</button>
 						</div>
 					</form>
 				</div>
@@ -50,4 +50,4 @@ const ResetPassword = () => {
 	)
 }
 
-export { ResetPassword };
+export { ForgotPassword };
