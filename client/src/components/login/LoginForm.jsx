@@ -1,5 +1,5 @@
 import {z} from "zod";
-import {set, useForm} from "react-hook-form";
+import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {baseUrl} from "../../axios/baseUrl.js";
 import {useNavigate} from "react-router-dom";
@@ -64,9 +64,9 @@ const LoginForm = () => {
                             </label>
                             <input {...register('password')} type="password" placeholder="password"
                                    className="input input-bordered"/>
-                            {/*<label className="label">*/}
-                            {/*    <a href="#" className="label-text-alt link link-hover">Forgot password?</a>*/}
-                            {/*</label>*/}
+                            {/* <label className="label">
+                               <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
+                            </label> */}
                         </div>
                         <div className="form-control mt-6">
                             <button className="btn btn-outline">Login</button>
