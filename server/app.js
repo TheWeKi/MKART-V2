@@ -7,8 +7,19 @@ import authRouter from "./routes/authRoutes.js";
 import cookieParser from "cookie-parser";
 import {errorMiddleware} from "./middleware/error.js";
 import orderRouter from "./routes/orderRoutes.js";
+import session from "express-session"
+import passport from "passport";
 
 const app = express();
+
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true
+}))
+
+app.use(passport.initialize());
+app.use(passport.session({secret: process.env.SESSION_SECRET}));
 
 app.use(cors());
 app.use(json());
