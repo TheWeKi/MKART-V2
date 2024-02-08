@@ -23,14 +23,5 @@ authRouter
     .route('/newPassword')
     .post(newPassword);
 
-authRouter.route('/auth/google').get(passport.authenticate('google'));
-
-authRouter.route('/auth/google/callback').get(
-        passport.authenticate('google', {
-            failureRedirect: 'http://localhost:3000/login',
-            successRedirect: 'http://localhost:3000/'
-        })
-);
-
 
 export default authRouter;
