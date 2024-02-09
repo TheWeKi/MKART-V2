@@ -1,19 +1,8 @@
 import Divider from "../ui/Divider.jsx";
-import axios from "axios";
-import {useCookies} from "react-cookie";
-import {useEffect} from "react";
-
 
 
 const ThirdPartyLogin = () => {
 
-    const [cookies] = useCookies(['token']);
-
-    useEffect(() => {
-        const token = cookies.token;
-        console.log(token);
-
-    }, []);
 
     return (
         <>
