@@ -1,6 +1,5 @@
 import express from "express";
-import {login, signUp ,reset, newPassword} from "../controller/authController.js";
-import passport from "passport";
+import {login, signUp, reset, newPassword, googleAuth, googleAuthHandler} from "../controller/authController.js";
 import "../utils/google.js";
 
 
@@ -10,6 +9,14 @@ const authRouter = express.Router();
 authRouter
     .route('/login')
     .post(login);
+
+authRouter
+    .route('/google')
+    .get(googleAuth);
+
+authRouter
+    .route('/auth/google')
+    .get(googleAuthHandler);
 
 authRouter
     .route('/signup')

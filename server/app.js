@@ -10,8 +10,12 @@ import orderRouter from "./routes/orderRoutes.js";
 
 const app = express();
 
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(json());
 app.use(cookieParser());
 app.use(urlencoded({extended: true}));
