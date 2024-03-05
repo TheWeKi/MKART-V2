@@ -8,7 +8,7 @@
     "start": "nodemon --env-file=.env server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Rituraj Pandey",
+  "author": "Rituraj Pandey and Shekhar Kumar",
   "license": "MIT",
   "devDependencies": {
     "nodemon": "^3.0.1",

@@ -10,7 +10,7 @@ const schema = z.object({
     town: z.string().nonempty({message: "Town is required"}),
     state: z.string().nonempty({message: 'State is required'}),
     city: z.string().nonempty({message: 'City is required'}),
-    zipcode: z.string().nonempty({message: 'Zipcode is required'}),
+    zipcode: z.string().min(1,{message: 'Zipcode is required'}),
 });
 
 const Checkout = () => {
