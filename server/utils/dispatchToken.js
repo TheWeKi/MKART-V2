@@ -1,7 +1,8 @@
 import jwt from "jsonwebtoken";
 import pair from "./keyPair.js";
+
 export const dispatchJsonToken = (user, statusCode, res) => {
-    
+
     const token = jwt.sign({id: user.id}, pair.private, {
         algorithm: "RS256",
         expiresIn: process.env.JWT_EXPIRE,

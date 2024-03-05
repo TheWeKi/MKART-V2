@@ -8,8 +8,8 @@ import {useDispatch} from "react-redux";
 import {login} from "../../redux/features/authSlice.js";
 
 const schema = z.object({
-    email: z.string().email({message: "Enter a Valid Email"}).nonempty({message: 'Email is Required'}),
-    password: z.string().nonempty({message: 'Password is required'}).min(6, {message: 'Password is too short [min 6 chars]'}),
+    email: z.string().email("Enter a Valid Email").min(1, 'Email is required'),
+    password: z.string().min(1, "Password is required").min(6, 'Password is too short [min 6 chars]'),
 });
 
 const LoginForm = () => {
@@ -65,7 +65,8 @@ const LoginForm = () => {
                             <input {...register('password')} type="password" placeholder="password"
                                    className="input input-bordered"/>
                             <label className="label">
-                                <p className="label-text-alt link link-hover" onClick={()=>navigate('/reset')}>Forgot password?</p>
+                                <p className="label-text-alt link link-hover" onClick={() => navigate('/reset')}>Forgot
+                                    password?</p>
                             </label>
                         </div>
                         <div className="form-control mt-6">

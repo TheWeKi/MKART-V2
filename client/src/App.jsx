@@ -13,9 +13,9 @@ import CreateProduct from "./components/admin_dashboard/products/CreateProduct.j
 import AdminDashboard from "./pages/AdminDashboard.jsx";
 import Checkout from "./pages/Checkout.jsx";
 import Order from "./pages/Order.jsx"
-import { AuthenticatedRoute } from "./utils/AuthenticatedRoute.jsx"
+import {AuthenticatedRoute} from "./utils/AuthenticatedRoute.jsx"
 import {ResetPassword} from "./components/login/ResetPassword.jsx"
-import { ForgotPassword } from "./components/login/ForgotPassword.jsx"
+import {ForgotPassword} from "./components/login/ForgotPassword.jsx"
 
 const App = () => {
     return (
@@ -26,19 +26,25 @@ const App = () => {
 
                 <Routes>
                     <Route path="/" element={<Home/>}/>
+
                     <Route path="/products" element={<ProductList/>}/>
                     <Route path="/product-detail/:productId" element={<ProductDetail/>}/>
+
                     <Route path="/cart" element={<AuthenticatedRoute><Cart/></AuthenticatedRoute>}/>
+
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/reset" element={<ForgotPassword/>}/>
                     <Route path="/reset/:resetToken" element={<ResetPassword/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
+
                     <Route path="/checkout" element={<AuthenticatedRoute><Checkout/></AuthenticatedRoute>}/>
                     <Route path="/orders" element={<AuthenticatedRoute><Order/></AuthenticatedRoute>}/>
 
+                    <Route path="/admin-dashboard/:dashboard"
+                           element={<AuthenticatedRoute><AdminDashboard/></AuthenticatedRoute>}/>
+                    <Route path="/admin-dashboard/products/create-product"
+                           element={<AuthenticatedRoute><CreateProduct/></AuthenticatedRoute>}/>
 
-                    <Route path="/admin-dashboard/:dashboard" element={<AuthenticatedRoute><AdminDashboard/></AuthenticatedRoute>}/>
-                    <Route path="/admin-dashboard/products/create-product" element={<AuthenticatedRoute><CreateProduct/></AuthenticatedRoute>}/>
                     <Route path="*" element={<ErrorPage/>}/>
                 </Routes>
 

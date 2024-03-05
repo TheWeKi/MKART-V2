@@ -6,9 +6,9 @@ import {baseUrl} from "../../axios/baseUrl.js";
 
 
 const schema = z.object({
-    username: z.string().nonempty({message: 'Username is Required'}).min(3, {message: 'Username must contain 3 chars'}),
-    email: z.string().email({message: "Enter a Valid Email"}).nonempty({message: 'Email is Required'}),
-    password: z.string().nonempty({message: 'Password is required'}).min(6, {message: 'Password too short'}),
+    username: z.string().min(3, 'Username must contain 3 chars'),
+    email: z.string().email("Invalid Email").min(1, 'Email is required'),
+    password: z.string().min(6, 'Password too short'),
 });
 
 const SignUpForm = () => {

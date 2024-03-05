@@ -9,7 +9,7 @@ const CartCard = ({cartItem}) => {
     }
     useEffect(() => {
         fetchProduct();
-    })
+    }, [])
     return (
         <>
             <div className="max-w-xl w-full bg-base-100 my-4 py-8">

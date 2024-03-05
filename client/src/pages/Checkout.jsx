@@ -5,12 +5,12 @@ import {baseUrl} from "../axios/baseUrl";
 import {useNavigate} from "react-router-dom";
 
 const schema = z.object({
-    houseNumber: z.string().nonempty({message: "House number is required"}),
-    mobileNumber: z.string().nonempty({message: "Mobile number is required"}).length(10, {message: "Mobile number must be 10 digits"}),
-    town: z.string().nonempty({message: "Town is required"}),
-    state: z.string().nonempty({message: 'State is required'}),
-    city: z.string().nonempty({message: 'City is required'}),
-    zipcode: z.string().min(1,{message: 'Zipcode is required'}),
+    houseNumber: z.string().min(1, "House number is required"),
+    mobileNumber: z.string().length(10, {message: "Mobile number must be 10 digits"}),
+    town: z.string().min(1, "Town is required"),
+    state: z.string().min(1, "State is required"),
+    city: z.string().min(1, "City is required"),
+    zipcode: z.string().min(5, "Zipcode Invalid"),
 });
 
 const Checkout = () => {
@@ -23,7 +23,7 @@ const Checkout = () => {
     const onSubmit = async (data) => {
         try {
             const deliveryAddress = `House Number: ${data.houseNumber},Town: ${data.town},City: ${data.city},State: ${data.state}(${data.zipcode})- Mobile Number: ${data.mobileNumber}`;
-            const res = await baseUrl.post('/orders', {
+            await baseUrl.post('/orders', {
                 deliveryAddress: deliveryAddress,
             }, {
                 headers: {

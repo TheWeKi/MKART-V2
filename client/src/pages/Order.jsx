@@ -1,11 +1,9 @@
 import {useEffect, useState} from "react";
 import {baseUrl} from "../axios/baseUrl.js";
-import {useNavigate} from "react-router-dom";
 
 const Order = () => {
 
     const [orders, setOrders] = useState([]);
-    const navigate = useNavigate();
 
     const fetchOrders = async () => {
 

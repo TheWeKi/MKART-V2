@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import pair from "./keyPair.js";
 
-function getGoogleAuth(){
+function getGoogleAuth() {
 
     const rootUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
 
@@ -22,7 +22,7 @@ function getGoogleAuth(){
     return `${rootUrl}?${qs.toString()}`
 }
 
-async function getGoogleData(code){
+async function getGoogleData(code) {
     const url = `https://oauth2.googleapis.com/token`;
     const options = {
         code,
@@ -49,7 +49,7 @@ async function getGoogleData(code){
     return await userData.json();
 }
 
-function createTokenForGoogle(user){
+function createTokenForGoogle(user) {
     const token = jwt.sign({id: user.id}, pair.private, {
         algorithm: "RS256",
         expiresIn: process.env.JWT_EXPIRE,
@@ -62,4 +62,4 @@ function createTokenForGoogle(user){
     return {token, options};
 }
 
-export {getGoogleAuth, getGoogleData , createTokenForGoogle}
+export {getGoogleAuth, getGoogleData, createTokenForGoogle}

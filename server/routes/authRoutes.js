@@ -1,5 +1,5 @@
 import express from "express";
-import {login, signUp, reset, newPassword, googleAuth, googleAuthHandler} from "../controller/authController.js";
+import {googleAuth, googleAuthHandler, login, newPassword, reset, signUp} from "../controller/authController.js";
 import "../utils/google.js";
 
 
