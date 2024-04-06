@@ -118,4 +118,55 @@ const getCart = async (req, res, next) => {
     }
 }
 
-export {addToCart, getCart}
+const deleteCartItem = async (req, res, next) => {
+
+    try {
+        const prodId= req.params.prodId;
+        const userId = req.user.id;
+        const user = await prisma.user.findUnique({
+            where: {id: userId},
+        });
+
+        const product = await prisma.product.findUnique({
+            where: {id: prodId},
+        });
+
+        if (!user || !product) {
+            return next(new Errorhandler(404, "Resource Not Found"));
+        }
+
+        const cart = await prisma.cart.findUnique({
+            where: {userId},
+        });
+
+        if (!cart) {
+            return next(new Errorhandler(404, "Resource Not Found"));
+        }
+
+        const existingCartItem = await prisma.cartItem.findFirst({
+            where: {
+                cartId: cart.id,
+                productId: prodId,
+            },
+        });
+
+        if (!existingCartItem) {
+            return next(new Errorhandler(404, "Resource Not Found"));
+        }
+
+        await prisma.cartItem.delete({
+            where: {
+                id: existingCartItem.id,
+            },
+        });
+
+        res.json({
+            message: 'Product removed from cart successfully',
+        });
+    } catch (e) {
+        next(e);
+    }
+}
+
+
+export {addToCart, getCart, deleteCartItem}

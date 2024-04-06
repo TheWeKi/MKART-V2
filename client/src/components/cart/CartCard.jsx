@@ -7,6 +7,22 @@ const CartCard = ({cartItem}) => {
         const res = await baseUrl.get(`/products/${cartItem.prodId}`)
         setProduct(res.data);
     }
+
+    const deleteCartItem = async () => {
+        try {
+            const data = document.cookie.split("token=")[1];
+            const token = data.split(";")[0];
+            const res = await baseUrl.delete(`/carts/${cartItem.prodId}`,{
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            })
+            console.log(res.data);
+        } catch (e) {
+            console.log(e)
+        }
+
+    }
     useEffect(() => {
         fetchProduct();
     }, [])
@@ -32,11 +48,11 @@ const CartCard = ({cartItem}) => {
                     </div>
 
                     <div className="flex flex-1 items-center justify-end gap-2">
+
                         <dd className="inline">{cartItem.quantity}</dd>
 
+                        <button onClick={deleteCartItem} className="text-gray-600 transition hover:text-red-600 px-2">
 
-                        <button className="text-gray-600 transition hover:text-red-600">
-                            <span className="sr-only">Remove item</span>
 
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
