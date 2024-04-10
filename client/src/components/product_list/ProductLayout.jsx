@@ -1,8 +1,7 @@
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import ProductCard from "./ProductCard.jsx";
-import {useEffect, useState} from "react";
-import {baseUrl} from "../../axios/baseUrl.js";
-
+import { useEffect, useState } from "react";
+import { baseUrl } from "../../axios/baseUrl.js";
 
 const ProductLayout = () => {
     const [products, setProducts] = useState([]);
@@ -22,9 +21,11 @@ const ProductLayout = () => {
                 {
                     products.map(product => (
                         <div key={product.id}>
-                            <Link to={`/product-detail/${product.id}`}>
-                                <ProductCard product={product}/>
-                            </Link>
+                            {
+                                <Link to={`/product-detail/${product.id}`}>
+                                    <ProductCard product={product} />
+                                </Link>
+                            }
                         </div>
                     ))
                 }

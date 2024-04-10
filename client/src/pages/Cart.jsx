@@ -23,7 +23,6 @@ const Cart = () => {
                 tax: res.data.tax,
                 shipping: res.data.shipping
             }
-            console.log(resData);
             dispatch(setCart(resData));
         } catch (e) {
             console.log(e)

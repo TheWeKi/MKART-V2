@@ -1,5 +1,6 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
+import {useSelector} from "react-redux";
 import axios from "axios";
 import {baseUrl} from "../axios/baseUrl.js";
 
@@ -8,6 +9,8 @@ const ProductDetail = () => {
     const {productId} = useParams();
     const [product, setProduct] = useState({});
     const [quantity, setQuantity] = useState(1);
+
+    const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);
 
     const fetchProduct = async () => {
         const res = await baseUrl.get(`/products/${productId}`)
@@ -24,6 +27,11 @@ const ProductDetail = () => {
     }
 
     const addToCart = async () => {
+        if (!isAuthenticated) {
+            navigate('/login');
+            return;
+        }
+        
         try {
             const data = document.cookie.split("token=")[1];
             const token = data.split(";")[0];
@@ -45,6 +53,7 @@ const ProductDetail = () => {
     useEffect(() => {
         fetchProduct();
     }, [])
+
     return (
         <>
             <div className="min-h-[70vh] bg-base-100 flex flex-col md:flex-row place-content-evenly items-center px-8">

@@ -3,45 +3,46 @@ import {baseUrl} from "../../axios/baseUrl.js";
 import {setCart} from "../../redux/features/cartSlice.js";
 import {useDispatch} from "react-redux";
 const CartCard = ({cartItem}) => {
+
     const dispatch = useDispatch();
     const [product, setProduct] = useState({});
+
     const fetchProduct = async () => {
-        console.log(cartItem.prodId);
         const res = await baseUrl.get(`/products/${cartItem.prodId}`)
         setProduct(res.data);
-        console.log(res.data);
-
     }
 
     const deleteCartItem = async () => {
         try {
             const data = document.cookie.split("token=")[1];
             const token = data.split(";")[0];
-            const res = await baseUrl.delete(`/carts/${cartItem.prodId}`,{
+
+            await baseUrl.delete(`/carts/${cartItem.prodId}`,{
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
             })
-            console.log(res.data);
+
             const res2 = await baseUrl.get(`/carts`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
             })
+
             const resData = {
                 cartItems: res2.data.cartItems,
                 totalPrice: res2.data.totalPrice,
                 tax: res2.data.tax,
                 shipping: res2.data.shipping
             }
-            console.log(resData);
+
             dispatch(setCart(resData));
-            // Update the cart state after deleting an item
         } catch (e) {
             console.log(e)
         }
 
     }
+    
     useEffect(() => {
         fetchProduct();
     }, [])
