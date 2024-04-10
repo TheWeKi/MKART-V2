@@ -13,9 +13,11 @@ import CreateProduct from "./components/admin_dashboard/products/CreateProduct.j
 import AdminDashboard from "./pages/AdminDashboard.jsx";
 import Checkout from "./pages/Checkout.jsx";
 import Order from "./pages/Order.jsx"
+import OrderSummary from "./pages/OrderSummary.jsx"
 import {AuthenticatedRoute} from "./utils/AuthenticatedRoute.jsx"
 import {ResetPassword} from "./components/login/ResetPassword.jsx"
 import {ForgotPassword} from "./components/login/ForgotPassword.jsx"
+
 
 const App = () => {
     return (
@@ -38,6 +40,7 @@ const App = () => {
                     <Route path="/signup" element={<SignUp/>}/>
 
                     <Route path="/checkout" element={<AuthenticatedRoute><Checkout/></AuthenticatedRoute>}/>
+                    <Route path="/order-summary" element={<AuthenticatedRoute><OrderSummary/></AuthenticatedRoute>}/>
                     <Route path="/orders" element={<AuthenticatedRoute><Order/></AuthenticatedRoute>}/>
 
                     <Route path="/admin-dashboard/:dashboard"

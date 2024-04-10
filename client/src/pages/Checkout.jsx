@@ -23,6 +23,7 @@ const Checkout = () => {
     const onSubmit = async (data) => {
         try {
             const deliveryAddress = `House Number: ${data.houseNumber},Town: ${data.town},City: ${data.city},State: ${data.state}(${data.zipcode})- Mobile Number: ${data.mobileNumber}`;
+
             await baseUrl.post('/orders', {
                 deliveryAddress: deliveryAddress,
             }, {
@@ -30,6 +31,7 @@ const Checkout = () => {
                     Authorization: `Bearer ${document.cookie.split("token=")[1].split(";")[0]}`,
                 }
             });
+
             return navigate('/orders');
 
         } catch (e) {

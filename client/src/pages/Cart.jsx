@@ -4,6 +4,8 @@ import { useEffect,} from "react";
 import { baseUrl } from "../axios/baseUrl.js";
 import {setCart}  from '../redux/features/cartSlice.js';
 import {useDispatch, useSelector} from 'react-redux';
+
+
 const Cart = () => {
 
     const dispatch = useDispatch();
@@ -63,53 +65,12 @@ const Cart = () => {
                             <div className="flex-col content-center place-items-center max-w-lg w-full mx-auto px-8 py-8">
                                 <div>
 
-                                    <Link to={"/checkout"}>
+                                    <Link to={"/order-summary"}>
                                         <button className="btn btn-block mt-6 btn-outline btn-neutral">Proceed To COMPLETE</button>
                                     </Link>
 
                                 </div>
                             </div>
-                            
-                            {/* Order Summary Below */}
-                            {/* <div className="flex-col max-w-lg w-full mx-auto px-8 py-8">
-                                <header className="text-center">
-                                    <h1 className='text-4xl mb-2'>Order Summary</h1>
-                                </header>
-
-                                <div className="mt-8 flex justify-between border-t border-gray-100 pt-8">
-
-                                    <div className="text-lg">SubTotal</div>
-                                    <div className="text-lg">${totalPrice}</div>
-
-                                </div>
-                                <div className="mt-8 flex justify-between ">
-
-                                    <div className="text-lg">Shipping</div>
-                                    <div className="text-lg">${ship}</div>
-
-                                </div>
-                                <div className="mt-8 flex justify-between ">
-
-                                    <div className="text-lg">Tax</div>
-                                    <div className="text-lg">${tax}</div>
-
-                                </div>
-
-                                <div className="mt-8 flex justify-between ">
-
-                                    <h2 className="text-xl font-semibold">Total</h2>
-                                    <h2 className="text-xl font-semibold">{tax + ship + totalPrice}</h2>
-
-                                </div>
-
-                                <div className="mt-8 flex justify-center ">
-
-                                    <Link to={"/checkout"}>
-                                        <button className="btn btn-lg mt-4 btn-outline">Checkout</button>
-                                    </Link>
-
-                                </div>
-                            </div> */}
                         </div>
                     </section>
             }

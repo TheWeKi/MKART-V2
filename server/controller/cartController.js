@@ -110,7 +110,7 @@ const getCart = async (req, res, next) => {
         res.json({
             cartItems: cartItemsWithTotalPrice,
             totalPrice,
-            tax: totalPrice * 0.24,
+            tax: totalPrice * 0.12,
             shipping: 30,
         });
     } catch (e) {

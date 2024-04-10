@@ -2,6 +2,8 @@ import {useEffect, useState} from "react";
 import {baseUrl} from "../../axios/baseUrl.js";
 import {setCart} from "../../redux/features/cartSlice.js";
 import {useDispatch} from "react-redux";
+
+
 const CartCard = ({cartItem}) => {
 
     const dispatch = useDispatch();
@@ -73,7 +75,6 @@ const CartCard = ({cartItem}) => {
                         <dd className="inline">{cartItem.quantity}</dd>
 
                         <button onClick={deleteCartItem} className="text-gray-600 transition hover:text-red-600 px-2">
-
 
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
