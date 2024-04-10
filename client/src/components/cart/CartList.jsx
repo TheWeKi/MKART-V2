@@ -1,13 +1,15 @@
 import CartCard from "./CartCard.jsx";
+import {useSelector} from "react-redux";
 
-const CartList = ({cartItems}) => {
+const CartList = () => {
 
+    const cart = useSelector((state) => state.cart);
     return (
         <>
             {
-                cartItems.map(cartItem => (
+                cart.cartItems.map(cartItem => (
                     <div key={cartItem.prodId}>
-                        <CartCard cartItem={cartItem}/>
+                        <CartCard cartItem={cartItem} />
                     </div>
                 ))
             }
@@ -16,3 +18,4 @@ const CartList = ({cartItems}) => {
 }
 
 export default CartList
+

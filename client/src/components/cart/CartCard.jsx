@@ -1,11 +1,16 @@
 import {useEffect, useState} from "react";
 import {baseUrl} from "../../axios/baseUrl.js";
-
+import {setCart} from "../../redux/features/cartSlice.js";
+import {useDispatch} from "react-redux";
 const CartCard = ({cartItem}) => {
+    const dispatch = useDispatch();
     const [product, setProduct] = useState({});
     const fetchProduct = async () => {
+        console.log(cartItem.prodId);
         const res = await baseUrl.get(`/products/${cartItem.prodId}`)
         setProduct(res.data);
+        console.log(res.data);
+
     }
 
     const deleteCartItem = async () => {
@@ -18,6 +23,20 @@ const CartCard = ({cartItem}) => {
                 }
             })
             console.log(res.data);
+            const res2 = await baseUrl.get(`/carts`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            })
+            const resData = {
+                cartItems: res2.data.cartItems,
+                totalPrice: res2.data.totalPrice,
+                tax: res2.data.tax,
+                shipping: res2.data.shipping
+            }
+            console.log(resData);
+            dispatch(setCart(resData));
+            // Update the cart state after deleting an item
         } catch (e) {
             console.log(e)
         }
@@ -26,6 +45,7 @@ const CartCard = ({cartItem}) => {
     useEffect(() => {
         fetchProduct();
     }, [])
+
     return (
         <>
             <div className="max-w-xl w-full bg-base-100 my-4 py-8">

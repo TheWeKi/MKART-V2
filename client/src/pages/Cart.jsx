@@ -1,13 +1,12 @@
 import CartList from "../components/cart/CartList.jsx";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect,} from "react";
 import { baseUrl } from "../axios/baseUrl.js";
-
+import {setCart}  from '../redux/features/cartSlice.js';
+import {useDispatch, useSelector} from 'react-redux';
 const Cart = () => {
-    const [cartItems, setCartItems] = useState([]);
-    const [totalPrice, setTotalPrice] = useState(0);
-    const [tax, setTax] = useState(0);
-    const [ship, setShip] = useState(0);
+
+    const dispatch = useDispatch();
 
     const fetchCartItems = async () => {
         try {
@@ -18,14 +17,20 @@ const Cart = () => {
                     Authorization: `Bearer ${token}`,
                 }
             })
-            setCartItems(res.data.cartItems);
-            setTotalPrice(res.data.totalPrice);
-            setTax(res.data.tax);
-            setShip(res.data.shipping);
+            const resData = {
+                cartItems: res.data.cartItems,
+                totalPrice: res.data.totalPrice,
+                tax: res.data.tax,
+                shipping: res.data.shipping
+            }
+            console.log(resData);
+            dispatch(setCart(resData));
         } catch (e) {
             console.log(e)
         }
     }
+
+    const cart = useSelector((state) => state.cart);
 
     useEffect(() => {
         fetchCartItems();
@@ -33,7 +38,7 @@ const Cart = () => {
     return (
         <>
             {
-                cartItems.length === 0 ?
+                cart.cartItems && cart.cartItems.length === 0 ?
                     <div className="hero bg-base-100 min-h-[70vh]">
                         <div className="hero-content text-center">
                             <div className="max-w-lg">
@@ -52,7 +57,7 @@ const Cart = () => {
                             <div className="flex-col max-w-lg w-full mx-auto px-8">
                                 <div className="lg:fixed lg:h-[70vh] lg:w-[28vw] lg:overflow-y-scroll">
 
-                                    <CartList cartItems={cartItems} />
+                                    <CartList />
 
                                 </div>
                             </div>
