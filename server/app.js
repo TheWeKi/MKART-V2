@@ -11,7 +11,7 @@ import paymentRouter from "./routes/paymentRoutes.js";
 const app = express();
 
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: process.env.CLIENT_URL,
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
@@ -32,6 +32,7 @@ app.get("/", (req, res) => {
         status: "running",
     });
 });
+
 app.use(errorMiddleware);
 
 export default app;

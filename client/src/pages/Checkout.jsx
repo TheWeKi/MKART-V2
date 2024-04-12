@@ -25,7 +25,7 @@ const Checkout = () => {
         const body = {
             products : cart.cartItems
         }
-        const response = await baseUrl.post(`/payments/create-checkout-session`,body, {
+        const response = await baseUrl.post(`/payments/create-checkout-session`, body, {
             headers: {
                 Authorization: `Bearer ${document.cookie.split("token=")[1].split(";")[0]}`,
             }
@@ -38,13 +38,14 @@ const Checkout = () => {
         console.log(cart);
     }
 
-
     const navigate = useNavigate();
 
     const onSubmit = async (data) => {
         try {
 
-            await makePayment();
+            const xyz = await makePayment();
+            console.log(xyz);
+
             const deliveryAddress = `House Number: ${data.houseNumber},Town: ${data.town},City: ${data.city},State: ${data.state}(${data.zipcode})- Mobile Number: ${data.mobileNumber}`;
 
             await baseUrl.post('/orders', {
