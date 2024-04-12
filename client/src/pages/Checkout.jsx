@@ -3,7 +3,8 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {baseUrl} from "../axios/baseUrl";
 import {useNavigate} from "react-router-dom";
-
+import {loadStripe} from "@stripe/stripe-js";
+import {useSelector} from "react-redux";
 const schema = z.object({
     houseNumber: z.string().min(1, "House number is required"),
     mobileNumber: z.string().length(10, {message: "Mobile number must be 10 digits"}),
@@ -14,14 +15,36 @@ const schema = z.object({
 });
 
 const Checkout = () => {
+    const cart = useSelector((state) => state.cart);
     const {register, handleSubmit, formState: {errors}} = useForm({
         resolver: zodResolver(schema),
     });
+
+    const makePayment = async () => {
+        const stripe = await loadStripe('pk_test_51NU6M8SGc2BOiEgPZKkvaZpCD0GHWfOruWn4gyy4myO8DhWm8PA9UxKW0FyfnAYUeEPiYlZlE9upH8h1j2065kex00M0uT8eIc');
+        const body = {
+            products : cart.cartItems
+        }
+        const response = await baseUrl.post(`/payments/create-checkout-session`,body, {
+            headers: {
+                Authorization: `Bearer ${document.cookie.split("token=")[1].split(";")[0]}`,
+            }
+        });
+        console.log(response.data);
+        const result = await stripe.redirectToCheckout({
+            sessionId: response.data.id,
+        });
+        console.log(result);
+        console.log(cart);
+    }
+
 
     const navigate = useNavigate();
 
     const onSubmit = async (data) => {
         try {
+
+            await makePayment();
             const deliveryAddress = `House Number: ${data.houseNumber},Town: ${data.town},City: ${data.city},State: ${data.state}(${data.zipcode})- Mobile Number: ${data.mobileNumber}`;
 
             await baseUrl.post('/orders', {
