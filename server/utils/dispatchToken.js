@@ -24,6 +24,5 @@ export const dispatchJsonToken = (user, statusCode, res) => {
                 email: user.email,
                 roleAdmin: user.roleAdmin,
             },
-        })
-    ;
+        });
 };

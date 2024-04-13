@@ -20,43 +20,30 @@ const Checkout = () => {
         resolver: zodResolver(schema),
     });
 
-    const makePayment = async () => {
+    const makePayment = async (deliveryAddress) => {
         const stripe = await loadStripe('pk_test_51NU6M8SGc2BOiEgPZKkvaZpCD0GHWfOruWn4gyy4myO8DhWm8PA9UxKW0FyfnAYUeEPiYlZlE9upH8h1j2065kex00M0uT8eIc');
         const body = {
-            products : cart.cartItems
+            products : cart.cartItems,
+            deliveryAddress
         }
         const response = await baseUrl.post(`/payments/create-checkout-session`, body, {
             headers: {
                 Authorization: `Bearer ${document.cookie.split("token=")[1].split(";")[0]}`,
             }
         });
-        console.log(response.data);
+        // console.log(response.data);
         const result = await stripe.redirectToCheckout({
             sessionId: response.data.id,
         });
-        console.log(result);
-        console.log(cart);
+        // console.log(result);
+        // console.log(cart);
     }
-
-    const navigate = useNavigate();
 
     const onSubmit = async (data) => {
         try {
 
-            const xyz = await makePayment();
-            console.log(xyz);
-
             const deliveryAddress = `House Number: ${data.houseNumber},Town: ${data.town},City: ${data.city},State: ${data.state}(${data.zipcode})- Mobile Number: ${data.mobileNumber}`;
-
-            await baseUrl.post('/orders', {
-                deliveryAddress: deliveryAddress,
-            }, {
-                headers: {
-                    Authorization: `Bearer ${document.cookie.split("token=")[1].split(";")[0]}`,
-                }
-            });
-
-            return navigate('/orders');
+            await makePayment(deliveryAddress);
 
         } catch (e) {
             console.log(e);
