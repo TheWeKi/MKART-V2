@@ -10,10 +10,7 @@ const OrderSummary = () => {
     const [a, seta] = useState({});
 
     return (
-        <div onClick={() => {
-            seta(cart)
-            console.log(a)
-        }}> 
+        <div onClick={() => seta(cart)}> 
             
             <div className="flex-col max-w-lg w-full mx-auto px-8 py-8">
                 <header className="text-center">

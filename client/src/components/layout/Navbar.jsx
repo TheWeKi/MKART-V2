@@ -3,19 +3,23 @@ import {Link, useNavigate} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux';
 import {login, logout} from '../../redux/features/authSlice.js';
 
+import Cookies from 'js-cookie';
+
 const Navbar = () => {
 
     const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);//Get the state from redux store to check if user is logged in or not
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const token = document.cookie.split("token=")[1];
+
+    const token = Cookies.get('token');
+
     if (!token) {
         dispatch(logout());//Set the state to false if token is not present in cookies in case of page refresh
     } else {
         dispatch(login()); //Set the state to true if token is present in cookies in case of page refresh
     }
     const setLogout = () => {
-        document.cookie = 'token' + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;'; //Delete the token from cookies if user clicks on logout button
+        Cookies.remove('token'); 
         dispatch(logout()); //Set the state to false if user clicks on logout button
         navigate('/login');
     };

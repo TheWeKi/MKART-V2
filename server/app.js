@@ -1,5 +1,4 @@
 import express, {json, urlencoded} from "express";
-import cors from "cors";
 import productRouter from "./routes/productRoutes.js"
 import userRouter from "./routes/userRoutes.js";
 import cartRouter from "./routes/cartRoutes.js";
@@ -10,12 +9,7 @@ import orderRouter from "./routes/orderRoutes.js";
 import paymentRouter from "./routes/paymentRoutes.js";
 const app = express();
 
-const corsOptions = {
-    origin: process.env.CLIENT_URL,
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
-
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 app.use(json());
 app.use(cookieParser());
 app.use(urlencoded({extended: true}));

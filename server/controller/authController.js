@@ -175,7 +175,6 @@ export const googleAuth = async (req, res, next) => {
 //googleAuthHandler is used to handle the response from the google consent screen (Callback URL)
 export const googleAuthHandler = async (req, res, next) => {
     try {
-        console.log(req);
         const code = req.query.code;
 
         if (!code) {

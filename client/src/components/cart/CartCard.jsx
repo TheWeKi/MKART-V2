@@ -16,20 +16,9 @@ const CartCard = ({cartItem}) => {
 
     const deleteCartItem = async () => {
         try {
-            const data = document.cookie.split("token=")[1];
-            const token = data.split(";")[0];
+            await baseUrl.delete(`/carts/${cartItem.prodId}`);
 
-            await baseUrl.delete(`/carts/${cartItem.prodId}`,{
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                }
-            })
-
-            const res2 = await baseUrl.get(`/carts`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                }
-            })
+            const res2 = await baseUrl.get(`/carts`);
 
             const resData = {
                 cartItems: res2.data.cartItems,

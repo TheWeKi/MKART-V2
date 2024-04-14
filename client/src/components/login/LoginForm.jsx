@@ -24,9 +24,8 @@ const LoginForm = () => {
     const onSubmit = async (data) => {
         try {
             const res = await baseUrl.post('/login', data);
-            const token = res.data.token;
             const user = res.data.user;
-            document.cookie = `token=${token}`;
+            
             // baseUrl.interceptors.request.use((config) => {
             //     config.headers.Authorization = `Bearer ${token}`;
             //     return config;

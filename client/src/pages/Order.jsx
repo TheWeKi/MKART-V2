@@ -6,14 +6,8 @@ const Order = () => {
     const [orders, setOrders] = useState([]);
 
     const fetchOrders = async () => {
-
-        const res = await baseUrl.get(`/orders/ordersByUser`, {
-            headers: {
-                Authorization: `Bearer ${document.cookie.split("token=")[1].split(";")[0]}`,
-            }
-        });
+        const res = await baseUrl.get(`/orders/ordersByUser`);
         setOrders(res.data);
-
     }
 
     useEffect(() => {

@@ -1,17 +1,14 @@
 import prisma from "../database/prismaClient.js";
 import jwt from "jsonwebtoken";
 import Errorhandler from "../utils/errorhandler.js";
-import pair from "../utils/keyPair.js";
 
 export const isAuthenticated = async (req, res, next) => {
     try {
-        const token = req.headers.authorization.split(" ")[1] || req.cookies.token;
+        const token = req.cookies.token || req.headers.authorization.split(" ")[1];
         if (!token) {
             return next(new Errorhandler(400, "Login Required"));
         }
-        const decodedData = await jwt.verify(token, pair.public, {
-            algorithms: ["RS256"],
-        });
+        const decodedData = await jwt.verify(token, process.env.JWT_SECRET);
         req.user = await prisma.user.findFirst({
             where:
                 {

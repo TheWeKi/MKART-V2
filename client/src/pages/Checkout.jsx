@@ -5,6 +5,7 @@ import {baseUrl} from "../axios/baseUrl";
 import {useNavigate} from "react-router-dom";
 import {loadStripe} from "@stripe/stripe-js";
 import {useSelector} from "react-redux";
+
 const schema = z.object({
     houseNumber: z.string().min(1, "House number is required"),
     mobileNumber: z.string().length(10, {message: "Mobile number must be 10 digits"}),
@@ -26,17 +27,12 @@ const Checkout = () => {
             products : cart.cartItems,
             deliveryAddress
         }
-        const response = await baseUrl.post(`/payments/create-checkout-session`, body, {
-            headers: {
-                Authorization: `Bearer ${document.cookie.split("token=")[1].split(";")[0]}`,
-            }
-        });
-        // console.log(response.data);
-        const result = await stripe.redirectToCheckout({
+        
+        const response = await baseUrl.post(`/payments/create-checkout-session`, body);
+        
+        await stripe.redirectToCheckout({
             sessionId: response.data.id,
         });
-        // console.log(result);
-        // console.log(cart);
     }
 
     const onSubmit = async (data) => {

@@ -12,13 +12,7 @@ const Cart = () => {
 
     const fetchCartItems = async () => {
         try {
-            const data = document.cookie.split("token=")[1];
-            const token = data.split(";")[0];
-            const res = await baseUrl.get(`/carts`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                }
-            })
+            const res = await baseUrl.get(`/carts`)
             const resData = {
                 cartItems: res.data.cartItems,
                 totalPrice: res.data.totalPrice,
@@ -36,6 +30,7 @@ const Cart = () => {
     useEffect(() => {
         fetchCartItems();
     }, [])
+    
     return (
         <>
             {

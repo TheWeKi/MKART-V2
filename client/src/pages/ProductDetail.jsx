@@ -1,7 +1,6 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
-import axios from "axios";
 import {baseUrl} from "../axios/baseUrl.js";
 
 const ProductDetail = () => {
@@ -33,15 +32,9 @@ const ProductDetail = () => {
         }
         
         try {
-            const data = document.cookie.split("token=")[1];
-            const token = data.split(";")[0];
-            const res = await axios.post(`http://localhost:8080/api/v1/carts/`, {
+            await baseUrl.post(`/carts`, {
                 prodId: productId,
                 quantity: quantity,
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                }
             })
 
             navigate('/products');
