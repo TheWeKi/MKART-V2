@@ -15,7 +15,7 @@ paymentRouter
         const { token } = req.cookies;
 
         const line_items = await Promise.all(products.map(async product => {
-            const response = await axios.get(`http://localhost:8080/api/v1/products/${product.prodId}`);
+            const response = await axios.get(`http://localhost:8080/api/v1/products/${product.productId}`);
             return {
                 price_data: {
                     currency: "usd",

@@ -1,11 +1,11 @@
-import prisma from "../database/prismaClient.js";
-import Errorhandler from "../utils/errorhandler.js";
+import Errorhandler from '../utils/errorhandler.js';
+import {Product} from "../model/productModel.js";
 
 const getProducts = async (req, res, next) => {
     try {
-        const products = await prisma.product.findMany();
+        const products = await Product.find({});
         if (!products) {
-            return next(new Errorhandler(404, "Products Not Founds"))
+            return next(new Errorhandler(404, "Products Not Found"))
         }
         res.json(products)
     } catch (e) {
@@ -16,13 +16,9 @@ const getProducts = async (req, res, next) => {
 const getProductById = async (req, res, next) => {
     try {
         const {id} = req.params;
-        const product = await prisma.product.findFirst({
-            where: {
-                id,
-            }
-        })
+        const product = await Product.findById(id);
         if (!product) {
-            return next(new Errorhandler(404, "Product Not Founds"))
+            return next(new Errorhandler(404, "Product Not Found"))
         }
         res.json(product)
     } catch (e) {
@@ -43,9 +39,8 @@ const addProduct = async (req, res, next) => {
             company: company,
             creatorId: creator
         }
-        const newProduct = await prisma.product.create({
-            data: data,
-        });
+        const newProduct = new Product(data);
+        await newProduct.save();
         res
             .status(201)
             .json(newProduct)
@@ -57,11 +52,7 @@ const addProduct = async (req, res, next) => {
 const deleteProductById = async (req, res, next) => {
     try {
         const {id} = req.params;
-        await prisma.product.delete({
-            where: {
-                id,
-            }
-        })
+        await Product.findByIdAndDelete(id);
         res.json({
             message: `Product [${id}] Deleted Successfully`
         })
@@ -72,13 +63,8 @@ const deleteProductById = async (req, res, next) => {
 
 const updateProductById = async (req, res, next) => {
     try {
-        const {id} = req.params
-        const updatedProduct = await prisma.product.update({
-            data: req.data,
-            where: {
-                id,
-            }
-        })
+        const {id} = req.params;
+        const updatedProduct = await Product.findByIdAndUpdate(id, req.body, {new: true});
         res.json(updatedProduct)
     } catch (e) {
         next(e);

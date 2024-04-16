@@ -1,7 +1,12 @@
 import server from "./app.js";
+import connectDB from "./database/db.js";
 
-const {PORT} = process.env;
+const { PORT } = process.env;
 
-server.listen(PORT || 8080, () => {
-    console.log(`Server started - http://localhost:${PORT}`)
-});
+connectDB()
+    .then(() => {
+        server.listen(PORT || 8080, () => {
+            console.log(`Server started - http://localhost:${PORT}`)
+        });
+    })
+    .catch(() => process.exit(1));

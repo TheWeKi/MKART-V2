@@ -1,9 +1,11 @@
-import prisma from "../database/prismaClient.js";
+import { Order } from "../model/orderModel.js";
+import { Cart } from "../model/cartModel.js";
+import { CartItem } from "../model/cartItemModel.js";
 
 const getOrders = async (req, res, next) => {
     try {
 
-        const allOrders = await prisma.order.findMany({});
+        const allOrders = await Order.find({});
         res.json(allOrders);
     } catch (e) {
         next(e);
@@ -12,11 +14,7 @@ const getOrders = async (req, res, next) => {
 
 const getOrdersByUser = async (req, res, next) => {
     try {
-        const orders = await prisma.order.findMany({
-            where: {
-                userId: req.user.id,
-            }
-        });
+        const orders = await Order.find({ userId: req.user.id });
         res.json(orders)
     } catch (error) {
         next(error);
@@ -24,12 +22,8 @@ const getOrdersByUser = async (req, res, next) => {
 }
 const getOrderItemById = async (req, res, next) => {
     try {
-        const {id} = req.body;
-        const orderItem = await prisma.order.findFirst({
-            where: {
-                id: id,
-            }
-        });
+        const { id } = req.body;
+        const orderItem = await Order.findById(id);
         res.json(orderItem)
     } catch (error) {
         next(error);
@@ -39,29 +33,27 @@ const getOrderItemById = async (req, res, next) => {
 const createOrder = async (req, res, next) => {
     try {
         const userId = req.user.id;
-        const {deliveryAddress} = req.body;
+        const { deliveryAddress } = req.body;
 
-        const cart = await prisma.cart.findFirst({
-            where: {
-                userId: userId,
-            }
-        });
+        const cart = await Cart.findOne({ userId });
 
-        const cartItems = await prisma.cartItem.findMany({
-            where: {
-                cartId: cart.id,
-            },
-            include: {
-                product: true,
-            }
-        });
+        const cartItems = await CartItem.find({
+            cartId: cart._id,
+        }).populate('productId');
+
         let totalPrice = 0;
+
         const cartItemsWithTotalPrice = cartItems.map((cartItem) => {
-            const {productId, quantity, product} = cartItem;
+            const productId = cartItem.productId._id;
+            const quantity = cartItem.quantity;
+            const product = cartItem.productId;
+
             const totalItemPrice = quantity * product.price;
-            totalPrice = totalItemPrice + totalPrice;
+
+            totalPrice += totalItemPrice;
+
             return {
-                prodId: productId,
+                productId: productId,
                 quantity,
                 totalItemPrice,
             };
@@ -70,22 +62,20 @@ const createOrder = async (req, res, next) => {
         const cartToAddInOrder = [];
         cartToAddInOrder.push(...cartItemsWithTotalPrice);
 
-        const orderItem = await prisma.order.create({
-            data: {
-                deliveryAddress: deliveryAddress,
-                totalPrice: totalPrice,
-                cart: cartToAddInOrder,
-                userId: req.user.id,
-            }
+        const orderItem = await Order.create({
+            deliveryAddress: deliveryAddress,
+            totalPrice: totalPrice + 30 + totalPrice * 0.12,
+            cart: cartToAddInOrder,
+            userId: req.user.id,
         });
 
         res.status(201).json(orderItem);
 
-        await prisma.cartItem.deleteMany({where: {cartId: cart.id}});
+        await CartItem.deleteOne({ cartId: cart._id });
 
     } catch (e) {
         next(e);
     }
 }
 
-export {getOrders, createOrder, getOrdersByUser, getOrderItemById};
+export { getOrders, createOrder, getOrdersByUser, getOrderItemById };

@@ -39,9 +39,9 @@ const Order = () => {
 
                     {
                         orders.map(order => (
-                            <tr key={order.id}>
+                            <tr key={order._id}>
                                 <td>
-                                    {order.id}
+                                    {order._id}
                                 </td>
                                 {/* <td>
                                     username

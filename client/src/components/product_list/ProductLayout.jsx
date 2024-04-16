@@ -20,9 +20,9 @@ const ProductLayout = () => {
 
                 {
                     products.map(product => (
-                        <div key={product.id}>
+                        <div key={product._id}>
                             {
-                                <Link to={`/product-detail/${product.id}`}>
+                                <Link to={`/product-detail/${product._id}`}>
                                     <ProductCard product={product} />
                                 </Link>
                             }

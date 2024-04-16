@@ -1,6 +1,6 @@
-import prisma from "../database/prismaClient.js";
 import jwt from "jsonwebtoken";
 import Errorhandler from "../utils/errorhandler.js";
+import {User} from "../model/userModel.js";
 
 export const isAuthenticated = async (req, res, next) => {
     try {
@@ -9,12 +9,7 @@ export const isAuthenticated = async (req, res, next) => {
             return next(new Errorhandler(400, "Login Required"));
         }
         const decodedData = await jwt.verify(token, process.env.JWT_SECRET);
-        req.user = await prisma.user.findFirst({
-            where:
-                {
-                    id: decodedData.id
-                }
-        });
+        req.user = await User.findById(decodedData.id);
         if (!token) {
             return next(new Errorhandler(400, "Login Required"));
         }

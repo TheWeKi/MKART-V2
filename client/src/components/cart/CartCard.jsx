@@ -10,13 +10,13 @@ const CartCard = ({cartItem}) => {
     const [product, setProduct] = useState({});
 
     const fetchProduct = async () => {
-        const res = await baseUrl.get(`/products/${cartItem.prodId}`)
+        const res = await baseUrl.get(`/products/${cartItem.productId}`)
         setProduct(res.data);
     }
 
     const deleteCartItem = async () => {
         try {
-            await baseUrl.delete(`/carts/${cartItem.prodId}`);
+            await baseUrl.delete(`/carts/${cartItem.productId}`);
 
             const res2 = await baseUrl.get(`/carts`);
 

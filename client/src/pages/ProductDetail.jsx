@@ -33,7 +33,7 @@ const ProductDetail = () => {
         
         try {
             await baseUrl.post(`/carts`, {
-                prodId: productId,
+                productId: productId,
                 quantity: quantity,
             })
 

@@ -1,19 +1,15 @@
-import prisma from "../database/prismaClient.js";
 import {dispatchJsonToken} from "../utils/dispatchToken.js";
 import Errorhandler from "../utils/errorhandler.js";
 import bcrypt from "bcryptjs";
 import sgMail from "@sendgrid/mail";
 import crypto from "crypto";
 import {createTokenForGoogle, getGoogleAuth, getGoogleData} from "../utils/google.js";
+import {User} from "../model/userModel.js";
 
 export const signUp = async (req, res, next) => {
     try {
         const {email, password, username, roleAdmin} = req.body;
-        const existingUser = await prisma.user.findFirst({
-            where: {
-                email: email,
-            },
-        });
+        const existingUser = await User.findOne({email});
         if (existingUser) {
             return next(new Errorhandler(400, "User Already Exists"));
         }
@@ -25,9 +21,7 @@ export const signUp = async (req, res, next) => {
             username,
             roleAdmin,
         };
-        const user = await prisma.user.create({
-            data,
-        });
+        const user = await User.create(data);
 
         res.status(201).json({
             message: "Successfully Created",
@@ -39,7 +33,7 @@ export const signUp = async (req, res, next) => {
 export const login = async (req, res, next) => {
     try {
         const {email, password} = req.body;
-        const user = await prisma.user.findFirst({where: {email: email}});
+        const user = await User.findOne({email});
         if (!user) {
             return next(new Errorhandler(404, "User Not Found"));
         }
@@ -59,19 +53,16 @@ export const reset = async (req, res, next) => {
 
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
         const email = req.body.email;
-        const user = await prisma.user.findFirst({where: {email: email}});
+        const user = await User.findOne({email});
         if (!user) {
             return next(new Errorhandler(404, "User Not Found"));
         }
         const resetToken = crypto.randomBytes(20).toString("hex");
-
-        await prisma.user.update({
-            where: {email: email},
-            data: {
-                resetToken: resetToken,
-                resetTokenExpiry: new Date(Date.now() + 3600000),
-            },
+        await User.findOneAndUpdate({email}, {
+            resetToken: resetToken,
+            resetTokenExpiry: new Date(Date.now() + 3600000),
         });
+
         const msg = {
             to: email, // Change to your recipient
             from: "hungrygrabo@gmail.com", // Change to your verified sender
@@ -123,7 +114,6 @@ export const reset = async (req, res, next) => {
             message: "Email Sent",
         });
     } catch (e) {
-
         next(e);
     }
 };
@@ -131,27 +121,27 @@ export const reset = async (req, res, next) => {
 export const newPassword = async (req, res, next) => {
     try {
         const {resetToken, password} = req.body;
-        const user = await prisma.user.findFirst({
-            where: {
-                resetToken: resetToken,
+        const user = await User.findOne({
+                resetToken,
                 resetTokenExpiry: {
-                    gte: new Date(Date.now() - 3600000),
+                    $gte: new Date(Date.now() - 3600000),
                 },
-            },
         });
+
         if (!user) {
             return next(new Errorhandler(400, "Invalid Token"));
         }
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        await prisma.user.update({
-            where: {resetToken: resetToken, id: user.id},
-            data: {
-                password: hashedPassword,
-                resetToken: null,
-                resetTokenExpiry: null,
-            },
-        });
+        await User.findByIdAndUpdate({
+            resetToken,
+            _id: user._id,
+        }, {
+            password: hashedPassword,
+            resetToken: null,
+            resetTokenExpiry: null,
+        }, {new: true});
+
         res.status(200).json({
             message: "Password Updated",
         });
@@ -183,10 +173,8 @@ export const googleAuthHandler = async (req, res, next) => {
         //Get Google Data from Google using code
         const googleUserData = await getGoogleData(code);
 
-        const user = await prisma.user.findFirst({
-            where: {
-                email: googleUserData.email,
-            }
+        const user = await User.findOne({
+            email: googleUserData.email,
         });
         if (!user) {
             const data = {
@@ -194,9 +182,7 @@ export const googleAuthHandler = async (req, res, next) => {
                 username: googleUserData.name,
                 password: crypto.randomBytes(20).toString("hex"),
             }
-            const user = await prisma.user.create({
-                data,
-            });
+            const user = await User.create(data);
 
             const googleToken = createTokenForGoogle(user);
             res.status(201).cookie("token", googleToken.token, googleToken.options);
