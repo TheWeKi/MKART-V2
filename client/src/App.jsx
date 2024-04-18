@@ -17,6 +17,8 @@ import OrderSummary from "./pages/OrderSummary.jsx"
 import {AuthenticatedRoute} from "./utils/AuthenticatedRoute.jsx"
 import {ResetPassword} from "./components/login/ResetPassword.jsx"
 import {ForgotPassword} from "./components/login/ForgotPassword.jsx"
+import OrderSuccess from "./pages/OrderSuccess.jsx";
+import OrderFail from "./pages/OrderFail.jsx";
 
 
 const App = () => {
@@ -39,6 +41,8 @@ const App = () => {
                     <Route path="/reset/:resetToken" element={<ResetPassword/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
 
+                    <Route path={"/ordersuccess"} element={<AuthenticatedRoute><OrderSuccess/></AuthenticatedRoute>}/>
+                    <Route path={"/orderfail"} element={<AuthenticatedRoute><OrderFail/></AuthenticatedRoute>}/>
                     <Route path="/checkout" element={<AuthenticatedRoute><Checkout/></AuthenticatedRoute>}/>
                     <Route path="/order-summary" element={<AuthenticatedRoute><OrderSummary/></AuthenticatedRoute>}/>
                     <Route path="/orders" element={<AuthenticatedRoute><Order/></AuthenticatedRoute>}/>

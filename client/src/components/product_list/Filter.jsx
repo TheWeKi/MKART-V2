@@ -1,11 +1,41 @@
 import Divider from "../ui/Divider.jsx";
-
+import {useState} from "react";
+import {baseUrl} from "../../axios/baseUrl.js";
 const filters = {
-    companies: ["Apple", "Microsoft", "Xiaomi", "Samsung", "Oppo"],
-    categories: ["Shoe", "Shirt", "Pant", "Trouser"],
+    companies: ["Nike", "Adidas", "Puma", "Sketchers"],
+    categories: ["Sneaker", "Lifestyle", "Running", "Football"],
 }
 
-const Filter = () => {
+const Filter = ({products,setProducts}) => {
+
+    const [selectedCompanies, setSelectedCompanies] = useState([]);
+    const [selectedCategories, setSelectedCategories] = useState([]);
+    const [minPrice, setMinPrice] = useState('');
+    const [maxPrice, setMaxPrice] = useState('');
+
+    const handleCompanyChange = (event) => {
+        const { checked, value } = event.target;
+        setSelectedCompanies(prevState => checked ? [...prevState, value] : prevState.filter(company => company !== value));
+    };
+
+    const handleCategoryChange = (event) => {
+        const { checked, value } = event.target;
+        setSelectedCategories(prevState => checked ? [...prevState, value] : prevState.filter(category => category !== value));
+    };
+
+    const handleFilter = async () => {
+        // Create a query parameter string
+        let queryParams = `?companies=${selectedCompanies.join(',')}&categories=${selectedCategories.join(',')}&minPrice=${minPrice}&maxPrice=${maxPrice}`;
+        console.log(queryParams)
+        try {
+            // Make a GET request to your server-side endpoint
+            const response = await baseUrl.get(`/products${queryParams}`);
+
+            setProducts(response.data);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
     return (
         <>
             <div className="navbar bg-base-100 px-4 lg:px-12">
@@ -17,21 +47,8 @@ const Filter = () => {
 
                 <div className="navbar-end gap-4">
 
-                    {/* Sort */}
-
-                    {/* <div className="form-control">
-                        <select className="select select-bordered select-md w-full max-w-lg">
-                            <option disabled selected hidden value="sort">Sort</option>
-                            <option value="price1">Price Low To High</option>
-                            <option value="price0">Price High To Low</option>
-                            <option value="popularity1">Popularity Low To High</option>
-                            <option value="popularity0">Popularity High To Low</option>
-                        </select>
-                    </div> */}
-
-                    {/* Filter */}
-
                     <div className="drawer-end">
+
                         <input id="my-drawer" type="checkbox" className="drawer-toggle"/>
                         <div className="drawer-content">
                             <label htmlFor="my-drawer" className="drawer-button btn btn-ghost btn-circle">
@@ -53,11 +70,13 @@ const Filter = () => {
                                         <div className="form-control" key={category}>
                                             <label className="label cursor-pointer">
                                                 <span className="text-md">{category}</span>
-                                                <input type="checkbox" className="checkbox checkbox-sm"/>
+                                                <input type="checkbox" className="checkbox checkbox-sm" value={category}
+                                                       onChange={handleCategoryChange}/>
                                             </label>
                                         </div>
                                     ))}
                                 </div>
+
                                 <Divider/>
 
                                 <div className="mb-8">
@@ -66,12 +85,14 @@ const Filter = () => {
                                         <div className="mb-4">
                                             <span className="text-md">Minimum Price: </span>
                                             <input type="text" placeholder="Minimum Amount"
-                                                   className="input input-bordered w-full max-w-xs"/>
+                                                   className="input input-bordered w-full max-w-xs" value={minPrice}
+                                                   onChange={(e) => setMinPrice(e.target.value)}/>
                                         </div>
                                         <div>
                                             <span>Maximum Price: </span>
                                             <input type="text" placeholder="Maximum Amount"
-                                                   className="input input-bordered w-full max-w-xs"/>
+                                                   className="input input-bordered w-full max-w-xs" value={maxPrice}
+                                                   onChange={(e) => setMaxPrice(e.target.value)}/>
                                         </div>
                                     </div>
                                 </div>
@@ -83,12 +104,16 @@ const Filter = () => {
                                         <div className="form-control" key={company}>
                                             <label className="label cursor-pointer">
                                                 <span className="text-md">{company}</span>
-                                                <input type="checkbox" className="checkbox checkbox-sm"/>
+                                                <input type="checkbox" className="checkbox checkbox-sm" value={company}
+                                                       onChange={handleCompanyChange}/>
                                             </label>
                                         </div>
                                     ))}
                                 </div>
+                                <Divider/>
+                                <button onClick={handleFilter}>Apply Filters</button>
                             </ul>
+
                         </div>
                     </div>
                 </div>

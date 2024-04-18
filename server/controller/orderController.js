@@ -71,7 +71,7 @@ const createOrder = async (req, res, next) => {
 
         res.status(201).json(orderItem);
 
-        await CartItem.deleteOne({ cartId: cart._id });
+        await CartItem.deleteMany({ cartId: cart._id });
 
     } catch (e) {
         next(e);

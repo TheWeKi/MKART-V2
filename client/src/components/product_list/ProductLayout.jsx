@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import ProductCard from "./ProductCard.jsx";
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import { baseUrl } from "../../axios/baseUrl.js";
 
-const ProductLayout = () => {
-    const [products, setProducts] = useState([]);
+const ProductLayout = ({products,setProducts}) => {
+
 
     const fetchProducts = async () => {
         const res = await baseUrl.get('/products')
