@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// Define the initial state of your cart
 const initialState = {
     cartItems: [],
     totalPrice: 0,
@@ -8,7 +7,6 @@ const initialState = {
     shipping: 0,
 };
 
-// Define a slice for the cart
 const cartSlice = createSlice({
     name: 'cart',
     initialState,

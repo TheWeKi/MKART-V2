@@ -47,8 +47,8 @@ paymentRouter
             customer_email: user.email,
             line_items: line_items,
             mode: "payment",
-            success_url: `${process.env.CLIENT_URL}/ordersuccess`,
-            cancel_url: `${process.env.CLIENT_URL}/`,
+            success_url: `${process.env.CLIENT_URL}/order-success`,
+            cancel_url: `${process.env.CLIENT_URL}/order-fail`,
         });
 
         res.json({ id: session.id });

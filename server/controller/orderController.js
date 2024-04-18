@@ -4,7 +4,6 @@ import { CartItem } from "../model/cartItemModel.js";
 
 const getOrders = async (req, res, next) => {
     try {
-
         const allOrders = await Order.find({});
         res.json(allOrders);
     } catch (e) {
@@ -14,7 +13,7 @@ const getOrders = async (req, res, next) => {
 
 const getOrdersByUser = async (req, res, next) => {
     try {
-        const orders = await Order.find({ userId: req.user.id });
+        const orders = await Order.find({ userId: req.user.id }).sort({ createdAt: -1 });
         res.json(orders)
     } catch (error) {
         next(error);

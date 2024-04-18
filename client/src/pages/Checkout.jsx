@@ -2,7 +2,6 @@ import {z} from "zod";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {baseUrl} from "../axios/baseUrl";
-import {useNavigate} from "react-router-dom";
 import {loadStripe} from "@stripe/stripe-js";
 import {useSelector} from "react-redux";
 

@@ -41,7 +41,7 @@ const Cart = () => {
                                 <h1 className="mb-5 text-5xl">
                                     Cart is empty
                                 </h1>
-                                <Link to={"/"}>
+                                <Link to={"/products"}>
                                     <button className="btn btn-lg mt-4 btn-outline">Go Shopping</button>
                                 </Link>
                             </div>
