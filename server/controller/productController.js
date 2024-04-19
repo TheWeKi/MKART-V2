@@ -1,5 +1,6 @@
 import Errorhandler from '../utils/errorhandler.js';
 import {Product} from "../model/productModel.js";
+import {uploadFile} from "../utils/uploadToS3.js";
 
 const getProducts = async (req, res, next) => {
     const { companies, categories, minPrice, maxPrice } = req.query;
@@ -56,11 +57,15 @@ const getProductById = async (req, res, next) => {
 
 const addProduct = async (req, res, next) => {
     try {
-        const {title, category, company, image, description, price} = req.body;
-        const creator = req.user.id;
+        const {title, category, company, description, price} = req.body;
+        const creator = req.user._id;
+        const image = req.file;
+
+        const imageUrl = await uploadFile(image);
+
         const data = {
             title: title,
-            image: image,
+            image: imageUrl,
             price: price,
             category: category,
             description: description,

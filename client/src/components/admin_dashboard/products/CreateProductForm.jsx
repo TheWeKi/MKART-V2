@@ -1,24 +1,42 @@
-import {z} from 'zod';
-import {useForm} from "react-hook-form";
-import {zodResolver} from "@hookform/resolvers/zod";
-//ValidationSchema
+import { z } from 'zod';
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { baseUrl } from "../../../axios/baseUrl";
+
 const schema = z.object({
-    title: z.string().nonempty({message: 'Title is required'}),
-    company: z.string().nonempty({message: 'Company is required'}),
-    category: z.string().nonempty({message: 'Category is required'}),
-    price: z.number().min(0, {message: 'Price should be greater than 0'}),
-    description: z.string().nonempty({message: 'Description is required'}),
-    image: z.instanceof(FileList).refine(file => file[0].type.startsWith('image'), {message: 'Only Image Is Accepted'}),
+    title: z.string().min(1, 'Title is required'),
+    company: z.string().min(1, 'Company is required'),
+    category: z.string().min(1, 'Category is required'),
+    price: z.number().min(0, 'Price should be greater than 0'),
+    description: z.string().min(1, 'Description is required'),
+    image: z.instanceof(FileList).refine(file => file[0] === null || file[0] === undefined, { message: 'Image is required' }).refine(file => file[0].type.startsWith('image'), { message: 'Only Image Is Accepted' }),
 });
 
 const CreateProductForm = () => {
 
-    const {register, handleSubmit, formState: {errors}} = useForm({
+    const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(schema),
     });
 
-    const onSubmit = (data) => {
-
+    const onSubmit = async (data) => {
+        try {
+            const formData = new FormData();
+            Object.keys(data).forEach(key => {
+                if (key === 'image') {
+                    formData.append(key, data[key][0]);
+                } else {
+                    formData.append(key, data[key]);
+                }
+            });
+    
+            await baseUrl.post('/products', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -32,7 +50,7 @@ const CreateProductForm = () => {
                                 {errors.title && <p className={"px-5 "}>{errors.title.message}</p>}
                             </label>
                             <input {...register('title')} type="text" placeholder="title"
-                                   className="input input-bordered"/>
+                                className="input input-bordered" />
                         </div>
                         <div className="form-control">
                             <label className="label">
@@ -40,7 +58,7 @@ const CreateProductForm = () => {
                                 {errors.company && <p className={"px-5"}>{errors.company.message}</p>}
                             </label>
                             <input {...register('company')} type="text" placeholder="company"
-                                   className="input input-bordered"/>
+                                className="input input-bordered" />
                         </div>
                         <div className="form-control">
                             <label className="label">
@@ -48,7 +66,7 @@ const CreateProductForm = () => {
                                 {errors.category && <p className={"px-5"}>{errors.category.message}</p>}
                             </label>
                             <input {...register('category')} type="text" placeholder="category"
-                                   className="input input-bordered"/>
+                                className="input input-bordered" />
 
                         </div>
                         <div className="form-control">
@@ -56,8 +74,8 @@ const CreateProductForm = () => {
                                 <span className="label-text text-lg">Price</span>
                                 {errors.price && <p className={"px-5"}>{errors.price.message}</p>}
                             </label>
-                            <input {...register('price', {setValueAs: value => parseFloat(value)})} type="number"
-                                   placeholder="price" className="input input-bordered"/>
+                            <input {...register('price', { setValueAs: value => parseFloat(value) })} type="number"
+                                placeholder="price" className="input input-bordered" />
 
                         </div>
 
@@ -66,7 +84,7 @@ const CreateProductForm = () => {
                                 <span className="label-text text-lg">Image</span>
                                 {errors.image && <p className={"px-5"}>{errors.image.message}</p>}
                             </label>
-                            <input {...register('image')} type="file" className="file-input file-input-bordered"/>
+                            <input {...register('image')} type="file" className="file-input file-input-bordered" />
                         </div>
 
                         <div className="form-control">
@@ -75,7 +93,7 @@ const CreateProductForm = () => {
                                 {errors.description && <p className={"px-5"}>{errors.description.message}</p>}
                             </label>
                             <textarea {...register('description')} className="textarea textarea-bordered"
-                                      placeholder="description"></textarea>
+                                placeholder="description"></textarea>
 
                         </div>
 

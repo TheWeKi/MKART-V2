@@ -1,4 +1,5 @@
 import {Router} from "express";
+import multer from "multer";
 import {
     addProduct,
     deleteProductById,
@@ -8,12 +9,14 @@ import {
 } from "../controller/productController.js";
 import {isAuthenticated, isAuthorized} from "../middleware/isAuthenticated.js";
 
+const upload = multer({storage: multer.memoryStorage()});
+
 const productRouter = Router();
 
 productRouter
     .route('/')
     .get(getProducts)
-    .post(isAuthenticated, isAuthorized(true), addProduct);
+    .post(isAuthenticated, isAuthorized(true), upload.single("image"), addProduct);
 
 productRouter
     .route('/:id')

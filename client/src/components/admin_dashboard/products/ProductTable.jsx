@@ -23,7 +23,7 @@ const ProductTable = () => {
                     <thead>
                     <tr>
                         <th>Title</th>
-                        <th>Category / Company</th>
+                        <th>Company / Category</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -34,7 +34,7 @@ const ProductTable = () => {
 
                     {
                         products.map(product => (
-                            <tr key={product.id}>
+                            <tr key={product._id}>
                                 <td>
                                     <div className="flex items-center space-x-3">
                                         <div className="avatar">
@@ -46,7 +46,7 @@ const ProductTable = () => {
                                         </div>
                                         <div>
                                             <div className="font-bold">{product.title}</div>
-                                            <div className="text-sm opacity-50">{product.id}</div>
+                                            <div className="text-sm opacity-50">{product._id}</div>
                                         </div>
                                     </div>
                                 </td>

@@ -6,11 +6,7 @@ const UserTable = () => {
     const [users, setUsers] = useState([]);
 
     const fetchUsers = async () => {
-        const res = await baseUrl.get(`/users`, {
-            headers: {
-                Authorization: `Bearer ${document.cookie.split("token=")[1].split(";")[0]}`,
-            }
-        });
+        const res = await baseUrl.get(`/users`);
         setUsers(res.data);
     }
 
@@ -40,9 +36,9 @@ const UserTable = () => {
 
                     {
                         users.map(user => (
-                            <tr key={user.id}>
+                            <tr key={user._id}>
                                 <td>
-                                    {user.id}
+                                    {user._id}
                                 </td>
                                 <td>
                                     {user.username}

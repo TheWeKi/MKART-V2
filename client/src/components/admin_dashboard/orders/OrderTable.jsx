@@ -6,15 +6,8 @@ const OrderTable = () => {
     const [orders, setOrders] = useState([]);
 
     const fetchOrders = async () => {
-        const data = document.cookie.split("token=")[1];
-        const token = data.split(";")[0];
-        const res = await baseUrl.get(`/orders`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            }
-        });
+        const res = await baseUrl.get(`/orders`);
         setOrders(res.data);
-
     }
 
     useEffect(() => {
@@ -44,9 +37,9 @@ const OrderTable = () => {
 
                     {
                         orders.map(order => (
-                            <tr key={order.id}>
+                            <tr key={order._id}>
                                 <td>
-                                    {order.id}
+                                    {order._id}
                                 </td>
                                 {/* <td>
                                     username

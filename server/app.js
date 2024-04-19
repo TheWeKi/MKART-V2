@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 import {errorMiddleware} from "./middleware/error.js";
 import orderRouter from "./routes/orderRoutes.js";
 import paymentRouter from "./routes/paymentRoutes.js";
+
 const app = express();
 
 // app.use(cors(corsOptions));
