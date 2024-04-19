@@ -1,6 +1,12 @@
 import express from "express";
 import {isAuthenticated, isAuthorized} from "../middleware/isAuthenticated.js";
-import {createOrder, getOrderItemById, getOrders, getOrdersByUser} from "../controller/orderController.js";
+import {
+    changeOrderStatus,
+    createOrder,
+    getOrderItemById,
+    getOrders,
+    getOrdersByUser
+} from "../controller/orderController.js";
 
 const orderRouter = express.Router();
 
@@ -16,5 +22,9 @@ orderRouter
 orderRouter
     .route("/orderItemById")
     .post(isAuthenticated, getOrderItemById);
+
+orderRouter
+    .route("/:id")
+    .put(isAuthenticated, isAuthorized(true), changeOrderStatus);
 
 export default orderRouter;

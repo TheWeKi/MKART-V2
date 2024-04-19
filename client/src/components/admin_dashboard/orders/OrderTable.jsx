@@ -10,6 +10,15 @@ const OrderTable = () => {
         setOrders(res.data);
     }
 
+    const changeOrderStatus = async (orderId) => {
+        await baseUrl.put(`/orders/${orderId}`);
+        await fetchOrders();
+    }
+
+    const checkOrderDetails = async (orderId) => {
+        console.log(orderId);
+    }
+
     useEffect(() => {
         fetchOrders();
     }, []);
@@ -24,8 +33,9 @@ const OrderTable = () => {
                     <tr>
                         <th>ID</th>
                         {/* <th>Username</th> */}
-                        <th>Delivery Address</th>
+                        {/*<th>Delivery Address</th>*/}
                         <th>Total Amount</th>
+                        <th>Timestamp</th>
                         <th>Status</th>
                         <th></th>
                         <th></th>
@@ -44,20 +54,23 @@ const OrderTable = () => {
                                 {/* <td>
                                     username
                                 </td> */}
+                                {/*<td>*/}
+                                {/*    {order.deliveryAddress}*/}
+                                {/*</td>*/}
                                 <td>
-                                    {order.deliveryAddress}
+                                    {`$${order.totalPrice}`}
                                 </td>
                                 <td>
-                                    {order.totalPrice}
+                                    {new Date(order.createdAt).toLocaleString()}
                                 </td>
                                 <td>
-                                    {order.isDelivered ? "Delivered" : "Not Delivered"}
+                                    {order.isDelivered ? "Shipped" : "Not Shipped"}
                                 </td>
                                 <td>
-                                    <button className="btn btn-outline btn-primary btn-sm">Modify</button>
+                                    <button onClick={() => changeOrderStatus(order._id)} className="btn btn-outline btn-primary btn-sm">Change Status</button>
                                 </td>
                                 <td>
-                                    <button className="btn btn-outline btn-error btn-sm">Delete</button>
+                                    <button onClick={() => checkOrderDetails(order._id)} className="btn btn-outline btn-info btn-sm">Check Details</button>
                                 </td>
                             </tr>
                         ))

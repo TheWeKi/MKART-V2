@@ -8,8 +8,8 @@ const userRouter = Router();
 userRouter
     .route('/:id')
     .get(getUserById)
-    .put(updateUserById)
-    .delete(deleteUserById);
+    .put(isAuthenticated, isAuthorized(true), updateUserById)
+    .delete(isAuthenticated, isAuthorized(true), deleteUserById);
 
 userRouter
     .route('/')

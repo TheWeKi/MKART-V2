@@ -10,6 +10,16 @@ const UserTable = () => {
         setUsers(res.data);
     }
 
+    const changeRole = async (id) => {
+        await baseUrl.put(`/users/${id}`);
+        await fetchUsers();
+    }
+
+    const deleteUser = async (id) => {
+        await baseUrl.delete(`/users/${id}`);
+        await fetchUsers();
+    }
+
     useEffect(() => {
         fetchUsers();
     }, []);
@@ -25,7 +35,7 @@ const UserTable = () => {
                         <th>ID</th>
                         <th>Username</th>
                         <th>Email</th>
-                        <th>Admin Role</th>
+                        <th>Role</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -47,14 +57,26 @@ const UserTable = () => {
                                     {user.email}
                                 </td>
                                 <td>
-                                    {user.roleAdmin ? "Yes" : "No"}
+                                    {user.roleAdmin ? "Admin" : "User"}
                                 </td>
                                 <td>
-                                    <button className="btn btn-outline btn-primary btn-sm">Modify</button>
+                                    <button onClick={() => changeRole(user._id)} className="btn btn-outline btn-primary btn-sm">Change Role</button>
                                 </td>
-                                <td>
-                                    <button className="btn btn-outline btn-error btn-sm">Delete</button>
-                                </td>
+                                {
+                                    user.roleAdmin ? (
+                                        <>
+                                            <td></td>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <td>
+                                                <button onClick={() => deleteUser(user._id)}
+                                                        className="btn btn-outline btn-error btn-sm">Delete
+                                                </button>
+                                            </td>
+                                        </>
+                                    )
+                                }
                             </tr>
                         ))
                     }

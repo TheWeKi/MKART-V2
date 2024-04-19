@@ -6,7 +6,7 @@ const filters = {
     categories: ["Sneaker", "Lifestyle", "Running", "Football"],
 }
 
-const Filter = ({products,setProducts}) => {
+const Filter = ({setProducts}) => {
 
     const [selectedCompanies, setSelectedCompanies] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);

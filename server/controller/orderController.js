@@ -4,7 +4,7 @@ import { CartItem } from "../model/cartItemModel.js";
 
 const getOrders = async (req, res, next) => {
     try {
-        const allOrders = await Order.find({});
+        const allOrders = await Order.find({}).sort({ createdAt: -1 });
         res.json(allOrders);
     } catch (e) {
         next(e);
@@ -19,6 +19,21 @@ const getOrdersByUser = async (req, res, next) => {
         next(error);
     }
 }
+
+const changeOrderStatus = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const order = await Order.findById(id);
+
+        order.isDelivered = !order.isDelivered;
+        await order.save();
+
+        res.json(order);
+    } catch (error) {
+        next(error);
+    }
+}
+
 const getOrderItemById = async (req, res, next) => {
     try {
         const { id } = req.body;
@@ -77,4 +92,4 @@ const createOrder = async (req, res, next) => {
     }
 }
 
-export { getOrders, createOrder, getOrdersByUser, getOrderItemById };
+export { getOrders, createOrder, getOrdersByUser, changeOrderStatus, getOrderItemById };

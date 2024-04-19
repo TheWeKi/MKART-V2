@@ -4,7 +4,7 @@ import {User} from "../model/userModel.js";
 
 const getUsers = async (req, res, next) => {
     try {
-        const users = await User.find({});
+        const users = await User.find({}).sort({roleAdmin: 1, createdAt: -1}).select("-password");
         if (!users) {
             return next(new Errorhandler(404, "User Not Found"));
         }
@@ -42,7 +42,18 @@ const deleteUserById = async (req, res, next) => {
 const updateUserById = async (req, res) => {
     try {
         const {id} = req.params
-        const updatedUser = await User.findByIdAndUpdate(id, req.body, { new: true });
+
+        const userToUpdate = await User.findById(id);
+
+        if (!userToUpdate) {
+            return res.status(404).json({
+                message: `User [${id}] Not Found`
+            })
+        }
+
+        userToUpdate.roleAdmin = !userToUpdate.roleAdmin;
+        const updatedUser = await userToUpdate.save();
+
         res.json(updatedUser)
     } catch (e) {
         console.log(e);

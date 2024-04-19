@@ -12,13 +12,13 @@ const ProductTable = () => {
     }
     const deleteProduct = async (id) => {
         await baseUrl.delete(`/products/${id}`);
+        await fetchProducts();
     }
    
     useEffect(() => {
          fetchProducts();
-    }, [deleteProduct]);
+    }, []);
 
-    
 
     return (
         <main>
@@ -30,6 +30,7 @@ const ProductTable = () => {
                     <tr>
                         <th>Title</th>
                         <th>Company / Category</th>
+                        <th>Price</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -62,10 +63,17 @@ const ProductTable = () => {
                                     <span className="badge badge-ghost badge-sm">{product.category}</span>
                                 </td>
                                 <td>
-                                    <Link to={`/admin-dashboard/products/update-product/${product._id}`}><button className="btn btn-outline btn-primary btn-sm">Modify</button></Link>
+                                    {`$${product.price}`}
                                 </td>
                                 <td>
-                                    <button onClick={()=>deleteProduct(product._id)} className="btn btn-outline btn-error btn-sm">Delete</button>
+                                    <Link to={`/admin-dashboard/products/update-product/${product._id}`}>
+                                        <button className="btn btn-outline btn-primary btn-sm">Modify</button>
+                                    </Link>
+                                </td>
+                                <td>
+                                    <button onClick={() => deleteProduct(product._id)}
+                                            className="btn btn-outline btn-error btn-sm">Delete
+                                    </button>
                                 </td>
                             </tr>
                         ))

@@ -48,7 +48,7 @@ const Order = () => {
                                             <th>Delivery Address</th>
                                             <th>Total Amount</th>
                                             <th>Status</th>
-                                            <th>Date</th>
+                                            <th>Timestamp</th>
                                         </tr>
                                     </thead>
 
@@ -69,10 +69,10 @@ const Order = () => {
                                                         {order.totalPrice}
                                                     </td>
                                                     <td>
-                                                        {order.isDelivered ? "Delivered" : "Not Delivered"}
+                                                        {order.isDelivered ? "Shipped" : "Not Shipped"}
                                                     </td>
                                                     <td>
-                                                        {order.createdAt.split("T")[0]}
+                                                        {new Date(order.createdAt).toLocaleString()}
                                                     </td>
                                                 </tr>
                                             ))

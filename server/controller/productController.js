@@ -96,33 +96,23 @@ const deleteProductById = async (req, res, next) => {
 
 const updateProductById = async (req, res, next) => {
     try {
-        const {id , title, category, company, description, price} = req.body;
+        const reqBody = {
+            title: req.body.title,
+            category: req.body.category,
+            company: req.body.company,
+            description: req.body.description,
+            price: req.body.price
+        };
+
         const image = req.file;
-        if(!image) {
-            const data = {
-                title: title,
-                price: price,
-                category: category,
-                description: description,
-                company: company
-            }
-            const updatedProduct = await Product.findByIdAndUpdate(id, data, {new: true});
-            return res.json(updatedProduct)
+        if(image !== undefined) {
+            reqBody.image = await uploadFile(image);
         }
 
-        const imageUrl = await uploadFile(image);
-        const data = {
-            title: title,
-            image: imageUrl,
-            price: price,
-            category: category,
-            description: description,
-            company: company
-        }
+        const {id} = req.params;
+        const product = await Product.findByIdAndUpdate(id, reqBody, {new: true});
 
-
-        const updatedProduct = await Product.findByIdAndUpdate(id, data, {new: true});
-        res.json(updatedProduct);
+        res.json(product)
     } catch (e) {
         next(e);
     }

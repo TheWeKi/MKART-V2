@@ -21,7 +21,7 @@ productRouter
 productRouter
     .route('/:id')
     .get(getProductById)
-    .put(isAuthenticated, isAuthorized(true), updateProductById)
+    .put(isAuthenticated, isAuthorized(true), upload.single("image"), updateProductById)
     .delete(isAuthenticated, isAuthorized(true), deleteProductById);
 
 export default productRouter;

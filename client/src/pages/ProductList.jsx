@@ -6,7 +6,7 @@ const ProductList = () => {
     const [products, setProducts] = useState([]);
     return (
         <>
-            <Filter products={products} setProducts={setProducts}/>
+            <Filter setProducts={setProducts}/>
             <ProductLayout products={products} setProducts={setProducts}/>
             {/* <Pagination/> */}
         </>
