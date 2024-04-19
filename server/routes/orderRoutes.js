@@ -20,11 +20,12 @@ orderRouter
     .get(isAuthenticated, getOrdersByUser);
 
 orderRouter
-    .route("/orderItemById")
-    .post(isAuthenticated, getOrderById);
+    .route("/:id")
+    .get(isAuthenticated, getOrderById);
 
 orderRouter
     .route("/:id")
-    .put(isAuthenticated, isAuthorized(true), changeOrderStatus);
+    .put(isAuthenticated, isAuthorized(true), changeOrderStatus)
+
 
 export default orderRouter;

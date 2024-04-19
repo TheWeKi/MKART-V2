@@ -36,7 +36,7 @@ const changeOrderStatus = async (req, res, next) => {
 
 const getOrderById = async (req, res, next) => {
     try {
-        const { id } = req.body;
+        const { id } = req.params;
         const orderItem = await Order.findById(id);
         res.json(orderItem)
     } catch (error) {
@@ -81,6 +81,7 @@ const createOrder = async (req, res, next) => {
             totalPrice: totalPrice + 30 + totalPrice * 0.12,
             cart: cartToAddInOrder,
             userId: req.user.id,
+
         });
 
         res.status(201).json(orderItem);

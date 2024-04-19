@@ -16,7 +16,8 @@ const OrderTable = () => {
     }
 
     const checkOrderDetails = async (orderId) => {
-        console.log(orderId);
+        const response = await baseUrl.get(`/orders/${orderId}`);
+        console.log(response.data);
     }
 
     useEffect(() => {

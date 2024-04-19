@@ -1,23 +1,4 @@
-/*
-  cart            Json?
-*/
-
 import mongoose from "mongoose";
-
-const cart = new mongoose.Schema({
-    productId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Product",
-    },
-    quantity: {
-        type: Number,
-        required: true,
-    },
-    price: {
-        type: Number,
-        required: true,
-    },
-});
 
 const orderSchema = new mongoose.Schema({
     deliveryAddress: {
@@ -36,6 +17,20 @@ const orderSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
+    cart:[{
+        productId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Product",
+        },
+        quantity: {
+            type: Number,
+            required: true,
+        },
+        totalItemPrice: {
+            type: Number,
+            required: true,
+        },
+    }],
 }, { timestamps: true });
 
 export const Order = mongoose.model("Order", orderSchema);
