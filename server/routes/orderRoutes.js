@@ -19,12 +19,10 @@ orderRouter
     .route("/ordersByUser")
     .get(isAuthenticated, getOrdersByUser);
 
-orderRouter
-    .route("/:id")
-    .get(isAuthenticated, getOrderById);
 
 orderRouter
     .route("/:id")
+    .get(isAuthenticated, getOrderById)
     .put(isAuthenticated, isAuthorized(true), changeOrderStatus)
 
 
