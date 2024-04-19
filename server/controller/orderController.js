@@ -34,7 +34,7 @@ const changeOrderStatus = async (req, res, next) => {
     }
 }
 
-const getOrderItemById = async (req, res, next) => {
+const getOrderById = async (req, res, next) => {
     try {
         const { id } = req.body;
         const orderItem = await Order.findById(id);
@@ -92,4 +92,6 @@ const createOrder = async (req, res, next) => {
     }
 }
 
-export { getOrders, createOrder, getOrdersByUser, changeOrderStatus, getOrderItemById };
+
+
+export { getOrders, createOrder, getOrdersByUser, changeOrderStatus, getOrderById };

@@ -9,15 +9,15 @@ const client = new S3Client({
     }
 });
 
-const getFile = async (key) => {
-    const command = new GetObjectCommand({
-        Bucket: process.env.AWS_BUCKET_NAME,
-        Key: key,
-    });
-
-    const signedUrl = await getSignedUrl(client, command);
-    return signedUrl;
-}
+// const getFile = async (key) => {
+//     const command = new GetObjectCommand({
+//         Bucket: process.env.AWS_BUCKET_NAME,
+//         Key: key,
+//     });
+//
+//     const signedUrl = await getSignedUrl(client, command);
+//     return signedUrl;
+// }
 
 const uploadFile = async (file) => {
     const key = file.originalname + Date.now();
@@ -31,7 +31,7 @@ const uploadFile = async (file) => {
 
     try {
         await client.send(command);
-        return await getFile(`product-images/${key}`);
+        return `https://mkart.s3.ap-south-1.amazonaws.com/product-images/${key}`
     } catch (err) {
         console.error(err);
     }

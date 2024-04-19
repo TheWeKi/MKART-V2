@@ -3,7 +3,7 @@ import {isAuthenticated, isAuthorized} from "../middleware/isAuthenticated.js";
 import {
     changeOrderStatus,
     createOrder,
-    getOrderItemById,
+    getOrderById,
     getOrders,
     getOrdersByUser
 } from "../controller/orderController.js";
@@ -21,7 +21,7 @@ orderRouter
 
 orderRouter
     .route("/orderItemById")
-    .post(isAuthenticated, getOrderItemById);
+    .post(isAuthenticated, getOrderById);
 
 orderRouter
     .route("/:id")
