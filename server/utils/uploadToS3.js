@@ -31,7 +31,7 @@ const uploadFile = async (file) => {
 
     try {
         await client.send(command);
-        return await getFile(key);
+        return await getFile(`product-images/${key}`);
     } catch (err) {
         console.error(err);
     }

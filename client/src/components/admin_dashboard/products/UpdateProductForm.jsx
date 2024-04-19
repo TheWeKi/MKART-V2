@@ -2,7 +2,8 @@ import { z } from 'zod';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { baseUrl } from "../../../axios/baseUrl";
-import {useNavigate} from "react-router-dom";
+import {useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
 
 const schema = z.object({
     title: z.string().min(1, 'Title is required'),
@@ -10,18 +11,29 @@ const schema = z.object({
     category: z.string().min(1, 'Category is required'),
     price: z.number().min(0, 'Price should be greater than 0'),
     description: z.string().min(1, 'Description is required'),
-    image: z.instanceof(FileList).refine(file => file[0].type.startsWith('image'), { message: 'Only Image Is Accepted' }),
+    // image: z.instanceof(FileList).refine(file => file[0] === null || file[0] === undefined, { message: 'Image is required' }).refine(file => file[0].type.startsWith('image'), { message: 'Only Image Is Accepted' }),
 });
 
-const CreateProductForm = () => {
+const UpdateProductForm = () => {
 
-    const navigate = useNavigate();
+    const {productId} = useParams();
+    const [product, setProduct] = useState({});
+    const fetchProduct = async () => {
+        const res = await baseUrl.get(`/products/${productId}`);
+       setProduct(res.data);
+    }
+
+    useEffect(() => {
+        fetchProduct();
+    },[]);
+
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(schema),
     });
 
     const onSubmit = async (data) => {
         try {
+            console.log(data);
             const formData = new FormData();
             Object.keys(data).forEach(key => {
                 if (key === 'image') {
@@ -30,15 +42,12 @@ const CreateProductForm = () => {
                     formData.append(key, data[key]);
                 }
             });
-    
-            await baseUrl.post('/products', formData, {
+
+            await baseUrl.put('/products', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-
-            navigate('/admin-dashboard/products');
-
         } catch (error) {
             console.log(error);
         }
@@ -55,7 +64,7 @@ const CreateProductForm = () => {
                                 {errors.title && <p className={"px-5 "}>{errors.title.message}</p>}
                             </label>
                             <input {...register('title')} type="text" placeholder="title"
-                                className="input input-bordered" />
+                                   className="input input-bordered" value={product.title}/>
                         </div>
                         <div className="form-control">
                             <label className="label">
@@ -63,7 +72,7 @@ const CreateProductForm = () => {
                                 {errors.company && <p className={"px-5"}>{errors.company.message}</p>}
                             </label>
                             <input {...register('company')} type="text" placeholder="company"
-                                className="input input-bordered" />
+                                   className="input input-bordered" value={product.company} />
                         </div>
                         <div className="form-control">
                             <label className="label">
@@ -71,7 +80,7 @@ const CreateProductForm = () => {
                                 {errors.category && <p className={"px-5"}>{errors.category.message}</p>}
                             </label>
                             <input {...register('category')} type="text" placeholder="category"
-                                className="input input-bordered" />
+                                   className="input input-bordered"  value={product.category}/>
 
                         </div>
                         <div className="form-control">
@@ -80,14 +89,14 @@ const CreateProductForm = () => {
                                 {errors.price && <p className={"px-5"}>{errors.price.message}</p>}
                             </label>
                             <input {...register('price', { setValueAs: value => parseFloat(value) })} type="number"
-                                placeholder="price" className="input input-bordered" />
+                                   placeholder="price" className="input input-bordered" value={product.price}/>
 
                         </div>
 
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text text-lg">Image</span>
-                                {errors.image && <p className={"px-5"}>{errors.image.message}</p>}
+                                {/*{errors.image && <p className={"px-5"}>{errors.image.message}</p>}*/}
                             </label>
                             <input {...register('image')} type="file" className="file-input file-input-bordered" />
                         </div>
@@ -98,12 +107,12 @@ const CreateProductForm = () => {
                                 {errors.description && <p className={"px-5"}>{errors.description.message}</p>}
                             </label>
                             <textarea {...register('description')} className="textarea textarea-bordered"
-                                placeholder="description"></textarea>
+                                      placeholder="description" value={product.description}></textarea>
 
                         </div>
 
                         <div className="form-control mt-6">
-                            <button className="btn btn-outline" type={"submit"}>Create Product</button>
+                            <button className="btn btn-outline" type={"submit"}>Update Product</button>
                         </div>
                     </form>
                 </div>
@@ -112,4 +121,4 @@ const CreateProductForm = () => {
     )
 }
 
-export default CreateProductForm;
+export default UpdateProductForm

@@ -19,6 +19,7 @@ import {ResetPassword} from "./components/login/ResetPassword.jsx"
 import {ForgotPassword} from "./components/login/ForgotPassword.jsx"
 import {OrderSuccess} from "./pages/OrderSuccess.jsx";
 import {OrderFail} from "./pages/OrderFail.jsx";
+import UpdateProduct from "./components/admin_dashboard/products/UpdateProduct.jsx";
 
 
 const App = () => {
@@ -51,6 +52,9 @@ const App = () => {
                            element={<AuthenticatedRoute><AdminDashboard/></AuthenticatedRoute>}/>
                     <Route path="/admin-dashboard/products/create-product"
                            element={<AuthenticatedRoute><CreateProduct/></AuthenticatedRoute>}/>
+
+                    <Route path="/admin-dashboard/products/update-product/:productId"
+                           element={<AuthenticatedRoute><UpdateProduct/></AuthenticatedRoute>}/>
 
                     <Route path="*" element={<ErrorPage/>}/>
                 </Routes>

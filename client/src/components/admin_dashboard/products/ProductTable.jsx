@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {baseUrl} from "../../../axios/baseUrl.js";
+import {Link} from "react-router-dom";
 
 const ProductTable = () => {
 
@@ -9,10 +10,15 @@ const ProductTable = () => {
         const res = await baseUrl.get("/products");
         setProducts(res.data);
     }
-
+    const deleteProduct = async (id) => {
+        await baseUrl.delete(`/products/${id}`);
+    }
+   
     useEffect(() => {
-        fetchProducts();
-    }, []);
+         fetchProducts();
+    }, [deleteProduct]);
+
+    
 
     return (
         <main>
@@ -56,10 +62,10 @@ const ProductTable = () => {
                                     <span className="badge badge-ghost badge-sm">{product.category}</span>
                                 </td>
                                 <td>
-                                    <button className="btn btn-outline btn-primary btn-sm">Modify</button>
+                                    <Link to={`/admin-dashboard/products/update-product/${product._id}`}><button className="btn btn-outline btn-primary btn-sm">Modify</button></Link>
                                 </td>
                                 <td>
-                                    <button className="btn btn-outline btn-error btn-sm">Delete</button>
+                                    <button onClick={()=>deleteProduct(product._id)} className="btn btn-outline btn-error btn-sm">Delete</button>
                                 </td>
                             </tr>
                         ))
