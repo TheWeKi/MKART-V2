@@ -39,7 +39,7 @@ const deleteUserById = async (req, res, next) => {
     }
 }
 
-const updateUserById = async (req, res) => {
+const updateUserRoleById = async (req, res) => {
     try {
         const {id} = req.params
 
@@ -60,4 +60,21 @@ const updateUserById = async (req, res) => {
     }
 }
 
-export {getUsers, getUserById, updateUserById, deleteUserById}
+const saveUserDeliveryaddress = async (req, res) => {
+    const { deliveryAddress } = req.body;
+    const user = req.user;
+
+    try {
+        
+        const userToUpdate = await User.findById(user.id);
+
+        userToUpdate.deliveryAddress = deliveryAddress;
+        const updatedUser = await userToUpdate.save();
+
+        res.json(updatedUser)
+    } catch (error) {
+        next(error);
+    }
+}
+
+export {getUsers, getUserById, updateUserRoleById, deleteUserById, saveUserDeliveryaddress};

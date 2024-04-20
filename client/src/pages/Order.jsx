@@ -66,7 +66,7 @@ const Order = () => {
                                                         {order.deliveryAddress}
                                                     </td>
                                                     <td>
-                                                        {order.totalPrice}
+                                                        {`₹${order.totalPrice}`}
                                                     </td>
                                                     <td>
                                                         {order.isDelivered ? "Shipped" : "Not Shipped"}

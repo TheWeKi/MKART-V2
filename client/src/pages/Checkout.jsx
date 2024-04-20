@@ -20,11 +20,11 @@ const Checkout = () => {
         resolver: zodResolver(schema),
     });
 
-    const makePayment = async (deliveryAddress) => {
+    const makePayment = async () => {
         const stripe = await loadStripe('pk_test_51NU6M8SGc2BOiEgPZKkvaZpCD0GHWfOruWn4gyy4myO8DhWm8PA9UxKW0FyfnAYUeEPiYlZlE9upH8h1j2065kex00M0uT8eIc');
+        
         const body = {
             products : cart.cartItems,
-            deliveryAddress
         }
         
         const response = await baseUrl.post(`/payments/create-checkout-session`, body);
@@ -38,7 +38,10 @@ const Checkout = () => {
         try {
 
             const deliveryAddress = `House Number: ${data.houseNumber},Town: ${data.town},City: ${data.city},State: ${data.state}(${data.zipcode})- Mobile Number: ${data.mobileNumber}`;
-            await makePayment(deliveryAddress);
+            
+            await baseUrl.patch(`/users`, { deliveryAddress });
+            
+            await makePayment();
 
         } catch (e) {
             console.log(e);

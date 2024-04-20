@@ -59,7 +59,7 @@ const OrderTable = () => {
                                 {/*    {order.deliveryAddress}*/}
                                 {/*</td>*/}
                                 <td>
-                                    {`$${order.totalPrice}`}
+                                    {`₹${order.totalPrice}`}
                                 </td>
                                 <td>
                                     {new Date(order.createdAt).toLocaleString()}

@@ -83,7 +83,7 @@ const ProductDetail = () => {
                         </div>
 
                         {/*price*/}
-                        <div className='text-2xl mb-2'>${product.price}</div>
+                        <div className='text-2xl mb-2'>₹{product.price}</div>
 
                         {/*quantity*/}
                         <div className='flex flex-row items-center gap-6'>

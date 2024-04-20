@@ -81,7 +81,6 @@ const createOrder = async (req, res, next) => {
             totalPrice: totalPrice + 30 + totalPrice * 0.12,
             cart: cartToAddInOrder,
             userId: req.user.id,
-
         });
 
         res.status(201).json(orderItem);

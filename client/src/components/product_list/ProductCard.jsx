@@ -17,7 +17,7 @@ const ProductCard = ({product}) => {
                         <div className="card-actions">
                             <div className="flex-1">
                                 <p className="text-lg font-semibold">
-                                    {`$${product.price}`}
+                                    {`₹${product.price}`}
                                 </p>
                             </div>
                             <div className="badge badge-outline">{product.category}</div>

@@ -19,22 +19,22 @@ const OrderSummary = () => {
 
                 <div className="mt-8 flex justify-between border-t border-gray-100 pt-8">
                     <div className="text-lg">SubTotal</div>
-                    <div className="text-lg">${cart.totalPrice}</div>
+                    <div className="text-lg">₹{cart.totalPrice}</div>
                 </div>
 
                 <div className="mt-8 flex justify-between ">
                     <div className="text-lg">Shipping</div>
-                    <div className="text-lg">${cart.shipping}</div>
+                    <div className="text-lg">₹{cart.shipping}</div>
                 </div>
 
                 <div className="mt-8 flex justify-between ">
                     <div className="text-lg">Tax</div>
-                    <div className="text-lg">${cart.tax}</div>
+                    <div className="text-lg">₹{cart.tax}</div>
                 </div>
 
                 <div className="mt-8 flex justify-between ">
                     <h2 className="text-xl font-semibold">Amount To Be Paid</h2>
-                    <h2 className="text-xl font-semibold">${cart.tax + cart.shipping + cart.totalPrice}</h2>
+                    <h2 className="text-xl font-semibold">₹{cart.tax + cart.shipping + cart.totalPrice}</h2>
                 </div>
 
                 <div className="mt-8 flex justify-center ">

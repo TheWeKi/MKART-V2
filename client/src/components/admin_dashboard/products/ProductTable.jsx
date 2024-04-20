@@ -63,7 +63,7 @@ const ProductTable = () => {
                                     <span className="badge badge-ghost badge-sm">{product.category}</span>
                                 </td>
                                 <td>
-                                    {`$${product.price}`}
+                                    {`₹${product.price}`}
                                 </td>
                                 <td>
                                     <Link to={`/admin-dashboard/products/update-product/${product._id}`}>
