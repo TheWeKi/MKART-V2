@@ -1,10 +1,11 @@
 import {useEffect, useState} from "react";
 import {baseUrl} from "../../../axios/baseUrl.js";
+import {useNavigate} from "react-router-dom";
 
 const OrderTable = () => {
 
     const [orders, setOrders] = useState([]);
-
+    const navigate = useNavigate();
     const fetchOrders = async () => {
         const res = await baseUrl.get(`/orders`);
         setOrders(res.data);
@@ -16,8 +17,8 @@ const OrderTable = () => {
     }
 
     const checkOrderDetails = async (orderId) => {
-        const response = await baseUrl.get(`/orders/${orderId}`);
-        console.log(response.data);
+        navigate(`/orders/${orderId}`)
+
     }
 
     useEffect(() => {

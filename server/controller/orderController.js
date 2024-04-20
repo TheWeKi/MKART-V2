@@ -37,7 +37,7 @@ const changeOrderStatus = async (req, res, next) => {
 const getOrderById = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const orderItem = await Order.findById(id);
+        const orderItem = await Order.findById(id).populate('cart.productId');
         res.json(orderItem)
     } catch (error) {
         next(error);
