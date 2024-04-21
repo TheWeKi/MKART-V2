@@ -1,5 +1,5 @@
 import Divider from "../ui/Divider.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {baseUrl} from "../../axios/baseUrl.js";
 const filters = {
     companies: ["Nike", "Adidas", "Puma", "Sketchers"],
@@ -36,6 +36,14 @@ const Filter = ({setProducts}) => {
             console.error('Error:', error);
         }
     };
+
+    const resetFilter =  async() => {
+        setSelectedCompanies([]);
+        setSelectedCategories([]);
+        setMinPrice('');
+        setMaxPrice('');
+        await handleFilter();
+    }
     return (
         <>
             <div className="navbar bg-base-100 px-4 lg:px-12">
@@ -111,7 +119,10 @@ const Filter = ({setProducts}) => {
                                     ))}
                                 </div>
                                 <Divider/>
-                                <button onClick={handleFilter}>Apply Filters</button>
+                                <div className="flex justify-evenly">
+                                    <button className="btn btn-ghost" onClick={handleFilter}>Apply Filters</button>
+                                    <button className="btn btn-ghost" onClick={resetFilter}>Reset Filters</button>
+                                </div>
                             </ul>
 
                         </div>

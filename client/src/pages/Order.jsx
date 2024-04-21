@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
 import { baseUrl } from "../axios/baseUrl.js";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const Order = () => {
 
+    const navigate = useNavigate();
     const [orders, setOrders] = useState([]);
+
+    const checkOrderDetails = async (orderId) => {
+        navigate(`/orders/${orderId}`)
+
+    }
 
     const fetchOrders = async () => {
         const res = await baseUrl.get(`/orders/ordersByUser`);
@@ -14,6 +20,8 @@ const Order = () => {
     useEffect(() => {
         fetchOrders();
     }, []);
+
+
 
     return (
         <main>
@@ -45,10 +53,10 @@ const Order = () => {
                                         <tr>
                                             <th>ID</th>
                                             {/* <th>Username</th> */}
-                                            <th>Delivery Address</th>
                                             <th>Total Amount</th>
                                             <th>Status</th>
                                             <th>Timestamp</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
 
@@ -61,10 +69,7 @@ const Order = () => {
                                                     <td>
                                                         {order._id}
                                                     </td>
-                                                    
-                                                    <td>
-                                                        {order.deliveryAddress}
-                                                    </td>
+
                                                     <td>
                                                         {`₹${order.totalPrice}`}
                                                     </td>
@@ -73,6 +78,12 @@ const Order = () => {
                                                     </td>
                                                     <td>
                                                         {new Date(order.createdAt).toLocaleString()}
+                                                    </td>
+                                                    <td>
+                                                        <button onClick={() => checkOrderDetails(order._id)}
+                                                                className="btn btn-outline btn-info btn-sm">Check
+                                                            Details
+                                                        </button>
                                                     </td>
                                                 </tr>
                                             ))

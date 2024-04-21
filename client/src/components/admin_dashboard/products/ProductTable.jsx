@@ -42,6 +42,7 @@ const ProductTable = () => {
                     {
                         products.map(product => (
                             <tr key={product._id}>
+                                <Link to={`/product-detail/${product._id}`}>
                                 <td>
                                     <div className="flex items-center space-x-3">
                                         <div className="avatar">
@@ -57,6 +58,7 @@ const ProductTable = () => {
                                         </div>
                                     </div>
                                 </td>
+                                    </Link>
                                 <td>
                                     {product.company}
                                     <br/>
