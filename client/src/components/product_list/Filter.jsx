@@ -1,12 +1,13 @@
 import Divider from "../ui/Divider.jsx";
-import {useEffect, useState} from "react";
-import {baseUrl} from "../../axios/baseUrl.js";
+import { useState } from "react";
+import { baseUrl } from "../../axios/baseUrl.js";
+
 const filters = {
     companies: ["Nike", "Adidas", "Puma", "Sketchers"],
     categories: ["Sneaker", "Lifestyle", "Running", "Football"],
 }
 
-const Filter = ({setProducts}) => {
+const Filter = ({ setProducts }) => {
 
     const [selectedCompanies, setSelectedCompanies] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
@@ -26,7 +27,7 @@ const Filter = ({setProducts}) => {
     const handleFilter = async () => {
         // Create a query parameter string
         let queryParams = `?companies=${selectedCompanies.join(',')}&categories=${selectedCategories.join(',')}&minPrice=${minPrice}&maxPrice=${maxPrice}`;
-        console.log(queryParams)
+        
         try {
             // Make a GET request to your server-side endpoint
             const response = await baseUrl.get(`/products${queryParams}`);
@@ -37,13 +38,21 @@ const Filter = ({setProducts}) => {
         }
     };
 
-    const resetFilter =  async() => {
+    const resetFilter =  async () => {
         setSelectedCompanies([]);
         setSelectedCategories([]);
         setMinPrice('');
         setMaxPrice('');
-        await handleFilter();
+        
+        try {
+            const response = await baseUrl.get(`/products`);
+
+            setProducts(response.data);
+        } catch (error) {
+            console.error('Error:', error);
+        }
     }
+
     return (
         <>
             <div className="navbar bg-base-100 px-4 lg:px-12">
@@ -57,13 +66,13 @@ const Filter = ({setProducts}) => {
 
                     <div className="drawer-end">
 
-                        <input id="my-drawer" type="checkbox" className="drawer-toggle"/>
+                        <input id="my-drawer" type="checkbox" className="drawer-toggle" />
                         <div className="drawer-content">
                             <label htmlFor="my-drawer" className="drawer-button btn btn-ghost btn-circle">
                                 <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2}
-                                     viewBox="0 0 24 24" aria-hidden="true">
+                                    viewBox="0 0 24 24" aria-hidden="true">
                                     <path strokeLinecap="round" strokeLinejoin="round"
-                                          d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z"/>
+                                        d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" />
                                 </svg>
                             </label>
 
@@ -79,13 +88,13 @@ const Filter = ({setProducts}) => {
                                             <label className="label cursor-pointer">
                                                 <span className="text-md">{category}</span>
                                                 <input type="checkbox" className="checkbox checkbox-sm" value={category}
-                                                       onChange={handleCategoryChange}/>
+                                                    onChange={handleCategoryChange} checked={selectedCategories.includes(category)} />
                                             </label>
                                         </div>
                                     ))}
                                 </div>
 
-                                <Divider/>
+                                <Divider />
 
                                 <div className="mb-8">
                                     <p className="text-xl mb-8">Price</p>
@@ -93,18 +102,18 @@ const Filter = ({setProducts}) => {
                                         <div className="mb-4">
                                             <span className="text-md">Minimum Price: </span>
                                             <input type="text" placeholder="Minimum Amount"
-                                                   className="input input-bordered w-full max-w-xs" value={minPrice}
-                                                   onChange={(e) => setMinPrice(e.target.value)}/>
+                                                className="input input-bordered w-full max-w-xs" value={minPrice}
+                                                onChange={(e) => setMinPrice(e.target.value)} />
                                         </div>
                                         <div>
                                             <span>Maximum Price: </span>
                                             <input type="text" placeholder="Maximum Amount"
-                                                   className="input input-bordered w-full max-w-xs" value={maxPrice}
-                                                   onChange={(e) => setMaxPrice(e.target.value)}/>
+                                                className="input input-bordered w-full max-w-xs" value={maxPrice}
+                                                onChange={(e) => setMaxPrice(e.target.value)} />
                                         </div>
                                     </div>
                                 </div>
-                                <Divider/>
+                                <Divider />
 
                                 <div className="mb-8">
                                     <p className="text-xl mb-4">Company</p>
@@ -113,12 +122,12 @@ const Filter = ({setProducts}) => {
                                             <label className="label cursor-pointer">
                                                 <span className="text-md">{company}</span>
                                                 <input type="checkbox" className="checkbox checkbox-sm" value={company}
-                                                       onChange={handleCompanyChange}/>
+                                                    onChange={handleCompanyChange} checked={selectedCompanies.includes(company)} />
                                             </label>
                                         </div>
                                     ))}
                                 </div>
-                                <Divider/>
+                                <Divider />
                                 <div className="flex justify-evenly">
                                     <button className="btn btn-ghost" onClick={handleFilter}>Apply Filters</button>
                                     <button className="btn btn-ghost" onClick={resetFilter}>Reset Filters</button>

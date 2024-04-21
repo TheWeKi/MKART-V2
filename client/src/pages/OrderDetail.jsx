@@ -17,6 +17,11 @@ const OrderDetail = () => {
         setUser(userResponse.data);
     }
 
+    const downloadInvoice = async (id) => {
+        //call api to download invoice
+        console.log("Downloading invoice for order id: ", id);
+    }
+
     useEffect(() => {
         fetchOrder();
     }, []);
@@ -29,6 +34,9 @@ const OrderDetail = () => {
                     <h2 className="mt-2 text-gray-500 text-lg">Order Amount: ₹{order.totalPrice}</h2>
                     <h2 className="mt-2 text-gray-500 text-lg">Order Status: {order.isDelivered ? "Delivered" : "Not Delivered"}</h2>
                     <h2 className="mt-2 text-gray-500 text-lg">Date: {new Date(order.createdAt).toLocaleString()}</h2>
+                </div>
+                <div>
+                    <button onClick={() => downloadInvoice(order._id)} className="bg-blue-500 text-white px-4 py-2 rounded-md">Download Invoice</button>
                 </div>
                 <Divider />
                 <div className="grid grid-cols-2 justify-items-center">
