@@ -63,6 +63,8 @@ const CartCard = ({cartItem}) => {
 
                         <dd className="inline">{cartItem.quantity}</dd>
 
+                        {/* <dd className="inline text-lg">{cartItem.size}</dd> */}
+
                         <button onClick={deleteCartItem} className="text-gray-600 transition hover:text-red-600 px-2">
 
                             <svg

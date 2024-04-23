@@ -4,6 +4,9 @@ export const cartItemSchema = new mongoose.Schema({
   quantity: {
     type: Number,
   },
+  size: {
+    type: String,
+  },
   cartId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Cart",

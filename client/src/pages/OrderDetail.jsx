@@ -49,6 +49,7 @@ const OrderDetail = () => {
                                     <h2 className="text-xl font-semibold">{item.productId.title}</h2>
                                     <p className="text-md text-gray-500">Quantity: {item.quantity}</p>
                                     <p className="text-md text-gray-500">Price: ₹{item.productId.price}</p>
+                                    <p className="text-md text-gray-500">Size: {item.size}UK</p>
                                     <p className="text-md text-gray-500">Total Item Price: ₹{item.totalItemPrice}</p>
                                 </div>
                             </div>
