@@ -1,5 +1,5 @@
-import {useEffect, useState} from "react";
-import {baseUrl} from "../../../axios/baseUrl.js";
+import { useEffect, useState } from "react";
+import { baseUrl } from "../../../axios/baseUrl.js";
 
 const UserTable = () => {
 
@@ -31,55 +31,61 @@ const UserTable = () => {
                 <table className="table table-zebra table-lg">
                     {/* head */}
                     <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
                     </thead>
 
 
                     <tbody>
 
-                    {
-                        users.map(user => (
-                            <tr key={user._id}>
-                                <td>
-                                    {user._id}
-                                </td>
-                                <td>
-                                    {user.username}
-                                </td>
-                                <td>
-                                    {user.email}
-                                </td>
-                                <td>
-                                    {user.roleAdmin ? "Admin" : "User"}
-                                </td>
-                                <td>
-                                    <button onClick={() => changeRole(user._id)} className="btn btn-outline btn-primary btn-sm">Change Role</button>
-                                </td>
-                                {
-                                    user.roleAdmin ? (
-                                        <>
-                                            <td></td>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <td>
-                                                <button onClick={() => deleteUser(user._id)}
+                        {
+                            users.map(user => (
+                                <tr key={user._id}>
+                                    <td>
+                                        {user._id}
+                                    </td>
+                                    <td>
+                                        {user.username}
+                                    </td>
+                                    <td>
+                                        {user.email}
+                                    </td>
+                                    <td>
+                                        {user.roleAdmin ? "Admin" : "User"}
+                                    </td>
+                                    <td>
+                                        {
+                                            !(user.email === "admin@gmail.com" && user.username === "admin")
+                                            &&
+                                            <button onClick={() => changeRole(user._id)} className="btn btn-outline btn-primary btn-sm">
+                                                Change Role
+                                            </button>
+                                        }
+                                    </td>
+                                    {
+                                        user.roleAdmin ? (
+                                            <>
+                                                <td></td>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <td>
+                                                    <button onClick={() => deleteUser(user._id)}
                                                         className="btn btn-outline btn-error btn-sm">Delete
-                                                </button>
-                                            </td>
-                                        </>
-                                    )
-                                }
-                            </tr>
-                        ))
-                    }
+                                                    </button>
+                                                </td>
+                                            </>
+                                        )
+                                    }
+                                </tr>
+                            ))
+                        }
 
                     </tbody>
 
