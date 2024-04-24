@@ -69,7 +69,6 @@ const createOrder = async (req, res, next) => {
             cartId: cart._id,
         }).populate('productId');
 
-        console.log(cartItems);
         let totalPrice = 0;
 
         const cartItemsWithTotalPrice = cartItems.map((cartItem) => {

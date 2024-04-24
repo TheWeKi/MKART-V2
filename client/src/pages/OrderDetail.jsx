@@ -15,6 +15,11 @@ const OrderDetail = () => {
 
         const userResponse = await baseUrl.get(`/users/${orderResponse.data.userId}`);
         setUser(userResponse.data);
+
+        console.log({
+            order: orderResponse.data,
+            user: userResponse.data,
+        });
     }
 
     const downloadInvoice = async (id) => {

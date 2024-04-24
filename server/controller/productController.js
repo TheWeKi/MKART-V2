@@ -49,7 +49,20 @@ const getProductById = async (req, res, next) => {
         if (!product) {
             return next(new Errorhandler(404, "Product Not Found"))
         }
-        res.json([product])
+        res.json(product)
+    } catch (e) {
+        next(e);
+    }
+}
+
+const getProductByIdForAdmin = async (req, res, next) => {
+    try {
+        const {id} = req.params;
+        const product = await Product.find({_id: id});
+        if (!product) {
+            return next(new Errorhandler(404, "Product Not Found"))
+        }
+        res.json(product)
     } catch (e) {
         next(e);
     }
@@ -118,4 +131,4 @@ const updateProductById = async (req, res, next) => {
     }
 }
 
-export {getProducts, getProductById, addProduct, updateProductById, deleteProductById}
+export {getProducts, getProductById, addProduct, updateProductById, deleteProductById, getProductByIdForAdmin}

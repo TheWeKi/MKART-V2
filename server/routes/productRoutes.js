@@ -5,7 +5,8 @@ import {
     deleteProductById,
     getProductById,
     getProducts,
-    updateProductById
+    updateProductById,
+    getProductByIdForAdmin
 } from "../controller/productController.js";
 import {isAuthenticated, isAuthorized} from "../middleware/isAuthenticated.js";
 
@@ -17,6 +18,10 @@ productRouter
     .route('/')
     .get(getProducts)
     .post(isAuthenticated, isAuthorized(true), upload.single("image"), addProduct);
+
+productRouter
+    .route('/admin/:id')
+    .get(isAuthenticated, isAuthorized(true), getProductByIdForAdmin);
 
 productRouter
     .route('/:id')

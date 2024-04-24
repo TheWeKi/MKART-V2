@@ -183,7 +183,7 @@ const getCart = async (req, res, next) => {
             cartItems: cartItemsWithTotalPrice,
             totalPrice,
             tax: totalPrice * 0.12,
-            shipping: 30,
+            shipping: 49,
         });
     } catch (e) {
         next(e);

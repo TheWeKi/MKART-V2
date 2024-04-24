@@ -16,8 +16,8 @@ const ProductDashboardNavbar = ({setProducts}) => {
     });
 
     const onSubmit = async  (data) => {
-        const response = await baseUrl.get(`/products/${data.id}`);
-        const products =response.data;
+        const response = await baseUrl.get(`/products/admin/${data.id}`);
+        const products = response.data;
         setProducts(products);
     };
 

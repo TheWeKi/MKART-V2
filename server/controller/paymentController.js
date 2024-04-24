@@ -2,11 +2,13 @@ import Stripe from 'stripe';
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 import axios from "axios";
 
+import jwt from "jsonwebtoken";
+
 const stripeCheckout = async (req, res) => {
     const { products } = req.body;
     const user = req.user;
 
-    const shipping = 30;
+    const shipping = 49;
     const tax = 0.12;
 
     const line_items = await Promise.all(products.map(async product => {
@@ -62,12 +64,20 @@ const stripePayment = async (req, res) => {
         return res.redirect(`${process.env.CLIENT_URL}/order-fail`);
     }
 
-    await axios.post(`http://localhost:8080/api/v1/orders`, {
+    const orderResponse = await axios.post(`http://localhost:8080/api/v1/orders`, {
         deliveryAddress: req.user.deliveryAddress,
     }, {
         headers: {
             Authorization: `Bearer ${req.cookies.token}`,
         }
+    });
+
+    const userId = await jwt.decode(req.cookies.token).id;
+    const userResponse = await axios.get(`http://localhost:8080/api/v1/users/${userId}`);
+
+    console.log({
+        order: orderResponse.data,
+        user: userResponse.data,
     });
 
     res.redirect(`${process.env.CLIENT_URL}/order-success`);
