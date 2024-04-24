@@ -1,10 +1,9 @@
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {baseUrl} from "../../../axios/baseUrl.js";
 import {useNavigate} from "react-router-dom";
 
-const OrderTable = () => {
+const OrderTable = ({orders , setOrders}) => {
 
-    const [orders, setOrders] = useState([]);
     const navigate = useNavigate();
     const fetchOrders = async () => {
         const res = await baseUrl.get(`/orders`);

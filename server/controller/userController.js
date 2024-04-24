@@ -1,5 +1,6 @@
 import Errorhandler from "../utils/errorhandler.js";
 import {User} from "../model/userModel.js";
+import {Order} from "../model/orderModel.js";
 
 
 const getUsers = async (req, res, next) => {
@@ -26,7 +27,19 @@ const getUserById = async (req, res, next) => {
         next(e);
     }
 }
-
+const getUserByEmail = async (req, res, next) => {
+    try {
+        const { email } = req.body;
+        console.log(email);
+        const user = await User.findOne({email});
+        if (!user) {
+            return res.status(404).json("User Not Found");
+        }
+           res.json([user]);
+    } catch (error) {
+        next(error);
+    }
+}
 const deleteUserById = async (req, res, next) => {
     try {
         const {id} = req.params
@@ -77,4 +90,4 @@ const saveUserDeliveryaddress = async (req, res) => {
     }
 }
 
-export {getUsers, getUserById, updateUserRoleById, deleteUserById, saveUserDeliveryaddress};
+export {getUsers, getUserById, updateUserRoleById, deleteUserById, saveUserDeliveryaddress, getUserByEmail};

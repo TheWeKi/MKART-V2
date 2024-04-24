@@ -1,6 +1,7 @@
 import { Order } from "../model/orderModel.js";
 import { Cart } from "../model/cartModel.js";
 import { CartItem } from "../model/cartItemModel.js";
+import {User} from "../model/userModel.js";
 
 const getOrders = async (req, res, next) => {
     try {
@@ -43,7 +44,20 @@ const getOrderById = async (req, res, next) => {
         next(error);
     }
 }
-
+const getOrderByEmail = async (req, res, next) => {
+    try {
+        const { email } = req.body;
+        const user = await User.findOne({email});
+        if (!user) {
+            return res.status(404).json([]);
+        }
+        const userId = user.id;
+        const orderItem = await Order.find({userId}).populate('cart.productId');
+        res.json(orderItem)
+    } catch (error) {
+        next(error);
+    }
+}
 const createOrder = async (req, res, next) => {
     try {
         const userId = req.user.id;
@@ -96,4 +110,4 @@ const createOrder = async (req, res, next) => {
 
 
 
-export { getOrders, createOrder, getOrdersByUser, changeOrderStatus, getOrderById };
+export { getOrders, createOrder, getOrdersByUser, changeOrderStatus, getOrderById , getOrderByEmail};

@@ -2,9 +2,8 @@ import {useEffect, useState} from "react";
 import {baseUrl} from "../../../axios/baseUrl.js";
 import {Link} from "react-router-dom";
 
-const ProductTable = () => {
+const ProductTable = ({products, setProducts}) => {
 
-    const [products, setProducts] = useState([]);
 
     const fetchProducts = async () => {
         const res = await baseUrl.get("/products");

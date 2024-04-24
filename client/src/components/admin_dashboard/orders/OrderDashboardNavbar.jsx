@@ -1,19 +1,22 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {baseUrl} from "../../../axios/baseUrl.js";
 
 const schema = z.object({
-    id: z.string().min(1, "Please enter an ID"),
+    email: z.string().email().min(1, "Please enter an email ID"),
 });
 
-const OrderDashboardNavbar = () => {
+const OrderDashboardNavbar = ({setOrders}) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(schema),
     });
 
-    const onSubmit = (data) => {
-        console.log("Search By ID: ", data.id);
+    const onSubmit = async (data) => {
+        console.log(data.email);
+        const orders = (await baseUrl.post(`/orders/getByEmail`,{email: data.email}));
+        setOrders(orders.data);
     };
 
     return (
@@ -21,7 +24,7 @@ const OrderDashboardNavbar = () => {
             <div className="flex justify-end bg-base-100 items-center max-h-[1vh] px-[8rem]">
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="flex gap-4">
-                        <input {...register('id')} type="text" placeholder={errors.id ? errors.id.message : "Search By ID"} className="input input-bordered border-base-600 w-[24rem]" />
+                        <input {...register('email')} type="text" placeholder={errors.id ? errors.id.message : "Search By Email"} className="input input-bordered border-base-600 w-[24rem]" />
                         <button className="btn btn-ghost btn-circle btn-outline border-base-300">
                             <svg className="w-8 h-8 fill-current" fill="none" stroke="currentColor" strokeWidth={2}
                                 viewBox="0 0 24 24" aria-hidden="true">

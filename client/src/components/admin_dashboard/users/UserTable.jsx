@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { baseUrl } from "../../../axios/baseUrl.js";
 
-const UserTable = () => {
+const UserTable = ({users , setUsers}) => {
 
-    const [users, setUsers] = useState([]);
+
 
     const fetchUsers = async () => {
         const res = await baseUrl.get(`/users`);

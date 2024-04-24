@@ -1,13 +1,15 @@
 import OrderTable from "./OrderTable.jsx";
 import OrderDashboardNavbar from "./OrderDashboardNavbar.jsx";
 import Divider from "../../ui/Divider.jsx";
+import {useState} from "react";
 
 const OrderDashboard = () => {
+    const [orders, setOrders] = useState([]);
     return (
         <main>
-            <OrderDashboardNavbar/>
+            <OrderDashboardNavbar setOrders={setOrders}/>
             <Divider/>
-            <OrderTable/>
+            <OrderTable orders={orders} setOrders={setOrders}/>
         </main>
     )
 }

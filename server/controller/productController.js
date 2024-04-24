@@ -49,7 +49,7 @@ const getProductById = async (req, res, next) => {
         if (!product) {
             return next(new Errorhandler(404, "Product Not Found"))
         }
-        res.json(product)
+        res.json([product])
     } catch (e) {
         next(e);
     }

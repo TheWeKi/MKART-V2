@@ -1,5 +1,12 @@
 import {Router} from "express";
-import {deleteUserById, getUserById, getUsers, updateUserRoleById, saveUserDeliveryaddress} from "../controller/userController.js";
+import {
+    deleteUserById,
+    getUserById,
+    getUsers,
+    updateUserRoleById,
+    saveUserDeliveryaddress,
+    getUserByEmail
+} from "../controller/userController.js";
 import {isAuthenticated, isAuthorized} from "../middleware/isAuthenticated.js";
 
 const userRouter = Router();
@@ -10,6 +17,10 @@ userRouter
     .get(getUserById)
     .put(isAuthenticated, isAuthorized(true), updateUserRoleById)
     .delete(isAuthenticated, isAuthorized(true), deleteUserById);
+
+userRouter
+    .route('/getUserByEmail')
+    .post(isAuthenticated,isAuthorized(true), getUserByEmail)
 
 userRouter
     .route('/')
