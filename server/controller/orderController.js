@@ -51,7 +51,7 @@ const getOrderByEmail = async (req, res, next) => {
         if (!user) {
             return res.status(404).json([]);
         }
-        const userId = user.id;
+        const userId = user._id;
         const orderItem = await Order.find({userId}).populate('cart.productId');
         res.json(orderItem)
     } catch (error) {
@@ -60,7 +60,7 @@ const getOrderByEmail = async (req, res, next) => {
 }
 const createOrder = async (req, res, next) => {
     try {
-        const userId = req.user.id;
+        const userId = req.user._id;
         const { deliveryAddress } = req.body;
 
         const cart = await Cart.findOne({ userId });
@@ -95,7 +95,7 @@ const createOrder = async (req, res, next) => {
             deliveryAddress: deliveryAddress,
             totalPrice: totalPrice + 30 + totalPrice * 0.12,
             cart: cartToAddInOrder,
-            userId: req.user.id,
+            userId: req.user._id,
         });
 
         res.status(201).json(orderItem);

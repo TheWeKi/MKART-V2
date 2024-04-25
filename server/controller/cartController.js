@@ -99,7 +99,7 @@ const getCart = async (req, res, next) => {
 const addToCart = async (req, res, next) => {
     try {
         const {productId, quantity, size} = req.body;
-        const userId = req.user.id;
+        const userId = req.user._id;
         const user = await User.findById(userId);
         const product = await Product.findById(productId);
 
@@ -145,7 +145,7 @@ const addToCart = async (req, res, next) => {
 const getCart = async (req, res, next) => {
     try {
         const cart = await Cart.findOne({
-            userId: req.user.id,
+            userId: req.user._id,
         });
 
         if (!cart) {
@@ -158,6 +158,8 @@ const getCart = async (req, res, next) => {
         const cartItems = await CartItem.find({
             cartId: cart._id,
         }).populate('productId');
+
+        console.log(cartItems);
 
         let totalPrice = 0;
 
@@ -194,7 +196,7 @@ const deleteCartItem = async (req, res, next) => {
 
     try {
         const prodId= req.params.prodId;
-        const userId = req.user.id;
+        const userId = req.user._id;
         const user = await User.findById(userId);
 
         const product = await Product.findById(prodId);
@@ -210,7 +212,7 @@ const deleteCartItem = async (req, res, next) => {
         }
 
         const existingCartItem = await CartItem.findOne({
-                cartId: cart.id,
+                cartId: cart._id,
                 productId: prodId,
             });
 
@@ -218,7 +220,7 @@ const deleteCartItem = async (req, res, next) => {
             return next(new Errorhandler(404, "Resource Not Found"));
         }
 
-        await CartItem.findByIdAndDelete(existingCartItem.id);
+        await CartItem.findByIdAndDelete(existingCartItem._id);
 
         res.json({
             message: 'Product removed from cart successfully',

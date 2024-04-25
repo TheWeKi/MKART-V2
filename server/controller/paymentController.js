@@ -64,20 +64,12 @@ const stripePayment = async (req, res) => {
         return res.redirect(`${process.env.CLIENT_URL}/order-fail`);
     }
 
-    const orderResponse = await axios.post(`http://localhost:8080/api/v1/orders`, {
+    await axios.post(`http://localhost:8080/api/v1/orders`, {
         deliveryAddress: req.user.deliveryAddress,
     }, {
         headers: {
             Authorization: `Bearer ${req.cookies.token}`,
         }
-    });
-
-    const userId = await jwt.decode(req.cookies.token).id;
-    const userResponse = await axios.get(`http://localhost:8080/api/v1/users/${userId}`);
-
-    console.log({
-        order: orderResponse.data,
-        user: userResponse.data,
     });
 
     res.redirect(`${process.env.CLIENT_URL}/order-success`);
