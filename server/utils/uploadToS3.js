@@ -37,4 +37,22 @@ const uploadFile = async (file) => {
     }
 }
 
-export { uploadFile };
+const uploadPdf = async (file,userId) => {
+    const key = file.originalname;
+
+    const command = new PutObjectCommand({
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: `order-invoice/${userId}/${key}`,
+        Body: file.buffer,
+        ContentType: file.mimetype,
+    });
+
+    try {
+        await client.send(command);
+        return `https://mkart.s3.ap-south-1.amazonaws.com/product-images/${key}`
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+export { uploadFile , uploadPdf};

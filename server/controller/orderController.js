@@ -93,7 +93,7 @@ const createOrder = async (req, res, next) => {
 
         const orderItem = await Order.create({
             deliveryAddress: deliveryAddress,
-            totalPrice: totalPrice + 30 + totalPrice * 0.12,
+            totalPrice: totalPrice + 49 + totalPrice * 0.12,
             cart: cartToAddInOrder,
             userId: req.user._id,
         });

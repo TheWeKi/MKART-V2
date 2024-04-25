@@ -1,9 +1,10 @@
 import Stripe from 'stripe';
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 import axios from "axios";
-
-import jwt from "jsonwebtoken";
-
+import PDFDocument from "pdfkit";
+import fs from "fs";
+import {createInvoice} from "../utils/createInvoice.js";
+import {uploadPdf} from "../utils/uploadToS3.js";
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 const stripeCheckout = async (req, res) => {
     const { products } = req.body;
     const user = req.user;
@@ -64,7 +65,7 @@ const stripePayment = async (req, res) => {
         return res.redirect(`${process.env.CLIENT_URL}/order-fail`);
     }
 
-    await axios.post(`http://localhost:8080/api/v1/orders`, {
+    const response = await axios.post(`http://localhost:8080/api/v1/orders`, {
         deliveryAddress: req.user.deliveryAddress,
     }, {
         headers: {
@@ -72,6 +73,13 @@ const stripePayment = async (req, res) => {
         }
     });
 
+    const getOrder = await axios.get(`http://localhost:8080/api/v1/orders/${response.data._id}`, {
+        headers: {
+            Authorization: `Bearer ${req.cookies.token}`,
+        }});
+
+     const invoice = createInvoice(getOrder.data, `${getOrder.data._id}.pdf`);
+     await uploadPdf(invoice, req.user._id);
     res.redirect(`${process.env.CLIENT_URL}/order-success`);
 }
 
