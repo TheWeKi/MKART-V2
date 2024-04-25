@@ -1,7 +1,7 @@
 import UserTable from "./UserTable.jsx";
 import UserDashboardNavbar from "./UserDashboardNavbar.jsx";
 import Divider from "../../ui/Divider.jsx";
-import {useState} from "react";
+import { useState } from "react";
 
 const UserDashboard = () => {
 
@@ -9,9 +9,9 @@ const UserDashboard = () => {
 
     return (
         <main>
-            <UserDashboardNavbar setUsers={setUsers}/>
-            <Divider/>
-            <UserTable users={users} setUsers={setUsers}/>
+            <UserDashboardNavbar setUsers={setUsers} />
+            <Divider />
+            <UserTable users={users} setUsers={setUsers} />
         </main>
     )
 }

@@ -1,20 +1,20 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {baseUrl} from "../../../axios/baseUrl.js";
+import { baseUrl } from "../../../axios/baseUrl.js";
 
 const schema = z.object({
     email: z.string().email().min(1, "Please enter an email"),
 });
 
-const UserDashboardNavbar = ({setUsers}) => {
+const UserDashboardNavbar = ({ setUsers }) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(schema),
     });
 
     const onSubmit = async (data) => {
-        const user = await baseUrl.post(`/users/getUserByEmail`, {email : data.email});
+        const user = await baseUrl.post(`/users/getUserByEmail`, { email: data.email });
         setUsers(user.data);
     };
 

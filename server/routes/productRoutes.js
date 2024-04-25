@@ -1,4 +1,4 @@
-import {Router} from "express";
+import { Router } from "express";
 import multer from "multer";
 import {
     addProduct,
@@ -8,9 +8,9 @@ import {
     updateProductById,
     getProductByIdForAdmin
 } from "../controller/productController.js";
-import {isAuthenticated, isAuthorized} from "../middleware/isAuthenticated.js";
+import { isAuthenticated, isAuthorized } from "../middleware/isAuthenticated.js";
 
-const upload = multer({storage: multer.memoryStorage()});
+const upload = multer({ storage: multer.memoryStorage() });
 
 const productRouter = Router();
 

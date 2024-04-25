@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { baseUrl } from "../../../axios/baseUrl.js";
 
-const UserTable = ({users , setUsers}) => {
-
-
+const UserTable = ({ users, setUsers }) => {
 
     const fetchUsers = async () => {
         const res = await baseUrl.get(`/users`);
@@ -40,10 +38,7 @@ const UserTable = ({users , setUsers}) => {
                             <th></th>
                         </tr>
                     </thead>
-
-
                     <tbody>
-
                         {
                             users.map(user => (
                                 <tr key={user._id}>
@@ -86,10 +81,7 @@ const UserTable = ({users , setUsers}) => {
                                 </tr>
                             ))
                         }
-
                     </tbody>
-
-
                 </table>
             </div>
 

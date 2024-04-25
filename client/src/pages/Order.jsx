@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { baseUrl } from "../axios/baseUrl.js";
-import {Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Order = () => {
 
@@ -20,7 +20,6 @@ const Order = () => {
     useEffect(() => {
         fetchOrders();
     }, []);
-
 
 
     return (
@@ -81,7 +80,7 @@ const Order = () => {
                                                     </td>
                                                     <td>
                                                         <button onClick={() => checkOrderDetails(order._id)}
-                                                                className="btn btn-outline btn-info btn-sm">Check
+                                                            className="btn btn-outline btn-info btn-sm">Check
                                                             Details
                                                         </button>
                                                     </td>

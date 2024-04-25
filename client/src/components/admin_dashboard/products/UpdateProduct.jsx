@@ -4,8 +4,8 @@ import UpdateProductForm from "./UpdateProductForm.jsx";
 const CreateProduct = () => {
     return (
         <div>
-            <DashboardNavbar/>
-            <UpdateProductForm/>
+            <DashboardNavbar />
+            <UpdateProductForm />
         </div>
     )
 }

@@ -1,104 +1,12 @@
 import Errorhandler from "../utils/errorhandler.js";
-import {User} from "../model/userModel.js";
-import {Product} from "../model/productModel.js";
-import {Cart} from "../model/cartModel.js";
-import {CartItem} from "../model/cartItemModel.js";
-/*
+import { User } from "../model/userModel.js";
+import { Product } from "../model/productModel.js";
+import { Cart } from "../model/cartModel.js";
+import { CartItem } from "../model/cartItemModel.js";
+
 const addToCart = async (req, res, next) => {
     try {
-        const {productId, quantity} = req.body;
-        const userId = req.user.id;
-        const user = await User.findById(userId);
-
-        const product = await Product.findById(productId);
-
-        if (!user || !product) {
-            return next(new Errorhandler(404, "Resource Not Found"));
-        }
-
-        let cart = await Cart.findOne({userId});
-
-        if (!cart) {
-            cart = await Cart.create({
-                    userId,
-                });
-        }
-
-        const existingCartItem = await CartItem.findOne({
-                cartId: cart.id,
-                productId: productId,
-            });
-
-        if (existingCartItem) {
-            await CartItem.findByIdAndUpdate(existingCartItem.id,{
-                    quantity: existingCartItem.quantity + quantity,
-                },
-                {new: true});
-        } else {
-            await CartItem.create({
-                    cartId: cart._id,
-                    productId: productId,
-                    quantity,
-                },
-            );
-        }
-
-        res
-            .json({
-                message: 'Product added to cart successfully'
-            });
-    } catch (e) {
-        next(e)
-    }
-}
-
-
-// { @get Total Product Price With Final Amount }
-
-const getCart = async (req, res, next) => {
-    try {
-        const cart = await Cart.findOne({userId: req.user._id});
-
-        if (!cart) {
-            return res.json({
-                cartItems: [],
-                totalPrice: 0,
-            });
-        }
-
-        const cartItems = await CartItem.find({ cartId: cart.id }).populate('productId');
-
-        console.log(cartItems);
-
-        let totalPrice = 0;
-
-        const cartItemsWithTotalPrice = cartItems.map((cartItem) => {
-            const {productId, quantity, product} = cartItem;
-            const totalItemPrice = quantity * product.price;
-
-            totalPrice += totalItemPrice;
-
-            return {
-                prodId: productId,
-                quantity,
-                totalItemPrice,
-            };
-        });
-
-        res.json({
-            cartItems: cartItemsWithTotalPrice,
-            totalPrice,
-            tax: totalPrice * 0.12,
-            shipping: 30,
-        });
-    } catch (e) {
-        next(e);
-    }
-}
-*/
-const addToCart = async (req, res, next) => {
-    try {
-        const {productId, quantity, size} = req.body;
+        const { productId, quantity, size } = req.body;
         const userId = req.user._id;
         const user = await User.findById(userId);
         const product = await Product.findById(productId);
@@ -107,7 +15,7 @@ const addToCart = async (req, res, next) => {
             return next(new Errorhandler(404, "Resource Not Found"));
         }
 
-        let cart = await Cart.findOne({userId});
+        let cart = await Cart.findOne({ userId });
 
         if (!cart) {
             cart = new Cart({
@@ -159,8 +67,6 @@ const getCart = async (req, res, next) => {
             cartId: cart._id,
         }).populate('productId');
 
-        console.log(cartItems);
-
         let totalPrice = 0;
 
         const cartItemsWithTotalPrice = cartItems.map((cartItem) => {
@@ -176,7 +82,7 @@ const getCart = async (req, res, next) => {
             return {
                 productId: productId,
                 quantity,
-                totalItemPrice,
+                totalItemPrice: totalItemPrice.toFixed(2),
                 size: cartItem.size,
             };
         });
@@ -184,7 +90,7 @@ const getCart = async (req, res, next) => {
         res.json({
             cartItems: cartItemsWithTotalPrice,
             totalPrice,
-            tax: totalPrice * 0.12,
+            tax: (totalPrice * 0.12).toFixed(2),
             shipping: 49,
         });
     } catch (e) {
@@ -195,7 +101,7 @@ const getCart = async (req, res, next) => {
 const deleteCartItem = async (req, res, next) => {
 
     try {
-        const prodId= req.params.prodId;
+        const prodId = req.params.prodId;
         const userId = req.user._id;
         const user = await User.findById(userId);
 
@@ -205,16 +111,16 @@ const deleteCartItem = async (req, res, next) => {
             return next(new Errorhandler(404, "Resource Not Found"));
         }
 
-        const cart = await Cart.findOne({userId});
+        const cart = await Cart.findOne({ userId });
 
         if (!cart) {
             return next(new Errorhandler(404, "Resource Not Found"));
         }
 
         const existingCartItem = await CartItem.findOne({
-                cartId: cart._id,
-                productId: prodId,
-            });
+            cartId: cart._id,
+            productId: prodId,
+        });
 
         if (!existingCartItem) {
             return next(new Errorhandler(404, "Resource Not Found"));
@@ -230,5 +136,4 @@ const deleteCartItem = async (req, res, next) => {
     }
 }
 
-
-export {addToCart, getCart, deleteCartItem}
+export { addToCart, getCart, deleteCartItem }

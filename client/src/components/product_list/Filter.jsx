@@ -27,7 +27,7 @@ const Filter = ({ setProducts }) => {
     const handleFilter = async () => {
         // Create a query parameter string
         let queryParams = `?companies=${selectedCompanies.join(',')}&categories=${selectedCategories.join(',')}&minPrice=${minPrice}&maxPrice=${maxPrice}`;
-        
+
         try {
             // Make a GET request to your server-side endpoint
             const response = await baseUrl.get(`/products${queryParams}`);
@@ -38,12 +38,12 @@ const Filter = ({ setProducts }) => {
         }
     };
 
-    const resetFilter =  async () => {
+    const resetFilter = async () => {
         setSelectedCompanies([]);
         setSelectedCategories([]);
         setMinPrice('');
         setMaxPrice('');
-        
+
         try {
             const response = await baseUrl.get(`/products`);
 

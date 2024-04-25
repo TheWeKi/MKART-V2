@@ -53,7 +53,7 @@ function generateOrderItemsTable(doc, order) {
             position,
             item.productId.title,
             item.quantity,
-            item.productId.price ,
+            item.productId.price,
             (item.totalItemPrice * 1.12).toFixed(2)
         );
         generateHr(doc, position + 20);

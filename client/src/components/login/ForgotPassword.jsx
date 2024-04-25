@@ -1,8 +1,8 @@
-import {z} from 'zod';
-import {useForm} from "react-hook-form";
-import {zodResolver} from "@hookform/resolvers/zod";
-import {baseUrl} from '../../axios/baseUrl';
-import {useState} from 'react';
+import { z } from 'zod';
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { baseUrl } from '../../axios/baseUrl';
+import { useState } from 'react';
 
 const schema = z.object({
     email: z.string().email("Invalid Email").min(1, 'Email is required'),
@@ -10,7 +10,7 @@ const schema = z.object({
 
 const ForgotPassword = () => {
 
-    const {register, handleSubmit, formState: {errors}} = useForm({
+    const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(schema),
     });
 
@@ -18,7 +18,7 @@ const ForgotPassword = () => {
 
     const onSubmit = async (data) => {
         try {
-            const response = await baseUrl.post(`/reset`, {email: data.email});
+            const response = await baseUrl.post(`/reset`, { email: data.email });
             if (response.status === 202) {
                 setSentEmail(true);
             }
@@ -38,7 +38,7 @@ const ForgotPassword = () => {
                                 {errors.email && <p className={"px-5 "}>{errors.password.message}</p>}
                             </label>
                             <input {...register('email')} type="email" placeholder="E-mail"
-                                   className="input input-bordered"/>
+                                className="input input-bordered" />
                         </div>
                         {sentEmail && <p className={"text-green-700 p-1"}>Please check your Email</p>}
                         <div className="form-control mt-6">
@@ -51,4 +51,4 @@ const ForgotPassword = () => {
     )
 }
 
-export {ForgotPassword};
+export { ForgotPassword };

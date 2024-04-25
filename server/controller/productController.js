@@ -1,6 +1,6 @@
 import Errorhandler from '../utils/errorhandler.js';
-import {Product} from "../model/productModel.js";
-import {uploadFile} from "../utils/uploadToS3.js";
+import { Product } from "../model/productModel.js";
+import { uploadFile } from "../utils/uploadToS3.js";
 
 const getProducts = async (req, res, next) => {
     const { companies, categories, minPrice, maxPrice } = req.query;
@@ -44,7 +44,7 @@ const getProducts = async (req, res, next) => {
 
 const getProductById = async (req, res, next) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
         const product = await Product.findById(id);
         if (!product) {
             return next(new Errorhandler(404, "Product Not Found"))
@@ -57,8 +57,8 @@ const getProductById = async (req, res, next) => {
 
 const getProductByIdForAdmin = async (req, res, next) => {
     try {
-        const {id} = req.params;
-        const product = await Product.find({_id: id});
+        const { id } = req.params;
+        const product = await Product.find({ _id: id });
         if (!product) {
             return next(new Errorhandler(404, "Product Not Found"))
         }
@@ -70,7 +70,7 @@ const getProductByIdForAdmin = async (req, res, next) => {
 
 const addProduct = async (req, res, next) => {
     try {
-        const {title, category, company, description, price} = req.body;
+        const { title, category, company, description, price } = req.body;
         const creator = req.user._id;
         const image = req.file;
 
@@ -87,9 +87,7 @@ const addProduct = async (req, res, next) => {
         }
         const newProduct = new Product(data);
         await newProduct.save();
-        res
-            .status(201)
-            .json(newProduct)
+        res.status(201).json(newProduct)
     } catch (e) {
         next(e);
     }
@@ -97,7 +95,7 @@ const addProduct = async (req, res, next) => {
 
 const deleteProductById = async (req, res, next) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
         await Product.findByIdAndDelete(id);
         res.json({
             message: `Product [${id}] Deleted Successfully`
@@ -118,12 +116,12 @@ const updateProductById = async (req, res, next) => {
         };
 
         const image = req.file;
-        if(image !== undefined) {
+        if (image !== undefined) {
             reqBody.image = await uploadFile(image);
         }
 
-        const {id} = req.params;
-        const product = await Product.findByIdAndUpdate(id, reqBody, {new: true});
+        const { id } = req.params;
+        const product = await Product.findByIdAndUpdate(id, reqBody, { new: true });
 
         res.json(product)
     } catch (e) {
@@ -131,4 +129,4 @@ const updateProductById = async (req, res, next) => {
     }
 }
 
-export {getProducts, getProductById, addProduct, updateProductById, deleteProductById, getProductByIdForAdmin}
+export { getProducts, getProductById, addProduct, updateProductById, deleteProductById, getProductByIdForAdmin }

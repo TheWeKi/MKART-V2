@@ -6,9 +6,9 @@ const MiscSignUpForm = () => {
         <>
             {/*oauth login*/}
             <div className="card max-w-xl w-full shadow-3xl bg-base-100">
-                <ThirdPartyLogin/>
+                <ThirdPartyLogin />
                 <div className="my-2"></div>
-                <AccountLogin/>
+                <AccountLogin />
             </div>
         </>
     );

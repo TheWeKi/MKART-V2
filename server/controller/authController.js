@@ -1,15 +1,15 @@
-import {dispatchJsonToken} from "../utils/dispatchToken.js";
+import { dispatchJsonToken } from "../utils/dispatchToken.js";
 import Errorhandler from "../utils/errorhandler.js";
 import bcrypt from "bcryptjs";
 import sgMail from "@sendgrid/mail";
 import crypto from "crypto";
-import {createTokenForGoogle, getGoogleAuth, getGoogleData} from "../utils/google.js";
-import {User} from "../model/userModel.js";
+import { createTokenForGoogle, getGoogleAuth, getGoogleData } from "../utils/google.js";
+import { User } from "../model/userModel.js";
 
 export const signUp = async (req, res, next) => {
     try {
-        const {email, password, username, roleAdmin} = req.body;
-        const existingUser = await User.findOne({email});
+        const { email, password, username, roleAdmin } = req.body;
+        const existingUser = await User.findOne({ email });
         if (existingUser) {
             return next(new Errorhandler(400, "User Already Exists"));
         }
@@ -21,7 +21,7 @@ export const signUp = async (req, res, next) => {
             username,
             roleAdmin,
         };
-        const user = await User.create(data);
+        await User.create(data);
 
         res.status(201).json({
             message: "Successfully Created",
@@ -32,8 +32,8 @@ export const signUp = async (req, res, next) => {
 };
 export const login = async (req, res, next) => {
     try {
-        const {email, password} = req.body;
-        const user = await User.findOne({email});
+        const { email, password } = req.body;
+        const user = await User.findOne({ email });
         if (!user) {
             return next(new Errorhandler(404, "User Not Found"));
         }
@@ -53,12 +53,12 @@ export const reset = async (req, res, next) => {
 
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
         const email = req.body.email;
-        const user = await User.findOne({email});
+        const user = await User.findOne({ email });
         if (!user) {
             return next(new Errorhandler(404, "User Not Found"));
         }
         const resetToken = crypto.randomBytes(20).toString("hex");
-        await User.findOneAndUpdate({email}, {
+        await User.findOneAndUpdate({ email }, {
             resetToken: resetToken,
             resetTokenExpiry: new Date(Date.now() + 3600000),
         });
@@ -120,12 +120,12 @@ export const reset = async (req, res, next) => {
 
 export const newPassword = async (req, res, next) => {
     try {
-        const {resetToken, password} = req.body;
+        const { resetToken, password } = req.body;
         const user = await User.findOne({
-                resetToken,
-                resetTokenExpiry: {
-                    $gte: new Date(Date.now() - 3600000),
-                },
+            resetToken,
+            resetTokenExpiry: {
+                $gte: new Date(Date.now() - 3600000),
+            },
         });
 
         if (!user) {
@@ -140,7 +140,7 @@ export const newPassword = async (req, res, next) => {
             password: hashedPassword,
             resetToken: null,
             resetTokenExpiry: null,
-        }, {new: true});
+        }, { new: true });
 
         res.status(200).json({
             message: "Password Updated",

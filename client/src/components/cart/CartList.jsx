@@ -1,9 +1,10 @@
 import CartCard from "./CartCard.jsx";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 
 const CartList = () => {
 
     const cart = useSelector((state) => state.cart);
+
     return (
         <>
             {
@@ -17,5 +18,4 @@ const CartList = () => {
     )
 }
 
-export default CartList
-
+export default CartList;

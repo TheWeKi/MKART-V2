@@ -1,4 +1,4 @@
-import {Router} from "express";
+import { Router } from "express";
 import {
     deleteUserById,
     getUserById,
@@ -7,7 +7,7 @@ import {
     saveUserDeliveryaddress,
     getUserByEmail
 } from "../controller/userController.js";
-import {isAuthenticated, isAuthorized} from "../middleware/isAuthenticated.js";
+import { isAuthenticated, isAuthorized } from "../middleware/isAuthenticated.js";
 
 const userRouter = Router();
 
@@ -20,7 +20,7 @@ userRouter
 
 userRouter
     .route('/getUserByEmail')
-    .post(isAuthenticated,isAuthorized(true), getUserByEmail)
+    .post(isAuthenticated, isAuthorized(true), getUserByEmail)
 
 userRouter
     .route('/')

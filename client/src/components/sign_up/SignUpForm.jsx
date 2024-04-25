@@ -1,8 +1,8 @@
-import {z} from "zod";
-import {useForm} from "react-hook-form";
-import {zodResolver} from "@hookform/resolvers/zod";
-import {useNavigate} from "react-router-dom";
-import {baseUrl} from "../../axios/baseUrl.js";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
+import { baseUrl } from "../../axios/baseUrl.js";
 
 
 const schema = z.object({
@@ -13,7 +13,7 @@ const schema = z.object({
 
 const SignUpForm = () => {
     const navigate = useNavigate();
-    const {register, handleSubmit, formState: {errors}} = useForm({
+    const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(schema),
     });
 
@@ -37,7 +37,7 @@ const SignUpForm = () => {
                                 {errors.username && <p className={"px-5"}>{errors.username.message}</p>}
                             </label>
                             <input {...register('username')} type="text" placeholder="username"
-                                   className="input input-bordered"/>
+                                className="input input-bordered" />
                         </div>
                         <div className="form-control">
                             <label className="label">
@@ -45,7 +45,7 @@ const SignUpForm = () => {
                                 {errors.email && <p className={"px-5"}>{errors.email.message}</p>}
                             </label>
                             <input {...register('email')} type="email" placeholder="email"
-                                   className="input input-bordered"/>
+                                className="input input-bordered" />
                         </div>
                         <div className="form-control">
                             <label className="label">
@@ -53,7 +53,7 @@ const SignUpForm = () => {
                                 {errors.password && <p className={"px-5"}>{errors.password.message}</p>}
                             </label>
                             <input {...register('password')} type="password" placeholder="password"
-                                   className="input input-bordered"/>
+                                className="input input-bordered" />
                             {/*<label className="label">*/}
                             {/*    <a href="#" className="label-text-alt link link-hover">Forgot password?</a>*/}
                             {/*</label>*/}

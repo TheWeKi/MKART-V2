@@ -1,7 +1,7 @@
 import { Order } from "../model/orderModel.js";
 import { Cart } from "../model/cartModel.js";
 import { CartItem } from "../model/cartItemModel.js";
-import {User} from "../model/userModel.js";
+import { User } from "../model/userModel.js";
 
 const getOrders = async (req, res, next) => {
     try {
@@ -38,7 +38,9 @@ const changeOrderStatus = async (req, res, next) => {
 const getOrderById = async (req, res, next) => {
     try {
         const { id } = req.params;
+
         const orderItem = await Order.findById(id).populate('cart.productId');
+
         res.json(orderItem)
     } catch (error) {
         next(error);
@@ -47,12 +49,16 @@ const getOrderById = async (req, res, next) => {
 const getOrderByEmail = async (req, res, next) => {
     try {
         const { email } = req.body;
-        const user = await User.findOne({email});
+
+        const user = await User.findOne({ email });
+
         if (!user) {
             return res.status(404).json([]);
         }
+
         const userId = user._id;
-        const orderItem = await Order.find({userId}).populate('cart.productId');
+        const orderItem = await Order.find({ userId }).populate('cart.productId');
+
         res.json(orderItem)
     } catch (error) {
         next(error);
@@ -83,7 +89,7 @@ const createOrder = async (req, res, next) => {
             return {
                 productId: productId,
                 quantity,
-                totalItemPrice,
+                totalItemPrice: totalItemPrice.toFixed(2),
                 size: cartItem.size,
             };
         });
@@ -93,7 +99,7 @@ const createOrder = async (req, res, next) => {
 
         const orderItem = await Order.create({
             deliveryAddress: deliveryAddress,
-            totalPrice: totalPrice + 49 + totalPrice * 0.12,
+            totalPrice: ((totalPrice * 1.12) + 49).toFixed(2),
             cart: cartToAddInOrder,
             userId: req.user._id,
         });
@@ -107,6 +113,4 @@ const createOrder = async (req, res, next) => {
     }
 }
 
-
-
-export { getOrders, createOrder, getOrdersByUser, changeOrderStatus, getOrderById , getOrderByEmail};
+export { getOrders, createOrder, getOrdersByUser, changeOrderStatus, getOrderById, getOrderByEmail };

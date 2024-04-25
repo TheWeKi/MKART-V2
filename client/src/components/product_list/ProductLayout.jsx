@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
 import ProductCard from "./ProductCard.jsx";
-import { useEffect} from "react";
+import { useEffect } from "react";
 import { baseUrl } from "../../axios/baseUrl.js";
 
-const ProductLayout = ({products,setProducts}) => {
-
+const ProductLayout = ({ products, setProducts }) => {
 
     const fetchProducts = async () => {
         const res = await baseUrl.get('/products')
         setProducts(res.data);
     }
+
     useEffect(() => {
         fetchProducts();
     }, [])
@@ -34,4 +34,4 @@ const ProductLayout = ({products,setProducts}) => {
     )
 }
 
-export default ProductLayout
+export default ProductLayout;

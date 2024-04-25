@@ -1,11 +1,11 @@
-import {z} from "zod";
-import {useForm} from "react-hook-form";
-import {zodResolver} from "@hookform/resolvers/zod";
-import {baseUrl} from "../../axios/baseUrl.js";
-import {useNavigate} from "react-router-dom";
-import {useState} from "react";
-import {useDispatch} from "react-redux";
-import {login} from "../../redux/features/authSlice.js";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { baseUrl } from "../../axios/baseUrl.js";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/features/authSlice.js";
 
 const schema = z.object({
     email: z.string().email("Enter a Valid Email").min(1, 'Email is required'),
@@ -15,7 +15,7 @@ const schema = z.object({
 const LoginForm = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const {register, handleSubmit, formState: {errors}} = useForm({
+    const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(schema),
     });
 
@@ -25,7 +25,7 @@ const LoginForm = () => {
         try {
             const res = await baseUrl.post('/login', data);
             const user = res.data.user;
-            
+
             // baseUrl.interceptors.request.use((config) => {
             //     config.headers.Authorization = `Bearer ${token}`;
             //     return config;
@@ -54,7 +54,7 @@ const LoginForm = () => {
                                 {errors.email && <p className={"px-5"}>{errors.email.message}</p>}
                             </label>
                             <input {...register('email')} type="email" placeholder="email"
-                                   className="input input-bordered"/>
+                                className="input input-bordered" />
                         </div>
                         <div className="form-control">
                             <label className="label">
@@ -62,7 +62,7 @@ const LoginForm = () => {
                                 {errors.password && <p className={"px-5 "}>{errors.password.message}</p>}
                             </label>
                             <input {...register('password')} type="password" placeholder="password"
-                                   className="input input-bordered"/>
+                                className="input input-bordered" />
                             <label className="label">
                                 <p className="label-text-alt link link-hover" onClick={() => navigate('/reset')}>Forgot
                                     password?</p>

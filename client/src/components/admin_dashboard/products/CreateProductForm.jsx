@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { baseUrl } from "../../../axios/baseUrl";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const schema = z.object({
     title: z.string().min(1, 'Title is required'),
@@ -30,7 +30,7 @@ const CreateProductForm = () => {
                     formData.append(key, data[key]);
                 }
             });
-    
+
             await baseUrl.post('/products', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -81,7 +81,6 @@ const CreateProductForm = () => {
                             </label>
                             <input {...register('price', { setValueAs: value => parseFloat(value) })} type="number"
                                 placeholder="price" className="input input-bordered" />
-
                         </div>
 
                         <div className="form-control">

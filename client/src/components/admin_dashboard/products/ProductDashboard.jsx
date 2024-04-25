@@ -1,7 +1,7 @@
 import ProductTable from "./ProductTable.jsx";
 import ProductDashboardNavbar from "./ProductDashboardNavbar.jsx";
 import Divider from "../../ui/Divider.jsx";
-import {useState} from "react";
+import { useState } from "react";
 
 const ProductDashboard = () => {
 
@@ -9,9 +9,9 @@ const ProductDashboard = () => {
 
     return (
         <main>
-            <ProductDashboardNavbar setProducts={setProducts}/>
-            <Divider/>
-            <ProductTable products={products} setProducts={setProducts}/>
+            <ProductDashboardNavbar setProducts={setProducts} />
+            <Divider />
+            <ProductTable products={products} setProducts={setProducts} />
         </main>
     )
 }

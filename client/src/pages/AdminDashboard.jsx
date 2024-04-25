@@ -4,8 +4,8 @@ import DashboardNavbar from "../components/admin_dashboard/DashboardNavbar.jsx";
 const AdminDashboard = () => {
     return (
         <>
-            <DashboardNavbar/>
-            <MainDashboard/>
+            <DashboardNavbar />
+            <MainDashboard />
         </>
     );
 };

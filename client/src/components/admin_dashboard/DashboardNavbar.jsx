@@ -1,8 +1,7 @@
 import Divider from "../ui/Divider.jsx";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const DashboardNavbar = () => {
-
     return (
         <>
             <div className="flex justify-evenly bg-base-100 items-center max-h-[1vh]">
@@ -32,7 +31,7 @@ const DashboardNavbar = () => {
                 </Link>
             </div>
 
-            <Divider/>
+            <Divider />
         </>
     );
 };

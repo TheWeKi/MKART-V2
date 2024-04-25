@@ -1,8 +1,9 @@
 import express from "express";
-import {isAuthenticated, isAuthorized} from "../middleware/isAuthenticated.js";
+import { isAuthenticated, isAuthorized } from "../middleware/isAuthenticated.js";
 import {
     changeOrderStatus,
-    createOrder, getOrderByEmail,
+    createOrder,
+    getOrderByEmail,
     getOrderById,
     getOrders,
     getOrdersByUser
@@ -21,13 +22,11 @@ orderRouter
 
 orderRouter
     .route("/getByEmail")
-    .post(isAuthenticated, isAuthorized(true),getOrderByEmail);
+    .post(isAuthenticated, isAuthorized(true), getOrderByEmail);
 
 orderRouter
     .route("/:id")
     .get(isAuthenticated, getOrderById)
     .put(isAuthenticated, isAuthorized(true), changeOrderStatus)
-
-
 
 export default orderRouter;

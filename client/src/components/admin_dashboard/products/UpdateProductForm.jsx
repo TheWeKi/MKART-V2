@@ -2,11 +2,12 @@ import { z } from 'zod';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { baseUrl } from "../../../axios/baseUrl";
-import {useNavigate, useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const UpdateProductForm = () => {
-    const {productId} = useParams();
+
+    const { productId } = useParams();
     const [title, setTitle] = useState("");
     const [company, setCompany] = useState("");
     const [category, setCategory] = useState("");
@@ -27,7 +28,7 @@ const UpdateProductForm = () => {
 
     useEffect(() => {
         fetchProduct();
-    },[]);
+    }, []);
 
     const schema = z.object({
         title: z.string().min(1, 'Title is required').default(title),
@@ -78,7 +79,7 @@ const UpdateProductForm = () => {
                                 {errors.title && <p className={"px-5 "}>{errors.title.message}</p>}
                             </label>
                             <input {...register('title')} type="text" placeholder="title"
-                                   className="input input-bordered" value={title} onChange={e => setTitle(e.target.value)}/>
+                                className="input input-bordered" value={title} onChange={e => setTitle(e.target.value)} />
                         </div>
                         <div className="form-control">
                             <label className="label">
@@ -86,7 +87,7 @@ const UpdateProductForm = () => {
                                 {errors.company && <p className={"px-5"}>{errors.company.message}</p>}
                             </label>
                             <input {...register('company')} type="text" placeholder="company"
-                                   className="input input-bordered" value={company} onChange={e => setCompany(e.target.value)} />
+                                className="input input-bordered" value={company} onChange={e => setCompany(e.target.value)} />
                         </div>
                         <div className="form-control">
                             <label className="label">
@@ -94,7 +95,7 @@ const UpdateProductForm = () => {
                                 {errors.category && <p className={"px-5"}>{errors.category.message}</p>}
                             </label>
                             <input {...register('category')} type="text" placeholder="category"
-                                   className="input input-bordered" value={category} onChange={e => setCategory(e.target.value)}/>
+                                className="input input-bordered" value={category} onChange={e => setCategory(e.target.value)} />
 
                         </div>
                         <div className="form-control">
@@ -103,7 +104,7 @@ const UpdateProductForm = () => {
                                 {errors.price && <p className={"px-5"}>{errors.price.message}</p>}
                             </label>
                             <input {...register('price', { setValueAs: value => parseFloat(value) })} type="number"
-                                   placeholder="price" className="input input-bordered" value={price} onChange={e => setPrice(e.target.value)}/>
+                                placeholder="price" className="input input-bordered" value={price} onChange={e => setPrice(e.target.value)} />
 
                         </div>
 
@@ -121,7 +122,7 @@ const UpdateProductForm = () => {
                                 {errors.description && <p className={"px-5"}>{errors.description.message}</p>}
                             </label>
                             <textarea {...register('description')} className="textarea textarea-bordered"
-                                      placeholder="description" value={description} onChange={e => setDescription(e.target.value)}></textarea>
+                                placeholder="description" value={description} onChange={e => setDescription(e.target.value)}></textarea>
 
                         </div>
 
@@ -135,4 +136,4 @@ const UpdateProductForm = () => {
     )
 }
 
-export default UpdateProductForm
+export default UpdateProductForm;

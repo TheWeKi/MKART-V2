@@ -1,10 +1,10 @@
-import {useEffect, useState} from "react";
-import {baseUrl} from "../../axios/baseUrl.js";
-import {setCart} from "../../redux/features/cartSlice.js";
-import {useDispatch} from "react-redux";
+import { useEffect, useState } from "react";
+import { baseUrl } from "../../axios/baseUrl.js";
+import { setCart } from "../../redux/features/cartSlice.js";
+import { useDispatch } from "react-redux";
 
 
-const CartCard = ({cartItem}) => {
+const CartCard = ({ cartItem }) => {
 
     const dispatch = useDispatch();
     const [product, setProduct] = useState({});
@@ -33,7 +33,7 @@ const CartCard = ({cartItem}) => {
         }
 
     }
-    
+
     useEffect(() => {
         fetchProduct();
     }, [])

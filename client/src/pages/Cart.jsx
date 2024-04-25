@@ -1,10 +1,9 @@
 import CartList from "../components/cart/CartList.jsx";
 import { Link } from "react-router-dom";
-import { useEffect,} from "react";
+import { useEffect, } from "react";
 import { baseUrl } from "../axios/baseUrl.js";
-import {setCart}  from '../redux/features/cartSlice.js';
-import {useDispatch, useSelector} from 'react-redux';
-
+import { setCart } from '../redux/features/cartSlice.js';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Cart = () => {
 
@@ -30,7 +29,7 @@ const Cart = () => {
     useEffect(() => {
         fetchCartItems();
     }, [])
-    
+
     return (
         <>
             {

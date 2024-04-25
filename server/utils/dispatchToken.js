@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 
-export const dispatchJsonToken = (user, statusCode, res) => {
+export const dispatchJsonToken = (user, _statusCode, res) => {
 
-    const token = jwt.sign({id: user.id}, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
 
     const options = {
         expires: new Date(Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000),

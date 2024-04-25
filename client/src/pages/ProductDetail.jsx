@@ -19,7 +19,6 @@ const ProductDetail = () => {
     const fetchProduct = async () => {
         const res = await baseUrl.get(`/products/${productId}`);
         setProduct(res.data);
-        console.log(res.data);
     }
     const handleDecreaseQuantity = () => {
         if (quantity === 1) {
@@ -136,4 +135,4 @@ const ProductDetail = () => {
     )
 }
 
-export default ProductDetail
+export default ProductDetail;

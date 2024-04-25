@@ -15,16 +15,11 @@ const OrderDetail = () => {
 
         const userResponse = await baseUrl.get(`/users/${orderResponse.data.userId}`);
         setUser(userResponse.data);
-
-        console.log({
-            order: orderResponse.data,
-            user: userResponse.data,
-        });
     }
 
     const downloadInvoice = async (id) => {
-        //call api to download invoice
-        console.log("Downloading invoice for order id: ", id);
+        const invoiceLink = `https://mkart.s3.ap-south-1.amazonaws.com/order-invoice/${user._id}/${id}`;
+        window.open(invoiceLink, "_blank");
     }
 
     useEffect(() => {

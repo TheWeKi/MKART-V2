@@ -1,7 +1,7 @@
-import {Link, useNavigate} from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
-import {useDispatch, useSelector} from 'react-redux';
-import {login, logout} from '../../redux/features/authSlice.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { login, logout } from '../../redux/features/authSlice.js';
 
 import Cookies from 'js-cookie';
 
@@ -19,7 +19,7 @@ const Navbar = () => {
         dispatch(login()); //Set the state to true if token is present in cookies in case of page refresh
     }
     const setLogout = () => {
-        Cookies.remove('token'); 
+        Cookies.remove('token');
         dispatch(logout()); //Set the state to false if user clicks on logout button
         navigate('/login');
     };
@@ -32,7 +32,7 @@ const Navbar = () => {
                         <label tabIndex={0} className="btn btn-ghost btn-circle">
                             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                                      d="M4 6h16M4 12h16M4 18h7"/>
+                                    d="M4 6h16M4 12h16M4 18h7" />
                             </svg>
                         </label>
                         <ul tabIndex={0}
@@ -45,14 +45,14 @@ const Navbar = () => {
                             </li>
                             {
                                 isAuthenticated &&
-                                    <>
-                                        <li>
-                                            <Link to='/cart'>Cart</Link>
-                                        </li>
-                                        <li>
-                                            <Link to='/orders'>Orders</Link>
-                                        </li>
-                                    </>
+                                <>
+                                    <li>
+                                        <Link to='/cart'>Cart</Link>
+                                    </li>
+                                    <li>
+                                        <Link to='/orders'>Orders</Link>
+                                    </li>
+                                </>
                             }
                         </ul>
                     </div>
@@ -79,4 +79,4 @@ const Navbar = () => {
     )
 }
 
-export default Navbar
+export default Navbar;

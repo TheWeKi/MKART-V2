@@ -4,8 +4,8 @@ import DashboardNavbar from "../DashboardNavbar.jsx";
 const CreateProduct = () => {
     return (
         <div>
-            <DashboardNavbar/>
-            <CreateProductForm/>
+            <DashboardNavbar />
+            <CreateProductForm />
         </div>
     )
 }
