@@ -78,17 +78,12 @@ const stripePayment = async (req, res) => {
             Authorization: `Bearer ${req.cookies.token}`,
         }});
 
-    createInvoice(getOrder.data, `${getOrder.data._id}.pdf`)
-        .then(doc => {
-            fs.readFile(`./${getOrder.data._id}.pdf`, (err, data) => {
-                if (err) {
-                    return console.log(err);
-                }
-                uploadPdf(data,getOrder.data._id,req.user._id);
-            });
-            res.redirect(`${process.env.CLIENT_URL}/order-success`);
-        })
-        .catch(console.error);
+        await createInvoice(getOrder.data, `${getOrder.data._id}.pdf`);
+        const data = fs.readFileSync(`./${getOrder.data._id}.pdf`);
+        await uploadPdf(data, getOrder.data._id, req.user._id);
+        fs.unlinkSync(`./${getOrder.data._id}.pdf`);
+        console.log('PDF file deleted successfully');
+        res.redirect(`${process.env.CLIENT_URL}/order-success`);
 }
 
 export { stripeCheckout, stripePayment };
