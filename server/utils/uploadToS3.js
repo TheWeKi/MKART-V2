@@ -37,14 +37,14 @@ const uploadFile = async (file) => {
     }
 }
 
-const uploadPdf = async (file,userId) => {
-    const key = file.originalname;
+const uploadPdf = async (file, fileName, userId) => {
+    const key = fileName;
 
     const command = new PutObjectCommand({
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: `order-invoice/${userId}/${key}`,
-        Body: file.buffer,
-        ContentType: file.mimetype,
+        Body: file,
+        ContentType: 'application/pdf',
     });
 
     try {

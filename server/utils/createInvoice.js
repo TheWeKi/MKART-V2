@@ -2,17 +2,21 @@ import PDFDocument from "pdfkit";
 import fs from "fs";
 
 export function createInvoice(order, path) {
-    let doc = new PDFDocument({ margin: 50 });
+    return new Promise((resolve, reject) => {
+        let doc = new PDFDocument({ margin: 50 });
 
-    generateHeader(doc);
-    generateOrderInformation(doc, order);
-    generateOrderItemsTable(doc, order);
-    generateFooter(doc);
+        generateHeader(doc);
+        generateOrderInformation(doc, order);
+        generateOrderItemsTable(doc, order);
+        generateFooter(doc);
 
-    doc.end();
-    doc.pipe(fs.createWriteStream(path));
+        let stream = fs.createWriteStream(path);
+        stream.on('finish', () => resolve(doc));
+        stream.on('error', reject);
 
-    return doc;
+        doc.pipe(stream);
+        doc.end();
+    });
 }
 
 function generateHeader(doc) {

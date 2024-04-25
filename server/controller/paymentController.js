@@ -78,9 +78,17 @@ const stripePayment = async (req, res) => {
             Authorization: `Bearer ${req.cookies.token}`,
         }});
 
-     const invoice = createInvoice(getOrder.data, `${getOrder.data._id}.pdf`);
-     await uploadPdf(invoice, req.user._id);
-    res.redirect(`${process.env.CLIENT_URL}/order-success`);
+    createInvoice(getOrder.data, `${getOrder.data._id}.pdf`)
+        .then(doc => {
+            fs.readFile(`./${getOrder.data._id}.pdf`, (err, data) => {
+                if (err) {
+                    return console.log(err);
+                }
+                uploadPdf(data,getOrder.data._id,req.user._id);
+            });
+            res.redirect(`${process.env.CLIENT_URL}/order-success`);
+        })
+        .catch(console.error);
 }
 
 export { stripeCheckout, stripePayment };
