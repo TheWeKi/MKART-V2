@@ -11,16 +11,19 @@ const ProductCard = ({ product }) => {
                     <div className="card-body">
                         <h2 className="card-title">
                             {product.title}
-                            <div className="badge badge-secondary">NEW</div>
                         </h2>
-                        <p className="mb-4">{product.description.split('?')[0]}</p>
+                        {/*<p className="mb-4">{product.description.split('?')[0]}</p>*/}
+                        <div className="flex justify-between">
+                            <div className="badge">{product.category}</div>
+                            <div className="badge">{product.company}</div>
+                        </div>
                         <div className="card-actions">
                             <div className="flex-1">
                                 <p className="text-lg font-semibold">
                                     {`₹${product.price}`}
                                 </p>
+                                <span className="text-sm text-gray-400">(excl. of taxes)</span>
                             </div>
-                            <div className="badge badge-outline">{product.category}</div>
                         </div>
                     </div>
                 </div>

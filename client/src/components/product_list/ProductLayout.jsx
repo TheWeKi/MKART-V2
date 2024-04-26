@@ -16,7 +16,7 @@ const ProductLayout = ({ products, setProducts }) => {
 
     return (
         <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 justify-items-center p-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center p-12">
 
                 {
                     products.map(product => (
