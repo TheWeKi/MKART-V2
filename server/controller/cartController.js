@@ -27,6 +27,7 @@ const addToCart = async (req, res, next) => {
         const existingCartItem = await CartItem.findOne({
             cartId: cart._id,
             productId: productId,
+            size: size,
         });
 
         if (existingCartItem) {

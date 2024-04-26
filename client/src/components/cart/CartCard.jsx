@@ -61,9 +61,12 @@ const CartCard = ({ cartItem }) => {
 
                     <div className="flex flex-1 items-center justify-end gap-2">
 
-                        <dd className="inline">{cartItem.quantity}</dd>
-
-                        {/* <dd className="inline text-lg">{cartItem.size}</dd> */}
+                        <div className="border border-neutral px-4 py-2">
+                            Quant: {cartItem.quantity}
+                        </div>
+                        <div className="border border-neutral px-3 py-2">
+                            Size: {`${cartItem.size}UK`}
+                        </div>
 
                         <button onClick={deleteCartItem} className="text-gray-600 transition hover:text-red-600 px-2">
 

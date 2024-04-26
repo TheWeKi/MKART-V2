@@ -52,6 +52,7 @@ function generateOrderItemsTable(doc, order) {
             doc,
             position,
             item.productId.title,
+            item.size,
             item.quantity,
             item.productId.price,
             (item.totalItemPrice * 1.12).toFixed(2)
@@ -66,6 +67,7 @@ function generateTableHeader(doc, y) {
     doc
         .fontSize(10)
         .text("Product", 50, y)
+        .text("Size", 150, y)
         .text("Quantity", 280, y)
         .text("Price", 370, y, { width: 90, align: "right" })
         .text("Total(+Tax)", 0, y, { align: "right" })
@@ -74,10 +76,11 @@ function generateTableHeader(doc, y) {
     generateHr(doc, y + 20);
 }
 
-function generateTableRow(doc, y, product, quantity, price, total) {
+function generateTableRow(doc, y, product, size, quantity, price, total) {
     doc
         .fontSize(10)
         .text(product, 50, y)
+        .text(`${size}UK`, 150, y)
         .text(quantity, 280, y)
         .text(price, 370, y, { width: 90, align: "right" })
         .text(total, 0, y, { align: "right" });
