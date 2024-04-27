@@ -42,7 +42,7 @@ const ProductDetail = () => {
                 quantity: quantity,
                 size: size
             })
-
+            alert('Product added to cart');
             navigate('/products');
         } catch (e) {
             console.log(e)
