@@ -6,8 +6,11 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useSelector } from "react-redux";
 
 const schema = z.object({
-    houseNumber: z.string().min(1, "House number is required"),
-    mobileNumber: z.string().length(10, { message: "Mobile number must be 10 digits" }),
+    houseNumber: z.string().min(1, "Address line is required"),
+    mobileNumber: z.string().min(10, "Mobile number must be 10 digits" )
+        .refine((value) => {
+            if(value == +value) return true;
+        }),
     town: z.string().min(1, "Town is required"),
     state: z.string().min(1, "State is required"),
     city: z.string().min(1, "City is required"),
@@ -55,10 +58,10 @@ const Checkout = () => {
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="form-control">
                             <label className="label">
-                                <span className="label-text text-lg">House Number</span>
+                                <span className="label-text text-lg">Address Line</span>
                                 {errors.houseNumber && <p className={"px-5"}>{errors.houseNumber.message}</p>}
                             </label>
-                            <input {...register('houseNumber')} type="text" placeholder="House Number"
+                            <input {...register('houseNumber')} type="text" placeholder="address line"
                                 className="input input-bordered" />
                         </div>
 
@@ -75,7 +78,7 @@ const Checkout = () => {
                                 <span className="label-text text-lg">City</span>
                                 {errors.city && <p className={"px-5"}>{errors.city.message}</p>}
                             </label>
-                            <input {...register('city')} type="text" placeholder="City"
+                            <input {...register('city')} type="text" placeholder="city"
                                 className="input input-bordered" />
                         </div>
                         <div className="form-control">
@@ -83,7 +86,7 @@ const Checkout = () => {
                                 <span className="label-text text-lg">State</span>
                                 {errors.state && <p className={"px-5"}>{errors.state.message}</p>}
                             </label>
-                            <input {...register('state')} type="text" placeholder="State"
+                            <input {...register('state')} type="text" placeholder="state"
                                 className="input input-bordered" />
                         </div>
 
@@ -92,7 +95,7 @@ const Checkout = () => {
                                 <span className="label-text text-lg">Zipcode</span>
                                 {errors.zipcode && <p className={"px-5"}>{errors.zipcode.message}</p>}
                             </label>
-                            <input {...register('zipcode')} type="text" placeholder="Zipcode"
+                            <input {...register('zipcode')} type="text" placeholder="zipcode"
                                 className="input input-bordered" />
                         </div>
 
@@ -101,7 +104,7 @@ const Checkout = () => {
                                 <span className="label-text text-lg">Mobile Number</span>
                                 {errors.mobileNumber && <p className={"px-5"}>{errors.mobileNumber.message}</p>}
                             </label>
-                            <input {...register('mobileNumber')} type="text" placeholder="Mobile Number"
+                            <input {...register('mobileNumber')} type="text" placeholder="mobile number"
                                 className="input input-bordered" />
                         </div>
 
