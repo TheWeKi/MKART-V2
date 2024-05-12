@@ -6,13 +6,13 @@ export default defineConfig({
     server: {
         port: 3000,
 
-        proxy: {
-            '/api': {
-                target: 'http://mkart-v2-server.onrender.com',
-                changeOrigin: true,
-                secure: false,
-              },
-        }
+        // proxy: {
+        //     '/api': {
+        //         target: 'http://mkart-v2-server.onrender.com',
+        //         changeOrigin: true,
+        //         secure: false,
+        //       },
+        // }
     },
     plugins: [react()],
 })
