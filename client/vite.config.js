@@ -8,7 +8,7 @@ export default defineConfig({
 
         proxy: {
             '/api': {
-                target: 'http://mkartv2.com',
+                target: 'http://mkart-v2-server.onrender.com',
                 changeOrigin: true,
                 secure: false,
               },
