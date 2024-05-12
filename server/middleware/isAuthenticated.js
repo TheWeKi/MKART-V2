@@ -22,7 +22,7 @@ export const isAuthenticated = async (req, res, next) => {
 
 export const isAuthorized = (role) => {
 
-    return (req, res, next) => {
+    return (req, _res, next) => {
         try {
             if (role.toString() !== (req.user.roleAdmin.toString())) {
                 return next(new Errorhandler(400, "Not Authorized"))
