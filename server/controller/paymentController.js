@@ -13,7 +13,7 @@ const stripeCheckout = async (req, res) => {
     const tax = 0.12;
 
     const line_items = await Promise.all(products.map(async product => {
-        const response = await axios.get(`http://localhost:8080/api/v1/products/${product.productId}`);
+        const response = await axios.get(`${process.env.SERVER_URL}/api/v1/products/${product.productId}`);
         return {
             price_data: {
                 currency: "inr",
@@ -51,8 +51,8 @@ const stripeCheckout = async (req, res) => {
 
         billing_address_collection: 'auto',
 
-        success_url: `http://localhost:8080/api/v1/payments/payment-status?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `http://localhost:8080/api/v1/payments/payment-status?session_id={CHECKOUT_SESSION_ID}`,
+        success_url: `${process.env.SERVER_URL}/api/v1/payments/payment-status?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${process.env.SERVER_URL}/api/v1/payments/payment-status?session_id={CHECKOUT_SESSION_ID}`,
     });
 
     res.json({ id: session.id });
@@ -65,7 +65,7 @@ const stripePayment = async (req, res) => {
         return res.redirect(`${process.env.CLIENT_URL}/order-fail`);
     }
 
-    const response = await axios.post(`http://localhost:8080/api/v1/orders`, {
+    const response = await axios.post(`${process.env.SERVER_URL}/api/v1/orders`, {
         deliveryAddress: req.user.deliveryAddress,
     }, {
         headers: {
@@ -73,7 +73,7 @@ const stripePayment = async (req, res) => {
         }
     });
 
-    const getOrder = await axios.get(`http://localhost:8080/api/v1/orders/${response.data._id}`, {
+    const getOrder = await axios.get(`${process.env.SERVER_URL}/api/v1/orders/${response.data._id}`, {
         headers: {
             Authorization: `Bearer ${req.cookies.token}`,
         }

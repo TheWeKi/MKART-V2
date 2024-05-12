@@ -6,7 +6,7 @@ const { PORT } = process.env;
 connectDB()
     .then(() => {
         server.listen(PORT || 8080, () => {
-            console.log(`Server started - http://localhost:${PORT}`)
+            console.log(`Server started`)
         });
     })
     .catch(() => process.exit(1));

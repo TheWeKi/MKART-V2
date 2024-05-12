@@ -100,7 +100,7 @@ export const reset = async (req, res, next) => {
               <h2>Password Reset Request</h2>
               <p>Hello,</p>
               <p>We received a request to reset your password. Click the button below to reset it.</p>
-              <a href="http://localhost:3000/reset/${resetToken}" class="button">Reset Password</a>
+              <a href="${process.env.CLIENT_URL}/reset/${resetToken}" class="button">Reset Password</a>
               <p>If you didn't request this, please ignore this email.</p>
               <p>Thanks,</p>
               <p>Your Team</p>
@@ -168,7 +168,7 @@ export const googleAuthHandler = async (req, res, next) => {
         const code = req.query.code;
         const error = req.query.error;
         if (error) {
-           return res.redirect("http://localhost:3000/login");
+           return res.redirect(`${process.env.CLIENT_URL}/login`);
         }
         if (!code) {
             return next(new Errorhandler(400, "No Code Provided"));
@@ -195,7 +195,7 @@ export const googleAuthHandler = async (req, res, next) => {
             res.status(201).cookie("token", googleToken.token, googleToken.options);
         }
 
-        res.redirect("http://localhost:3000");
+        res.redirect(process.env.CLIENT_URL);
 
     } catch (e) {
         next(e);
