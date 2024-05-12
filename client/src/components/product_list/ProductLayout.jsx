@@ -6,7 +6,7 @@ import { baseUrl } from "../../axios/baseUrl.js";
 const ProductLayout = ({ products, setProducts }) => {
 
     const fetchProducts = async () => {
-        const res = await baseUrl.get('/products')
+        const res = await axios.get('https://mkart-v2-server.com/api/v1/products')
         setProducts(res.data);
     }
 
