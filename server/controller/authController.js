@@ -166,10 +166,14 @@ export const googleAuth = async (req, res, next) => {
 export const googleAuthHandler = async (req, res, next) => {
     try {
         const code = req.query.code;
-
+        const error = req.query.error;
+        if (error) {
+           return res.redirect("http://localhost:3000/login");
+        }
         if (!code) {
             return next(new Errorhandler(400, "No Code Provided"));
         }
+
         //Get Google Data from Google using code
         const googleUserData = await getGoogleData(code);
 
