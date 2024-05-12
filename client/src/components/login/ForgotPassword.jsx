@@ -5,7 +5,7 @@ import { baseUrl } from '../../axios/baseUrl';
 import { useState } from 'react';
 
 const schema = z.object({
-    email: z.string().email("Invalid Email").min(1, 'Email is required'),
+    email: z.string().email().min(1, "Email is required"),
 });
 
 const ForgotPassword = () => {
@@ -15,14 +15,18 @@ const ForgotPassword = () => {
     });
 
     const [sentEmail, setSentEmail] = useState(false);
+    const [isEmailValid, setIsEmailValid] = useState(true);
 
     const onSubmit = async (data) => {
         try {
             const response = await baseUrl.post(`/reset`, { email: data.email });
             if (response.status === 202) {
+                setIsEmailValid(true);
                 setSentEmail(true);
             }
         } catch (error) {
+            setIsEmailValid(false);
+            sentEmail(false);
             console.log(error)
         }
     };
@@ -35,11 +39,12 @@ const ForgotPassword = () => {
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text text-lg">Enter E-mail</span>
-                                {errors.email && <p className={"px-5 "}>{errors.password.message}</p>}
+                                {errors.email && <p className={"px-5 "}>{errors.email.message}</p>}
                             </label>
                             <input {...register('email')} type="email" placeholder="E-mail"
                                 className="input input-bordered" />
                         </div>
+                        {!isEmailValid && <p className={"text-red-700 p-1"}>Email doesn't exist</p>}
                         {sentEmail && <p className={"text-green-700 p-1"}>Please check your Email</p>}
                         <div className="form-control mt-6">
                             <button className="btn btn-outline">Send Link</button>
