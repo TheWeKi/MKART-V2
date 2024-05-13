@@ -70,7 +70,7 @@ const Checkout = () => {
                                 <span className="label-text text-lg">Town</span>
                                 {errors.town && <p className={"px-5"}>{errors.town.message}</p>}
                             </label>
-                            <input {...register('town')} type="text" placeholder="Town"
+                            <input {...register('town')} type="text" placeholder="town"
                                 className="input input-bordered" />
                         </div>
                         <div className="form-control">
