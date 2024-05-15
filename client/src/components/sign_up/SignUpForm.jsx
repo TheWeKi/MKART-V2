@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { baseUrl } from "../../axios/baseUrl.js";
-
+import { useState } from "react";
 
 const schema = z.object({
     username: z.string().min(3, 'Username must contain 3 chars'),
@@ -13,15 +13,20 @@ const schema = z.object({
 
 const SignUpForm = () => {
     const navigate = useNavigate();
+
+    const [isUserAlreadyExist, setIsUserAlreadyExist] = useState(false);
+
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(schema),
     });
 
     const onSubmit = async (data) => {
         try {
-            await baseUrl.post('/signup', data);
+            const res = await baseUrl.post('/signup', data);
+            
             navigate('/login');
         } catch (e) {
+            setIsUserAlreadyExist(true);
             console.log(e);
         }
     };
@@ -30,6 +35,7 @@ const SignUpForm = () => {
         <>
             <div className="card max-w-xl w-full shadow-3xl bg-base-100">
                 <div className="card-body card-bordered border-base-300 rounded-box">
+                    {isUserAlreadyExist && <p className={"text-red-500"}>User already exist</p>}
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="form-control">
                             <label className="label">
